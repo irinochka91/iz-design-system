@@ -1,0 +1,18 @@
+{
+  "$schema": "./manifest.schema.json",
+  "note": "Figma ↔ code mapping. This is a manifest, not Figma Code Connect. Use null/pending for unknown values; never invent node IDs or URLs.",
+  "figmaFile": { "url": null, "fileKey": null, "plan": "unknown", "codeConnect": "unavailable (assumed: requires Organization/Enterprise)" },
+  "components": [
+    {
+      "name": "Button",
+      "category": "Actions",
+      "code": { "path": "src/components/Actions/Button/Button.tsx", "import": "import { Button } from '@iz/design-system'" },
+      "spec": "src/components/Actions/Button/Button.spec.json",
+      "stories": "src/components/Actions/Button/Button.stories.tsx",
+      "figma": { "componentSet": "Actions / Button", "nodeId": null, "url": null, "status": "pending" },
+      "propMap": { "Variant": "variant", "Size": "size", "State": "(browser/semantic states; see spec)", "Full width": "isFullWidth", "Icon start": "iconStart", "Icon end": "iconEnd", "Label": "children" },
+      "status": "planned",
+      "reviewedVersion": null
+    }
+  ]
+}

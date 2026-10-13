@@ -1,0 +1,127 @@
+{
+  "name": "Button",
+  "category": "Actions",
+  "status": "draft",
+  "since": "0.1.0",
+  "summary": "Triggers an action or submits a form. Not for navigation — use Link so screen readers announce the correct role.",
+  "pattern": {
+    "name": "Button",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/"
+  },
+  "role": "button",
+  "props": {
+    "variant": {
+      "type": "'primary' | 'secondary' | 'tertiary' | 'ghost' | 'danger'",
+      "default": "'secondary'",
+      "intent": "Visual weight. One primary per view. danger for destructive actions, always paired with confirmation for irreversible ones."
+    },
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "intent": "Target heights 24 / 32 / 44 px. lg is the touch default."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Removes from tab order. Prefer enabled + validation message so users learn why."
+    },
+    "isPending": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Shows a spinner, keeps width and focus, sets aria-busy, suppresses onPress."
+    },
+    "isFullWidth": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Stretches to container inline-size; typical in mobile forms."
+    },
+    "iconStart": {
+      "type": "ReactNode",
+      "intent": "Decorative icon before the label; aria-hidden applied automatically."
+    },
+    "iconEnd": {
+      "type": "ReactNode",
+      "intent": "Decorative icon after the label; aria-hidden applied automatically."
+    },
+    "aria-label": {
+      "type": "string",
+      "requiredWhen": "children is empty (icon-only). Use IconButton instead where possible.",
+      "intent": "The accessible name when there is no visible text."
+    },
+    "onPress": {
+      "type": "(e: PressEvent) => void",
+      "intent": "Unified activation for mouse, touch, keyboard (Enter/Space) and assistive tech."
+    },
+    "type": {
+      "type": "'button' | 'submit' | 'reset'",
+      "default": "'button'",
+      "intent": "Native form behaviour; submit only inside a Form."
+    }
+  },
+  "states": ["default", "hover", "focus", "active", "disabled", "pending"],
+  "keyboard": [
+    { "key": "Tab / Shift+Tab", "action": "Moves focus to / from the button." },
+    { "key": "Enter", "action": "Activates on key down." },
+    { "key": "Space", "action": "Activates on key up (native behaviour preserved)." }
+  ],
+  "a11y": {
+    "wcag": ["1.4.3", "1.4.11", "2.1.1", "2.4.7", "2.4.11", "2.4.13", "2.5.8", "4.1.2"],
+    "name": "Computed from children; from aria-label when icon-only (TypeScript union requires it).",
+    "announcements": "isPending: aria-busy=true and a visually-hidden 'Loading' appended to the name; label text stays visible.",
+    "screenReaderNotes": "",
+    "targetSize": "sm 24×24 (desktop-only contexts), md 32, lg 44"
+  },
+  "tokens": [
+    "color.action.primary.bg",
+    "color.action.primary.bg.hover",
+    "color.action.primary.bg.active",
+    "color.action.secondary.bg",
+    "color.action.secondary.bg.hover",
+    "color.action.secondary.border",
+    "color.action.danger.bg",
+    "color.action.danger.bg.hover",
+    "color.action.disabled.bg",
+    "color.text.on-action",
+    "color.text.primary",
+    "color.text.disabled",
+    "color.border.focus",
+    "border.width.focus",
+    "space.inset.sm",
+    "space.inset.md",
+    "space.inset.lg",
+    "space.inline.sm",
+    "size.target.min",
+    "size.target.touch",
+    "radius.md",
+    "font.size.200",
+    "font.weight.medium",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [],
+  "composedBy": [],
+  "rules": [
+    "Never use Button for navigation; use Link.",
+    "Never disable the submit button to signal an invalid form; validate and explain.",
+    "Icon-only requires aria-label; prefer IconButton.",
+    "Focus ring uses outline + outline-offset, never box-shadow alone (box-shadow is clipped by overflow and ignored in forced-colors mode).",
+    "In forced-colors mode (Windows High Contrast) keep a visible border: use border-color: ButtonText via @media (forced-colors: active)."
+  ],
+  "figma": {
+    "componentSet": "Actions / Button",
+    "properties": {
+      "Variant": "variant",
+      "Size": "size",
+      "State": "states",
+      "Full width": "isFullWidth",
+      "Icon start": "iconStart",
+      "Icon end": "iconEnd",
+      "Label": "children"
+    }
+  },
+  "examples": [
+    { "title": "Primary action", "code": "<Button variant=\"primary\" onPress={save}>Save changes</Button>" },
+    { "title": "Pending", "code": "<Button variant=\"primary\" isPending>Saving</Button>" },
+    { "title": "Danger with icon", "code": "<Button variant=\"danger\" iconStart={<TrashIcon />}>Delete</Button>" }
+  ]
+}

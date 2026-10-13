@@ -1,0 +1,31 @@
+/* Minimal, accessibility-safe reset. Deliberately does NOT remove outlines or set sizes in px.
+   Reduced motion is handled by the generated token CSS (duration tokens → 0), not here. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  line-height: 1.5;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-inline-size: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
