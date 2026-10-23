@@ -44,15 +44,27 @@ async function getCollection(name) {
   return found || figma.variables.createVariableCollection(name);
 }
 
-/** Make the collection's modes exactly `names`, in order, reusing the default mode for the first. */
+/**
+ * Make the collection's modes exactly `names`, in order, reusing the default mode for the first.
+ * Figma caps modes per plan — Starter has none, Professional allows 10 — and addMode throws when
+ * the cap is reached. Degrade instead of failing: import the modes that fit, report the rest, and
+ * let a later run on a higher plan fill them in (this plugin is idempotent).
+ */
 function syncModes(collection, names) {
   collection.renameMode(collection.modes[0].modeId, names[0]);
+  const refused = [];
   for (const name of names.slice(1)) {
-    if (!collection.modes.some((m) => m.name === name)) collection.addMode(name);
+    if (collection.modes.some((m) => m.name === name)) continue;
+    try {
+      collection.addMode(name);
+    } catch {
+      // Figma throws when the plan's mode cap is reached; which modes were refused is the useful part.
+      refused.push(name);
+    }
   }
   const byName = {};
   for (const m of collection.modes) byName[m.name] = m.modeId;
-  return byName;
+  return { byName, refused };
 }
 
 async function variableIndex(collection) {
@@ -103,7 +115,8 @@ async function importTokens(doc) {
 
   // ── Semantic: one mode per theme, every value an alias.
   const semantic = await getCollection('Semantic');
-  const modeIds = syncModes(semantic, modeNames);
+  const { byName: modeIds, refused } = syncModes(semantic, modeNames);
+  const imported = modeNames.filter((m) => modeIds[m]);
   const semanticIndex = await variableIndex(semantic);
   let semanticCount = 0;
   let aliasCount = 0;
@@ -118,7 +131,7 @@ async function importTokens(doc) {
 
     for (const [modeName, entry] of Object.entries(modes)) {
       const modeId = modeIds[modeName];
-      if (!modeId) { unresolved.push(`${name}: no mode "${modeName}"`); continue; }
+      if (!modeId) continue; // refused by the plan — reported once below, not per variable
       const target = primitiveIndex[entry.alias];
       if (target) {
         variable.setValueForMode(modeId, figma.variables.createVariableAlias(target));
@@ -132,12 +145,21 @@ async function importTokens(doc) {
     }
     semanticCount++;
   }
-  report.push(`Semantic: ${semanticCount} variables × ${modeNames.length} modes (${modeNames.join(', ')}), ${aliasCount} aliases`);
+  report.push(`Semantic: ${semanticCount} variables × ${imported.length} mode(s) (${imported.join(', ')}), ${aliasCount} aliases`);
+  if (refused.length) {
+    report.push(
+      `\nFigma refused ${refused.length} mode(s): ${refused.join(', ')}.\n` +
+      'Variable modes are a paid feature: Starter has none, Professional allows 10. Everything that\n' +
+      'fits was imported. Re-run this plugin after upgrading and the missing modes fill in — it\n' +
+      'updates in place, nothing is duplicated.'
+    );
+  }
 
   if (notes.size) report.push(`Conversions: ${[...notes].join('; ')}`);
   if (skipped.length) report.push(`\nSkipped ${skipped.length} (expected — no Figma type):\n  ${skipped.join('\n  ')}`);
   if (unresolved.length) report.push(`\n${unresolved.length} problem(s):\n  ${unresolved.join('\n  ')}`);
-  else report.push('\nEvery Semantic value is an alias. Switch the Semantic mode to check the mirror.');
+  else if (imported.length > 1) report.push('\nEvery Semantic value is an alias. Switch the Semantic mode to check the mirror.');
+  else report.push('\nEvery Semantic value is an alias, but only one mode exists — the mirror cannot be checked by switching modes yet.');
 
   return report.join('\n');
 }

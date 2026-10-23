@@ -29,6 +29,17 @@ Mode names match `attribute` in `tokens/themes.config.ts`, so a Figma mode maps 
 values and aliases are updated, nothing is duplicated. A variable whose token changed `$type` is
 removed and recreated, because Figma cannot change a variable's type.
 
+## Figma plans: modes are paid
+
+Variable **modes** are a paid feature — Starter has none, Professional allows 10 per collection,
+Organization 20. The six modes here fit Professional.
+
+The plugin degrades rather than failing: it imports every mode the plan allows, names the ones Figma
+refused, and says what to do. On Starter you get all 271 variables with `light` values and one mode.
+Re-running after an upgrade fills the rest in — it updates in place, so nothing is duplicated and
+nothing has to be undone. Verified by running `code.js` against a mock whose `addMode` throws:
+155 + 116 variables, 116 aliases, 0 raw, 0 unset, 5 modes reported as refused.
+
 ## What it cannot do, and why
 
 - **Easing (6 tokens).** `curve/*` and `easing/*` are `cubicBezier`; Figma has no variable type for a
