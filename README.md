@@ -3,6 +3,8 @@ Goal by 8 Nov: portfolio case on Phase A. Product with testers — after the off
 
 # IZ Design System
 
+[![CI](https://github.com/irinochka91/iz-design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/irinochka91/iz-design-system/actions/workflows/ci.yml)
+
 An accessible, token-first, agent-ready design system. Small on purpose: every component is built by hand, end to end, so the system is understood from the inside — and so AI agents (Claude Code, Codex, Claude Design) can consume it without guessing.
 
 **Status:** Phase 1 done (tokens, six themes incl. `linen`, contrast gate, lint rules). Next: Phase 2 primitives — see `docs/ROADMAP.md`.
@@ -26,8 +28,8 @@ This is an independently initiated concept project for learning and portfolio pu
 ## Setup (after cloning or receiving the folder)
 
 ```bash
-git init && git add -A && git commit -m "chore: phase 0 scaffold"   # once, if not yet a repo
-npm install                      # exact versions from package-lock.json
+git clone git@github.com:irinochka91/iz-design-system.git && cd iz-design-system
+npm ci                           # exact versions from package-lock.json
 # (no `playwright install` needed: tests use your installed Google Chrome — see docs/CAPABILITIES.md)
 npm run check                    # lint, css lint, type-check, token checks (stubs until Phase 1), tests
 npm run storybook                # http://localhost:6006
