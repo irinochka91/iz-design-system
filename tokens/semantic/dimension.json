@@ -1,0 +1,128 @@
+{
+  "$description": "Semantic spacing/size roles. inset = padding inside; stack = vertical gap; inline = horizontal gap.",
+  "space": {
+    "inset": {
+      "xs": {
+        "$type": "dimension",
+        "$value": "{space.1}"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{space.2}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{space.4}"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{space.6}"
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": "{space.8}"
+      }
+    },
+    "stack": {
+      "xs": {
+        "$type": "dimension",
+        "$value": "{space.1}"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{space.2}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{space.4}"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{space.6}"
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": "{space.8}"
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": "{space.12}"
+      }
+    },
+    "inline": {
+      "xs": {
+        "$type": "dimension",
+        "$value": "{space.1}"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{space.2}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{space.3}"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{space.4}"
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": "{space.6}"
+      }
+    }
+  },
+  "size": {
+    "target": {
+      "min": {
+        "$type": "dimension",
+        "$value": "{size.6}",
+        "$description": "WCAG 2.2 AA minimum (2.5.8): 24px"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{size.8}"
+      },
+      "touch": {
+        "$type": "dimension",
+        "$value": "{size.11}",
+        "$description": "Recommended touch target: 44px (not the AA minimum)"
+      }
+    }
+  },
+  "radius": {
+    "sm": {
+      "$type": "dimension",
+      "$value": "{radius-scale.1}"
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": "{radius-scale.2}"
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": "{radius-scale.3}"
+    },
+    "full": {
+      "$type": "dimension",
+      "$value": "{radius-scale.full}"
+    }
+  },
+  "border": {
+    "width": {
+      "sm": {
+        "$type": "dimension",
+        "$value": "{border-width.1}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{border-width.2}"
+      },
+      "focus": {
+        "$type": "dimension",
+        "$value": "{border-width.2}",
+        "$description": "Focus ring thickness"
+      }
+    }
+  }
+}

@@ -33,3 +33,16 @@ Consequence: a Figma-originated change is never "live" until merged.
 
 ## ADR-005 — Target size
 Decision: WCAG 2.2 AA minimum is 24 × 24 CSS px (2.5.8); `size="lg"` is 44 px as a recommended touch target. Documentation never calls 44 px the AA minimum.
+
+## ADR-006 — A ~120-line custom token transformer instead of Style Dictionary (for now)
+Problem: DTCG 2025.10 became stable in Oct 2025 with object-valued colours (`{colorSpace, components, hex}`) and dimensions (`{value, unit}`); Style Dictionary 5 reads DTCG but its handling of these object shapes and of per-theme output needed custom transforms/formats anyway.
+Options: (a) Style Dictionary 5 + custom transforms; (b) a small readable script (`scripts/lib/dtcg.mjs` + `tokens-build.mjs`) that resolves aliases and emits CSS, types and a resolved DTCG snapshot.
+Decision: (b). `style-dictionary` stays installed as a devDependency for a later comparison but is not on the build path.
+Reason: the learning goal is to understand the pipeline, and the whole pipeline is now five small functions (flatten → resolve → cssName → toCss → write). Output is one CSS file with four theme blocks, OS bridges and reduced-motion, plus `tokens.d.ts` and `tokens.dtcg.json` for Figma/MCP/Claude Design. The source stays pure DTCG, so Style Dictionary or Terrazzo can replace the script without touching `tokens/*.json`.
+Consequence: no Android/iOS outputs until needed; `tokens:validate` is our own (aliases, cycles, shapes, tier rules, theme-only-overrides-semantic).
+Revisit when: a second platform output is needed, or Style Dictionary gains first-class DTCG 2025.10 colour/dimension support.
+
+## ADR-007 — Name-collision rule between tiers
+Problem: `tokens:validate` caught `radius.full` and `easing.standard` aliasing themselves — the semantic token had the same path as the primitive.
+Decision: primitive groups that could share a name with a semantic role get a distinct suffix (`radius-scale.*`, `curve.*`). Semantic names describe roles (`radius.md`), primitives describe scales (`radius-scale.2`).
+Consequence: the validator's cycle check is the enforcement; this ADR is the explanation future-us will look for.

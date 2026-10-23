@@ -1,0 +1,53 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ButtonStories from './Button.stories';
+
+<Meta of={ButtonStories} />
+
+# Button
+
+Triggers an action or submits a form. **Not for navigation** — a link that looks like a button is still a link to a screen reader; use `Link`.
+
+Pattern: [WAI-ARIA APG — Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/) · Behaviour: React Aria `Button` · Spec: `Button.spec.json`
+
+<Canvas of={ButtonStories.Primary} />
+<Controls of={ButtonStories.Primary} />
+
+## Anatomy
+
+`[iconStart] label [iconEnd]` inside a `<button>`. Icons are decorative (`aria-hidden`); the label is the accessible name. Icon-only buttons must pass `aria-label` — TypeScript refuses them otherwise.
+
+## Variants and sizes
+
+One `primary` per view. `secondary` is the default. `tertiary` is text-only for low-emphasis actions. `danger` for destructive actions — pair irreversible ones with a confirmation Modal.
+
+Sizes map to target heights: `sm` 24 px (the WCAG 2.2 AA minimum, desktop-only contexts), `md` 32 px, `lg` 44 px (recommended touch target).
+
+<Canvas of={ButtonStories.Sizes} />
+
+## Keyboard
+
+| Key | Action |
+|---|---|
+| `Tab` / `Shift+Tab` | Moves focus to / from the button |
+| `Enter` | Activates on key down |
+| `Space` | Activates on key up |
+
+Focus is shown with a 2 px `outline` in `color.border.focus`, offset 2 px so it sits on the surface, never clipped, visible in forced-colors mode.
+
+## States
+
+Hover, focus and active are browser states styled through React Aria `data-*` attributes — not props. Semantic states are props: `isDisabled` (removed from tab order; prefer enabled + validation), `isPending` (spinner, `aria-busy`, width preserved, presses suppressed).
+
+<Canvas of={ButtonStories.Pending} />
+
+## Do / Don't
+
+- Do write the label as a verb phrase: "Save changes", "Delete vacancy".
+- Don't disable the submit button to signal an invalid form — validate and explain.
+- Don't use `onClick`; `onPress` unifies mouse, touch, keyboard and assistive tech.
+
+## Tokens consumed
+
+See `tokens` in `Button.spec.json`; `check:specs` verifies the list against the CSS.
+
+<Stories />

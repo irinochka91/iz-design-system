@@ -8,5 +8,14 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   use: { baseURL: 'http://localhost:6006', trace: 'retain-on-failure' },
   webServer: { command: 'npm run storybook -- --ci', url: 'http://localhost:6006', reuseExistingServer: true, timeout: 120_000 },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  projects: [
+    {
+      name: 'chromium',
+      // Installed Google Chrome by default (Playwright ships no Chromium for macOS 12); PW_CHROMIUM_PATH overrides.
+      use: {
+        ...devices['Desktop Chrome'],
+        ...(process.env.PW_CHROMIUM_PATH ? { launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } } : { channel: 'chrome' }),
+      },
+    },
+  ],
 });

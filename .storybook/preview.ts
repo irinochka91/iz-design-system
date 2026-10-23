@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/react-vite';
 import '../src/styles/index.css';
+import './storybook.css';
 
 // Theme toolbar: sets data-theme on <html>, exactly as a consuming app would (docs/TOKENS.md).
 const THEMES = ['light', 'dark', 'hc-light', 'hc-dark'] as const;

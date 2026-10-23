@@ -1,0 +1,26 @@
+{
+  "duration": {
+    "fast": {
+      "$type": "duration",
+      "$value": "{duration.100}"
+    },
+    "normal": {
+      "$type": "duration",
+      "$value": "{duration.200}"
+    },
+    "slow": {
+      "$type": "duration",
+      "$value": "{duration.300}"
+    }
+  },
+  "easing": {
+    "standard": {
+      "$type": "cubicBezier",
+      "$value": "{curve.standard}"
+    },
+    "emphasized": {
+      "$type": "cubicBezier",
+      "$value": "{curve.emphasized}"
+    }
+  }
+}

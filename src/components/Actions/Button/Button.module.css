@@ -1,0 +1,179 @@
+/* Button — every value is a token (docs/TOKENS.md). States come from React Aria data-* attributes,
+   so keyboard, mouse, touch and screen-reader activation all look the same. */
+
+.root {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-button-bg: var(--iz-color-action-secondary-bg);
+  --iz-button-fg: var(--iz-color-text-primary);
+  --iz-button-border: var(--iz-color-action-secondary-border);
+  --iz-button-padding-x: var(--iz-space-inset-md);
+  --iz-button-height: var(--iz-size-target-md);
+  --iz-button-font-size: var(--iz-font-control-size);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--iz-space-inline-sm);
+  min-block-size: var(--iz-button-height);
+  padding-block: 0;
+  padding-inline: var(--iz-button-padding-x);
+  border: var(--iz-border-width-sm) solid var(--iz-button-border);
+  border-radius: var(--iz-radius-md);
+  background: var(--iz-button-bg);
+  color: var(--iz-button-fg);
+  font-family: var(--iz-font-body-family);
+  font-size: var(--iz-button-font-size);
+  font-weight: var(--iz-font-control-weight);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--iz-duration-fast) var(--iz-easing-standard),
+    border-color var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+/* ---- variants ---- */
+.primary {
+  --iz-button-bg: var(--iz-color-action-primary-bg);
+  --iz-button-fg: var(--iz-color-text-on-action);
+  --iz-button-border: var(--iz-color-action-primary-bg);
+}
+
+.primary[data-hovered] {
+  --iz-button-bg: var(--iz-color-action-primary-bg-hover);
+  --iz-button-border: var(--iz-color-action-primary-bg-hover);
+}
+
+.primary[data-pressed] {
+  --iz-button-bg: var(--iz-color-action-primary-bg-active);
+  --iz-button-border: var(--iz-color-action-primary-bg-active);
+}
+
+.secondary[data-hovered] {
+  --iz-button-bg: var(--iz-color-action-secondary-bg-hover);
+}
+
+.secondary[data-pressed] {
+  --iz-button-bg: var(--iz-color-action-secondary-bg-active);
+}
+
+.tertiary {
+  --iz-button-bg: transparent;
+  --iz-button-fg: var(--iz-color-action-primary-fg);
+  --iz-button-border: transparent;
+}
+
+.tertiary[data-hovered] {
+  --iz-button-bg: var(--iz-color-action-secondary-bg-hover);
+}
+
+.tertiary[data-pressed] {
+  --iz-button-bg: var(--iz-color-action-secondary-bg-active);
+}
+
+.danger {
+  --iz-button-bg: var(--iz-color-action-danger-bg);
+  --iz-button-fg: var(--iz-color-text-on-action);
+  --iz-button-border: var(--iz-color-action-danger-bg);
+}
+
+.danger[data-hovered] {
+  --iz-button-bg: var(--iz-color-action-danger-bg-hover);
+  --iz-button-border: var(--iz-color-action-danger-bg-hover);
+}
+
+.danger[data-pressed] {
+  --iz-button-bg: var(--iz-color-action-danger-bg-active);
+  --iz-button-border: var(--iz-color-action-danger-bg-active);
+}
+
+/* ---- sizes: 24 / 32 / 44 px targets ---- */
+.sm {
+  --iz-button-height: var(--iz-size-target-min);
+  --iz-button-padding-x: var(--iz-space-inset-sm);
+  --iz-button-font-size: var(--iz-font-label-size);
+}
+
+.lg {
+  --iz-button-height: var(--iz-size-target-touch);
+  --iz-button-padding-x: var(--iz-space-inset-lg);
+}
+
+.fullWidth {
+  inline-size: 100%;
+}
+
+.iconOnly {
+  padding-inline: 0;
+  inline-size: var(--iz-button-height);
+}
+
+/* ---- universal states ---- */
+
+/* outline (not box-shadow): survives overflow clipping and forced-colors mode. px is allowed here on purpose. */
+.root[data-focus-visible] {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: 2px;
+}
+
+.root[data-disabled] {
+  --iz-button-bg: var(--iz-color-action-disabled-bg);
+  --iz-button-fg: var(--iz-color-action-disabled-fg);
+  --iz-button-border: var(--iz-color-action-disabled-bg);
+
+  cursor: not-allowed;
+}
+
+.root[data-pending] {
+  cursor: progress;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.icon > * {
+  inline-size: 1em; /* em: icon scales with the button's text */
+  block-size: 1em;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.root[data-pending] .label,
+.root[data-pending] .icon {
+  /* opacity, NOT visibility: visibility:hidden removes the label from the accessibility tree
+     and the button loses its name (axe: button-name). Found by the story test on 2026-10-15. */
+  opacity: 0;
+}
+
+.spinner {
+  position: absolute;
+  inline-size: 1em;
+  block-size: 1em;
+  border: var(--iz-border-width-md) solid currentcolor;
+  border-inline-end-color: transparent;
+  border-radius: var(--iz-radius-full);
+  animation: iz-spin var(--iz-duration-slow) linear infinite;
+}
+
+@keyframes iz-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Windows High Contrast / forced-colors: keep a visible boundary and a visible focus ring. */
+@media (forced-colors: active) {
+  .root {
+    border-color: ButtonText;
+  }
+
+  .root[data-focus-visible] {
+    outline-color: Highlight;
+  }
+}

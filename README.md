@@ -23,7 +23,7 @@ This is an independently initiated concept project for learning and portfolio pu
 ```bash
 git init && git add -A && git commit -m "chore: phase 0 scaffold"   # once, if not yet a repo
 npm install                      # exact versions from package-lock.json
-npx playwright install chromium  # browser for story tests and e2e
+# (no `playwright install` needed: tests use your installed Google Chrome — see docs/CAPABILITIES.md)
 npm run check                    # lint, css lint, type-check, token checks (stubs until Phase 1), tests
 npm run storybook                # http://localhost:6006
 ```

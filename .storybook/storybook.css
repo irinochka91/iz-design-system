@@ -1,0 +1,7 @@
+/* Layout helpers for stories only — never shipped. */
+.sb-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--iz-space-inline-lg);
+  align-items: center;
+}

@@ -1,7 +1,7 @@
 {
   "name": "Button",
   "category": "Actions",
-  "status": "draft",
+  "status": "beta",
   "since": "0.1.0",
   "summary": "Triggers an action or submits a form. Not for navigation — use Link so screen readers announce the correct role.",
   "pattern": {
@@ -11,9 +11,9 @@
   "role": "button",
   "props": {
     "variant": {
-      "type": "'primary' | 'secondary' | 'tertiary' | 'ghost' | 'danger'",
+      "type": "'primary' | 'secondary' | 'tertiary' | 'danger'",
       "default": "'secondary'",
-      "intent": "Visual weight. One primary per view. danger for destructive actions, always paired with confirmation for irreversible ones."
+      "intent": "Visual weight. One primary per view. tertiary = text-only (uses action.primary.fg). danger for destructive actions."
     },
     "size": {
       "type": "'sm' | 'md' | 'lg'",
@@ -28,7 +28,7 @@
     "isPending": {
       "type": "boolean",
       "default": "false",
-      "intent": "Shows a spinner, keeps width and focus, sets aria-busy, suppresses onPress."
+      "intent": "Shows a spinner, keeps width and focus, sets aria-disabled=\"true\" and data-pending, suppresses onPress. React Aria announces the pending state to screen readers."
     },
     "isFullWidth": {
       "type": "boolean",
@@ -58,45 +58,80 @@
       "intent": "Native form behaviour; submit only inside a Form."
     }
   },
-  "states": ["default", "hover", "focus", "active", "disabled", "pending"],
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "pending"
+  ],
   "keyboard": [
-    { "key": "Tab / Shift+Tab", "action": "Moves focus to / from the button." },
-    { "key": "Enter", "action": "Activates on key down." },
-    { "key": "Space", "action": "Activates on key up (native behaviour preserved)." }
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "Moves focus to / from the button."
+    },
+    {
+      "key": "Enter",
+      "action": "Activates on key down."
+    },
+    {
+      "key": "Space",
+      "action": "Activates on key up (native behaviour preserved)."
+    }
   ],
   "a11y": {
-    "wcag": ["1.4.3", "1.4.11", "2.1.1", "2.4.7", "2.4.11", "2.4.13", "2.5.8", "4.1.2"],
+    "wcag": [
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.7",
+      "2.4.11",
+      "2.4.13",
+      "2.5.8",
+      "4.1.2"
+    ],
     "name": "Computed from children; from aria-label when icon-only (TypeScript union requires it).",
-    "announcements": "isPending: aria-busy=true and a visually-hidden 'Loading' appended to the name; label text stays visible.",
+    "announcements": "isPending → aria-disabled=\"true\" + data-pending (React Aria); a visually-hidden 'Loading' is appended to the name; label stays visible. Corrected 2026-10-15: the first draft said aria-busy — React Aria does not use it.",
     "screenReaderNotes": "",
     "targetSize": "sm 24×24 (desktop-only contexts), md 32, lg 44"
   },
   "tokens": [
     "color.action.primary.bg",
-    "color.action.primary.bg.hover",
-    "color.action.primary.bg.active",
+    "color.action.primary.bg-hover",
+    "color.action.primary.bg-active",
     "color.action.secondary.bg",
-    "color.action.secondary.bg.hover",
+    "color.action.secondary.bg-hover",
+    "color.action.secondary.bg-active",
     "color.action.secondary.border",
     "color.action.danger.bg",
-    "color.action.danger.bg.hover",
+    "color.action.danger.bg-hover",
+    "color.action.danger.bg-active",
     "color.action.disabled.bg",
+    "color.action.disabled.fg",
+    "color.action.primary.fg",
     "color.text.on-action",
     "color.text.primary",
-    "color.text.disabled",
     "color.border.focus",
     "border.width.focus",
+    "border.width.sm",
     "space.inset.sm",
     "space.inset.md",
     "space.inset.lg",
     "space.inline.sm",
     "size.target.min",
+    "size.target.md",
     "size.target.touch",
     "radius.md",
-    "font.size.200",
-    "font.weight.medium",
+    "font.control.size",
+    "font.control.weight",
+    "font.label.size",
     "duration.fast",
-    "easing.standard"
+    "easing.standard",
+    "font.body.family",
+    "border.width.md",
+    "radius.full",
+    "duration.slow"
   ],
   "compose": [],
   "composedBy": [],
@@ -105,14 +140,16 @@
     "Never disable the submit button to signal an invalid form; validate and explain.",
     "Icon-only requires aria-label; prefer IconButton.",
     "Focus ring uses outline + outline-offset, never box-shadow alone (box-shadow is clipped by overflow and ignored in forced-colors mode).",
-    "In forced-colors mode (Windows High Contrast) keep a visible border: use border-color: ButtonText via @media (forced-colors: active)."
+    "In forced-colors mode (Windows High Contrast) keep a visible border: use border-color: ButtonText via @media (forced-colors: active).",
+    "isPending uses aria-disabled (React Aria), not aria-busy — do not add aria-busy on top; double announcements confuse screen readers.",
+    "Pending hides label/icons with opacity:0, never visibility:hidden or display:none — those remove the accessible name."
   ],
   "figma": {
     "componentSet": "Actions / Button",
     "properties": {
       "Variant": "variant",
       "Size": "size",
-      "State": "states",
+      "State": "browser states (default/hover/focus/active) + isDisabled + isPending",
       "Full width": "isFullWidth",
       "Icon start": "iconStart",
       "Icon end": "iconEnd",
@@ -120,8 +157,18 @@
     }
   },
   "examples": [
-    { "title": "Primary action", "code": "<Button variant=\"primary\" onPress={save}>Save changes</Button>" },
-    { "title": "Pending", "code": "<Button variant=\"primary\" isPending>Saving</Button>" },
-    { "title": "Danger with icon", "code": "<Button variant=\"danger\" iconStart={<TrashIcon />}>Delete</Button>" }
-  ]
+    {
+      "title": "Primary action",
+      "code": "<Button variant=\"primary\" onPress={save}>Save changes</Button>"
+    },
+    {
+      "title": "Pending",
+      "code": "<Button variant=\"primary\" isPending>Saving</Button>"
+    },
+    {
+      "title": "Danger with icon",
+      "code": "<Button variant=\"danger\" iconStart={<TrashIcon />}>Delete</Button>"
+    }
+  ],
+  "source": "src/components/Actions/Button/Button.spec.json"
 }
