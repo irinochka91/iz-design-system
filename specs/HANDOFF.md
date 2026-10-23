@@ -48,7 +48,7 @@ iz-design-system/
   src/patterns/jobsearch/*         composed from primitives; own spec per component
   specs/<Component>.md             anatomy · props · states · keyboard · a11y · do/don't
   agent/llms.txt  agent/mcp/       list_components, get_spec, list_tokens, get_token
-  scripts/build-tokens.ts          Style Dictionary → CSS vars, TS types, Figma JSON
+  scripts/tokens-build.mjs         DTCG transformer → CSS vars, TS types, Figma JSON (ADR-006)
   scripts/check-contrast.ts        every bg/fg pair, every theme; < 4.5:1 fails CI
 ```
 
@@ -408,10 +408,25 @@ Six phases; each ends with a learning checkpoint (one question, one exercise) as
 | 5 · Leads + palette | TriageCard flow, ⌘K palette, StageChip cycling, empty states, focus mode | Backlog #7, #9, #10, #13, #14 accepted on phone and desktop |
 | 6 · Experiments + insights | ExperimentCard, metric computation from pipeline events, StreakBar, goal adjustment, Offer moment, What's working | Backlog #11, #12, #15–17 accepted; case study screenshots captured in both themes |
 
+**Phase 1 is done (2026-10-23). What the repo actually does, so phase 2 does not fight it.**
+The prompt below is kept as the original brief; four things were decided differently during the
+build and the ADRs are the authority, not this document:
+
+| This handoff says | The repo does | Why |
+| --- | --- | --- |
+| `src/tokens/*.json5`, Style Dictionary | `tokens/*.json` in DTCG 2025.10, a ~160-line transformer (`scripts/lib/dtcg.mjs`) | ADR-006 — Style Dictionary 5 needed custom transforms for DTCG object colours/dimensions anyway |
+| `--iz-{category}-{role}-{emphasis}-{state}` | `docs/TOKENS.md` naming is canonical; these names exist as a CSS **alias layer** | ADR-009 — renaming would break Button, four themes, `tokens.d.ts` and package exports; `--iz-color-bg-accent` and `--iz-color-action-primary-bg` are both real and always equal |
+| `scripts/build-tokens.ts`, `check-contrast.ts` | `scripts/tokens-build.mjs`, `scripts/check-contrast.ts` | the build script predates phase 1; the contrast script is `.ts` as asked |
+| four themes | six — `light`, `dark`, `hc-light`, `hc-dark`, `linen`, `linen-dark`, registered in `tokens/themes.config.ts` | the `hc-*` pair already existed and is the strongest a11y evidence for the case study |
+
+Write pattern CSS against either name scheme; both resolve. `dist/` is generated and **not**
+committed (ADR-016) — run `npm run build` before linking the package.
+
 **Prompt for phase 1** (paste into Claude Code in the design-system repo)
 
 ```
-Read specs/ARCHITECTURE.md and the handoff doc linked in README. Implement Phase 1:
+Read specs/HANDOFF.md (this file) sections "Design system architecture" and
+"Linen theme tokens", plus docs/TOKENS.md and docs/decisions.md. Implement Phase 1:
 1. Create src/tokens/base.json5 and semantic.json5 following the naming scheme
    --iz-{category}-{role}-{emphasis}-{state}; every bg role gets an fg-on-* pair.
 2. Add src/tokens/themes/linen.json5 and linen.dark.json5 as override files with

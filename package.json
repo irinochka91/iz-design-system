@@ -1,7 +1,7 @@
 {
   "name": "@iz/design-system",
   "version": "0.0.1",
-  "description": "IZ Design System — accessible, token-first React components with DTCG tokens and an MCP spec server.",
+  "description": "IZ Design System \u2014 accessible, token-first React components with DTCG tokens and an MCP spec server.",
   "license": "MIT",
   "type": "module",
   "private": true,
@@ -25,13 +25,15 @@
     "./styles.css": "./dist/styles.css",
     "./tokens.css": "./dist/design-tokens.css",
     "./tokens.json": "./docs/specs/tokens.dtcg.json",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./css/*": "./dist/css/*",
+    "./figma.json": "./dist/figma/tokens.json"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build",
-    "build": "vite build",
+    "build": "vite build && npm run build:tokens && node scripts/check-package.mjs",
     "type-check": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
     "lint:css": "stylelint \"src/**/*.css\"",
@@ -46,7 +48,8 @@
     "check:specs": "node scripts/check-specs.mjs",
     "check": "npm run lint && npm run lint:css && npm run type-check && npm run tokens:validate && npm run tokens:build && npm run check:contrast && npm run check:specs && npm run test",
     "changeset": "changeset",
-    "tokens:sync": "echo '[tokens-sync] Phase 2: diff tokens/figma-export/*.json against tokens/' && exit 0"
+    "tokens:sync": "echo '[tokens-sync] Phase 2: diff tokens/figma-export/*.json against tokens/' && exit 0",
+    "check:package": "node scripts/check-package.mjs"
   },
   "peerDependencies": {
     "react": "^19.0.0",
