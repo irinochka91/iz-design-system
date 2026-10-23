@@ -85,7 +85,25 @@ function ensureVariable(index, name, collection, resolvedType) {
   return index[name];
 }
 
+/** Refuse anything that is not dist/figma/tokens.json, by name, instead of importing nothing. */
+function assertShape(doc) {
+  if (!doc || typeof doc !== 'object') throw new Error('That file is not a JSON object.');
+  const hasCollections = doc.Primitives && doc.Semantic;
+  const hasMeta = (doc.$extensions || {})[VENDOR];
+  if (hasCollections && hasMeta) return;
+  const keys = Object.keys(doc).filter((k) => k !== '$description').slice(0, 6).join(', ') || '(none)';
+  const guess = doc.themes
+    ? '\n\nThis looks like docs/specs/tokens.dtcg.json — a different generated file, keyed by theme.'
+    : '';
+  throw new Error(
+    `This is not the Figma export.\n\nExpected top-level "Primitives" and "Semantic" plus ` +
+    `$extensions["${VENDOR}"].\nFound: ${keys}.${guess}\n\nPick dist/figma/tokens.json ` +
+    `(run "npm run build" if it is missing).`
+  );
+}
+
 async function importTokens(doc) {
+  assertShape(doc);
   const meta = (doc.$extensions || {})[VENDOR] || {};
   const collections = meta.collections || [];
   const semanticMeta = collections.find((c) => c.name === 'Semantic') || {};

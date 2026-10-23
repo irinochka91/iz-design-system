@@ -29,8 +29,15 @@
     const reader = new FileReader();
     reader.onload = () => {
       try {
-        payload = JSON.parse(reader.result);
-        const n = Object.keys(payload.Primitives || {}).length + Object.keys(payload.Semantic || {}).length;
+        const parsed = JSON.parse(reader.result);
+        const n = Object.keys(parsed.Primitives || {}).length + Object.keys(parsed.Semantic || {}).length;
+        if (!n) {
+          payload = null;
+          run.disabled = true;
+          drop.textContent = `${f.name} has no Primitives/Semantic — this is not dist/figma/tokens.json`;
+          return;
+        }
+        payload = parsed;
         drop.textContent = `${f.name} — ${n} variables ready`;
         run.disabled = false;
       } catch (e) {
