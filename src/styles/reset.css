@@ -12,7 +12,14 @@ html {
 
 body {
   margin: 0;
-  line-height: 1.5;
+
+  /* The body font role governs page text; without this the browser default wins and
+     --iz-font-body-* only applies wherever a component happens to reference it. */
+  font-family: var(--iz-font-body-family);
+  font-size: var(--iz-font-body-size);
+  line-height: var(--iz-font-body-line-height);
+  color: var(--iz-color-text-primary);
+  background-color: var(--iz-color-surface-default);
 }
 
 img,

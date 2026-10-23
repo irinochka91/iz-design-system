@@ -1,0 +1,16 @@
+<!--
+  Fonts for Storybook only. The library does not ship font binaries and does not declare
+  @font-face: a consuming app owns font loading (subsetting, self-hosting, CDN, CSP) — see
+  docs/TOKENS.md § Fonts and ADR-017. This file exists so a design review in Storybook shows
+  the real typefaces instead of the fallback stack.
+
+  Archivo is requested at wdth 112 per specs/HANDOFF.md. A variable font still renders at its
+  default width unless the element sets font-variation-settings: 'wdth' 112 — the display and
+  figure roles must set it (and font-variant-numeric: tabular-nums for figures).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,400;112,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+/>

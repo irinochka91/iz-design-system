@@ -82,6 +82,23 @@ Every `color.text.*` is defined *against* a `color.surface.*`, and `scripts/chec
 - focus ring (`color.border.focus`) against the surfaces it can appear on: 3:1. **Not** against the component it outlines: the ring is drawn with a 2 px offset, so a band of surface always separates the two (ADR-012).
 - disabled states are exempt from contrast (WCAG) but must still be distinguishable; we keep ≥ 3:1 anyway where possible.
 
+## Fonts
+
+**The library names typefaces; it does not ship or load them.** `font.family.*` are `fontFamily` tokens with a real fallback stack, and nothing in `src/` declares `@font-face` (ADR-017). A consuming app loads the faces it needs — it owns subsetting, self-hosting vs CDN, `font-display` and its own CSP.
+
+What a consumer must load for each theme:
+
+| Theme | Role | Face | Weights / axes |
+|---|---|---|---|
+| base (`light`, `dark`, `hc-*`) | body, label, control, heading | Inter | 400, 500, 600 |
+| `linen`, `linen-dark` | body, title, heading, meta | Space Grotesk | 400, 500, 600 |
+| `linen`, `linen-dark` | label, code | IBM Plex Mono | 400, 500 |
+| `linen`, `linen-dark` | display, figure, figure-lg | Archivo | 400, 700 at **wdth 112** |
+
+Two things a variable font needs that a token cannot express: `font-variation-settings: 'wdth' 112` wherever Archivo is used (a variable font renders at its default width otherwise), and `font-variant-numeric: tabular-nums` on the figure roles so counts do not jitter as they change. The component that first uses the display role sets both.
+
+Storybook loads all four faces from Google Fonts via `.storybook/preview-head.html`, so a design review shows the real typography. That file is Storybook-only and is not part of the library.
+
 ## Figma mirror
 
 Figma Variables mirror the tiers one-to-one:

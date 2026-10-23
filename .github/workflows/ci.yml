@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A superseded run is cancelled: the only result that matters is the latest commit's.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # The Storybook test project needs a browser. Locally it uses the installed Google Chrome
+      # (Playwright ships no Chromium for macOS 12 — docs/CAPABILITIES.md); in CI we install
+      # Chromium and point the documented override at it.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Export PW_CHROMIUM_PATH
+        run: echo "PW_CHROMIUM_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())")" >> "$GITHUB_ENV"
+
+      # Each gate is its own step, so a red run names what failed instead of "check failed".
+      - name: Lint (JS/TS) — no raw colours or spacing
+        run: npm run lint
+      - name: Lint (CSS) — no raw units, hex or !important
+        run: npm run lint:css
+      - name: Types
+        run: npm run type-check
+
+      - name: Tokens — aliases, cycles, shapes, tier rules
+        run: npm run tokens:validate
+      - name: Tokens — build
+        run: npm run build:tokens
+      - name: Generated token output is current
+        # docs/TOKENS.md: generated files are committed and must match a fresh build.
+        # dist/ is excluded — it is generated and never committed (ADR-016).
+        run: |
+          git diff --exit-code -- src/styles/design-tokens.css src/styles/tokens.d.ts docs/specs/tokens.dtcg.json \
+            || { echo "::error::Committed token output differs from a fresh build. Run 'npm run build:tokens' and commit the result."; exit 1; }
+
+      - name: Contrast — every documented pair, every theme
+        run: npm run check:contrast
+      - name: Component specs
+        run: npm run check:specs
+
+      - name: Tests (unit + Storybook stories with axe)
+        run: npm test
+
+      - name: Library build and published paths
+        run: npm run build
+
+      - name: Upload failure artefacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-artefacts
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 7
