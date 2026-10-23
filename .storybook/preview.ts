@@ -1,23 +1,29 @@
 import type { Preview } from '@storybook/react-vite';
 import '../src/styles/index.css';
 import './storybook.css';
+import { themes as THEME_DEFS } from '../tokens/themes.config.ts';
 
-// Theme toolbar: sets data-theme on <html>, exactly as a consuming app would (docs/TOKENS.md).
-const THEMES = ['light', 'dark', 'hc-light', 'hc-dark'] as const;
+// Theme toolbar: driven by tokens/themes.config.ts, so a theme added there shows up here with no
+// edit. Sets data-theme AND data-iz-theme on <html>, exactly as a consuming app would (ADR-011).
+const THEME_IDS = THEME_DEFS.map((t) => t.id);
+const ATTRIBUTES = ['data-theme', 'data-iz-theme'] as const;
 
 const preview: Preview = {
   globalTypes: {
     theme: {
-      description: 'Colour theme (data-theme attribute)',
-      toolbar: { title: 'Theme', icon: 'paintbrush', items: [...THEMES], dynamicTitle: true },
+      description: 'Colour theme (data-theme / data-iz-theme attribute)',
+      toolbar: { title: 'Theme', icon: 'paintbrush', items: THEME_IDS, dynamicTitle: true },
     },
   },
   initialGlobals: { theme: 'light' },
   decorators: [
     (Story, { globals }) => {
-      const theme = (globals.theme as string) || 'light';
-      if (theme === 'light') document.documentElement.removeAttribute('data-theme');
-      else document.documentElement.setAttribute('data-theme', theme);
+      const id = (globals.theme as string) || 'light';
+      const attribute = THEME_DEFS.find((t) => t.id === id)?.attribute ?? null;
+      for (const name of ATTRIBUTES) {
+        if (attribute === null) document.documentElement.removeAttribute(name);
+        else document.documentElement.setAttribute(name, attribute);
+      }
       return Story();
     },
   ],

@@ -111,10 +111,10 @@ npm run check:contrast # every documented pair, every theme
 | `src/styles/design-tokens.css` | the package: `:root` base, one block per theme, OS bridges, reduced motion |
 | `src/styles/tokens.d.ts`, `dist/ts/tokens.d.ts` | `TokenName` and `ThemeId` unions for editors and `check:specs` |
 | `dist/css/<theme>.css` | one standalone file per theme, usable alone or via the attribute |
-| `dist/figma/tokens.json` | Figma Variables mirror: `Primitives` (no modes) + `Semantic` (one mode per theme, aliases preserved) |
+| `dist/figma/tokens.json` | Figma Variables mirror: `Primitives` (159, no modes) + `Semantic` (118, one mode per theme, aliases preserved). Collections and modes live in `$extensions["design.iz.figma"]`; the CSS alias layer is excluded on purpose (ADR-015) |
 | `docs/specs/tokens.dtcg.json` | resolved values per theme, for MCP `list_tokens` and Claude Design |
 
-Each theme block contains exactly the tokens that theme's extends-chain overrides — colour for most themes, colour plus type for linen.
+Each theme block contains exactly the tokens that theme's extends-chain overrides — colour for most themes, colour plus type for linen. Alias-layer tokens are the exception: they are declared once on `:root` as `var(--iz-<canonical>)` so they follow their target into every theme (ADR-014).
 
 Generated files are committed (so consumers and the MCP server don't need a build step) but never hand-edited; CI fails if the generated output differs from a fresh build.
 
