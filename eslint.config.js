@@ -30,4 +30,10 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     },
   },
+  {
+    // Figma plugin sandbox: `figma` and `__html__` are injected globals, and the UI half runs in an
+    // iframe. Not part of the library build — see tools/figma-plugin/README.md.
+    files: ['tools/figma-plugin/**/*.js'],
+    languageOptions: { globals: { figma: 'readonly', __html__: 'readonly' } },
+  },
 );

@@ -1,0 +1,13 @@
+{
+  "name": "IZ tokens → Variables",
+  "id": "iz-design-system-tokens-to-variables",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": ["none"],
+    "reasoning": "The plugin reads a file you choose from your own disk. It never sends anything anywhere."
+  }
+}

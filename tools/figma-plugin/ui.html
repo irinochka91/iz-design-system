@@ -1,0 +1,58 @@
+<style>
+  body { margin: 0; padding: 14px; font: 12px/1.5 Inter, system-ui, sans-serif; color: #1d1e24; }
+  h1 { margin: 0 0 4px; font-size: 13px; }
+  p { margin: 0 0 10px; color: #5e6068; }
+  code { background: #f0ede6; padding: 1px 4px; border-radius: 3px; }
+  .drop { border: 1px dashed #8a8578; border-radius: 8px; padding: 18px; text-align: center; color: #5e6068; cursor: pointer; }
+  .drop.over { border-color: #2b3fbf; color: #2b3fbf; }
+  button { margin-top: 10px; width: 100%; padding: 9px; border: 0; border-radius: 8px; background: #2b3fbf; color: #fff; font: inherit; font-weight: 500; cursor: pointer; }
+  button:disabled { background: #e4e0d8; color: #8a8578; cursor: default; }
+  pre { margin: 10px 0 0; max-height: 220px; overflow: auto; background: #f7f5f0; padding: 8px; border-radius: 6px; white-space: pre-wrap; }
+</style>
+
+<h1>IZ tokens → Variables</h1>
+<p>Pick <code>dist/figma/tokens.json</code> (run <code>npm run build</code> first). Nothing leaves your machine.</p>
+
+<div class="drop" id="drop">Drop the file here, or click to choose</div>
+<input id="file" type="file" accept="application/json,.json" hidden />
+<button id="run" disabled>Import</button>
+<pre id="log" hidden></pre>
+
+<script>
+  const drop = document.getElementById('drop');
+  const file = document.getElementById('file');
+  const run = document.getElementById('run');
+  const log = document.getElementById('log');
+  let payload = null;
+
+  const load = (f) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        payload = JSON.parse(reader.result);
+        const n = Object.keys(payload.Primitives || {}).length + Object.keys(payload.Semantic || {}).length;
+        drop.textContent = `${f.name} — ${n} variables ready`;
+        run.disabled = false;
+      } catch (e) {
+        drop.textContent = `Not valid JSON: ${e.message}`;
+        run.disabled = true;
+      }
+    };
+    reader.readAsText(f);
+  };
+
+  drop.onclick = () => file.click();
+  file.onchange = () => file.files[0] && load(file.files[0]);
+  drop.ondragover = (e) => { e.preventDefault(); drop.classList.add('over'); };
+  drop.ondragleave = () => drop.classList.remove('over');
+  drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove('over'); if (e.dataTransfer.files[0]) load(e.dataTransfer.files[0]); };
+  run.onclick = () => { run.disabled = true; drop.textContent = 'Importing…'; parent.postMessage({ pluginMessage: { type: 'import', payload } }, '*'); };
+
+  onmessage = (e) => {
+    const msg = e.data.pluginMessage;
+    if (!msg) return;
+    log.hidden = false;
+    log.textContent = msg.report;
+    drop.textContent = msg.ok ? 'Done — check Local variables' : 'Failed, see below';
+  };
+</script>

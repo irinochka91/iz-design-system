@@ -10,6 +10,18 @@ Create a Figma file **IZ Design System**. Pages, in this order: `Start here`, `F
 
 ## 2. Variable collections (mirror the token tiers)
 
+**Do this with the plugin, not by hand.** `tools/figma-plugin/` creates both collections, all six
+modes, 271 variables and 696 alias assignments from `dist/figma/tokens.json` in one run — see
+`tools/figma-plugin/README.md`. Re-running it is also how a later token change reaches Figma.
+
+Entering 271 variables by hand takes hours and gets an alias wrong somewhere; the plugin's report
+tells you if any alias failed to resolve. The manual steps below are the specification of what
+*should* exist — use them to review the result, or as the fallback if the plugin cannot run.
+
+Six tokens the plugin cannot import, because Figma has no variable type for a curve: `curve/standard`,
+`curve/emphasized`, `curve/out`, `curve/in-out`, `easing/standard`, `easing/emphasized`. Set easing by
+hand on prototype interactions. The plugin lists exactly these six as skipped.
+
 Open *Local variables* (right panel → Variables).
 
 **Collection `Primitives`** — no modes. **159 variables.** Everything under `Primitives` in `dist/figma/tokens.json`, named exactly like the token paths with `/` instead of `.`.
