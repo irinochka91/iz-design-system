@@ -1,3 +1,6 @@
+Goal by 28 Oct: Phase 1 done (tokens, linen theme, contrast check, lint).
+Goal by 8 Nov: portfolio case on Phase A. Product with testers — after the offer.
+
 # IZ Design System
 
 An accessible, token-first, agent-ready design system. Small on purpose: every component is built by hand, end to end, so the system is understood from the inside — and so AI agents (Claude Code, Codex, Claude Design) can consume it without guessing.

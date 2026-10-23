@@ -1,0 +1,258 @@
+{
+  "$description": "Input to scripts/check-contrast.ts. `pairs` are the fg/bg combinations that no naming convention implies; `onPairs` map each color.fg.on-* token to the background roles it is the partner for. The script FAILS if a bg role has no onPairs entry, so adding a background without its foreground cannot pass. kind: text = 4.5:1 (7:1 on an AAA theme), ui = 3:1, exempt = reported, never fails (WCAG exempts disabled controls). The focus ring is checked against the surfaces only, never against the component it outlines: the handoff specifies a 2 px outline with a 2 px offset, so a 2 px band of surface always separates ring and component and there is no ring/component adjacency to measure. If the ring ever sits flush on a component, the pair must come back and the ring needs a contrasting inner halo.",
+  "pairs": [
+    {
+      "fg": "color.text.secondary",
+      "bg": "color.surface.default",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.muted",
+      "bg": "color.surface.default",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.secondary",
+      "bg": "color.surface.raised",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.muted",
+      "bg": "color.surface.raised",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.secondary",
+      "bg": "color.surface.sunken",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.muted",
+      "bg": "color.surface.sunken",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.link",
+      "bg": "color.surface.default",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.danger",
+      "bg": "color.surface.default",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.link",
+      "bg": "color.surface.raised",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.danger",
+      "bg": "color.surface.raised",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.success",
+      "bg": "color.surface.default",
+      "kind": "text"
+    },
+    {
+      "fg": "color.text.warning",
+      "bg": "color.surface.default",
+      "kind": "text"
+    },
+    {
+      "fg": "color.action.primary.fg",
+      "bg": "color.surface.default",
+      "kind": "text"
+    },
+    {
+      "fg": "color.action.primary.fg",
+      "bg": "color.surface.raised",
+      "kind": "text"
+    },
+    {
+      "fg": "color.action.primary.bg",
+      "bg": "color.surface.default",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.action.secondary.border",
+      "bg": "color.surface.default",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.action.secondary.border",
+      "bg": "color.surface.raised",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.border.strong",
+      "bg": "color.surface.default",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.border.strong",
+      "bg": "color.surface.raised",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.border.focus",
+      "bg": "color.surface.default",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.border.focus",
+      "bg": "color.surface.raised",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.border.focus",
+      "bg": "color.surface.sunken",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.border.danger",
+      "bg": "color.surface.default",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.status.info.border",
+      "bg": "color.status.info.bg",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.status.success.border",
+      "bg": "color.status.success.bg",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.status.warning.border",
+      "bg": "color.status.warning.bg",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.status.danger.border",
+      "bg": "color.status.danger.bg",
+      "kind": "ui"
+    },
+    {
+      "fg": "color.brand.bg",
+      "bg": "color.surface.default",
+      "kind": "ui"
+    }
+  ],
+  "onPairs": [
+    {
+      "fg": "color.fg.on-surface",
+      "bgs": [
+        "color.surface.default"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-surface-raised",
+      "bgs": [
+        "color.surface.raised"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-surface-sunken",
+      "bgs": [
+        "color.surface.sunken"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-surface-overlay",
+      "bgs": [
+        "color.surface.overlay"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-surface-inverse",
+      "bgs": [
+        "color.surface.inverse"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-accent",
+      "bgs": [
+        "color.action.primary.bg",
+        "color.action.primary.bg-hover",
+        "color.action.primary.bg-active"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-accent-subtle",
+      "bgs": [
+        "color.action.primary.bg-subtle"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-secondary",
+      "bgs": [
+        "color.action.secondary.bg",
+        "color.action.secondary.bg-hover",
+        "color.action.secondary.bg-active"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-danger",
+      "bgs": [
+        "color.action.danger.bg",
+        "color.action.danger.bg-hover",
+        "color.action.danger.bg-active"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-disabled",
+      "bgs": [
+        "color.action.disabled.bg"
+      ],
+      "kind": "exempt"
+    },
+    {
+      "fg": "color.fg.on-status-info",
+      "bgs": [
+        "color.status.info.bg"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-status-success",
+      "bgs": [
+        "color.status.success.bg"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-status-warning",
+      "bgs": [
+        "color.status.warning.bg"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-status-danger",
+      "bgs": [
+        "color.status.danger.bg"
+      ],
+      "kind": "text"
+    },
+    {
+      "fg": "color.fg.on-brand",
+      "bgs": [
+        "color.brand.bg"
+      ],
+      "kind": "text"
+    }
+  ]
+}

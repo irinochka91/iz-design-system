@@ -1,0 +1,60 @@
+{
+  "$description": "HANDOFF token names that differ from docs/TOKENS.md, kept as aliases so pattern code written against the handoff compiles. Canonical names stay the source of truth; themes override the canonical token only. Full table: docs/decisions.md ADR-009.",
+  "$type": "color",
+  "color": {
+    "bg": {
+      "page": {
+        "$type": "color",
+        "$value": "{color.surface.default}",
+        "$description": "HANDOFF --iz-color-bg-page"
+      },
+      "surface": {
+        "$type": "color",
+        "$value": "{color.surface.raised}",
+        "$description": "HANDOFF --iz-color-bg-surface"
+      },
+      "surface-raised": {
+        "$type": "color",
+        "$value": "{color.surface.overlay}",
+        "$description": "HANDOFF --iz-color-bg-surface-raised"
+      },
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.surface.sunken}",
+        "$description": "HANDOFF --iz-color-bg-sunken"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.action.primary.bg}",
+        "$description": "HANDOFF --iz-color-bg-accent"
+      },
+      "accent-hover": {
+        "$type": "color",
+        "$value": "{color.action.primary.bg-hover}",
+        "$description": "HANDOFF --iz-color-bg-accent-hover"
+      },
+      "accent-active": {
+        "$type": "color",
+        "$value": "{color.action.primary.bg-active}",
+        "$description": "HANDOFF --iz-color-bg-accent-active"
+      },
+      "accent-subtle": {
+        "$type": "color",
+        "$value": "{color.action.primary.bg-subtle}",
+        "$description": "HANDOFF --iz-color-bg-accent-subtle"
+      }
+    },
+    "text": {
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.text.secondary}",
+        "$description": "HANDOFF --iz-color-text-subtle"
+      },
+      "accent": {
+        "$type": "color",
+        "$value": "{color.text.link}",
+        "$description": "HANDOFF --iz-color-text-accent"
+      }
+    }
+  }
+}

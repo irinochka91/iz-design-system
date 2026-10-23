@@ -1,0 +1,187 @@
+{
+  "$description": "Semantic typography roles. display/figure-lg/figure/title/meta/code come from HANDOFF § Linen theme tokens (Archivo display, Space Grotesk UI, IBM Plex Mono labels); body/label/heading keep the base scale here and take the HANDOFF values in tokens/themes/linen.json.",
+  "font": {
+    "body": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.sans}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.300}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.normal}"
+      }
+    },
+    "label": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.200}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.medium}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.tight}"
+      },
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.sans}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{tracking.wide-8}",
+        "$description": "HANDOFF label +8%, caps"
+      }
+    },
+    "control": {
+      "$description": "Text inside buttons and inputs",
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.300}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.medium}"
+      }
+    },
+    "heading": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.700}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.tight}"
+      },
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.sans}"
+      }
+    },
+    "display": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.archivo}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.1000}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.100}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.bold}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{tracking.tight-2}"
+      }
+    },
+    "figure-lg": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.archivo}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.850}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.100}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.bold}"
+      }
+    },
+    "figure": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.archivo}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.550}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.109}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.bold}"
+      }
+    },
+    "title": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.grotesk}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.250}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.133}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      }
+    },
+    "meta": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.grotesk}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.150}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.138}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      }
+    },
+    "code": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.plex-mono}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.100}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.133}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "$description": "Foreground partner for every background role (HANDOFF § Design system architecture: \"every background role has a matching foreground\"). Each aliases the canonical fg token, so a theme overrides ONE place. Not overridable by themes — see scripts/tokens-validate.mjs.",
+  "$type": "color",
+  "color": {
+    "fg": {
+      "on-surface": {
+        "$type": "color",
+        "$value": "{color.text.primary}",
+        "$description": "on color.surface.default"
+      },
+      "on-surface-raised": {
+        "$type": "color",
+        "$value": "{color.text.primary}",
+        "$description": "on color.surface.raised"
+      },
+      "on-surface-sunken": {
+        "$type": "color",
+        "$value": "{color.text.primary}",
+        "$description": "on color.surface.sunken"
+      },
+      "on-surface-overlay": {
+        "$type": "color",
+        "$value": "{color.text.primary}",
+        "$description": "on color.surface.overlay"
+      },
+      "on-surface-inverse": {
+        "$type": "color",
+        "$value": "{color.text.inverse}",
+        "$description": "on color.surface.inverse"
+      },
+      "on-accent": {
+        "$type": "color",
+        "$value": "{color.text.on-action}",
+        "$description": "on color.action.primary.bg / -hover / -active"
+      },
+      "on-accent-subtle": {
+        "$type": "color",
+        "$value": "{color.action.primary.fg}",
+        "$description": "on color.action.primary.bg-subtle"
+      },
+      "on-secondary": {
+        "$type": "color",
+        "$value": "{color.action.secondary.fg}",
+        "$description": "on color.action.secondary.bg / -hover / -active"
+      },
+      "on-danger": {
+        "$type": "color",
+        "$value": "{color.text.on-action}",
+        "$description": "on color.action.danger.bg / -hover / -active"
+      },
+      "on-disabled": {
+        "$type": "color",
+        "$value": "{color.action.disabled.fg}",
+        "$description": "on color.action.disabled.bg — exempt from contrast"
+      },
+      "on-status-info": {
+        "$type": "color",
+        "$value": "{color.status.info.fg}",
+        "$description": "on color.status.info.bg"
+      },
+      "on-status-success": {
+        "$type": "color",
+        "$value": "{color.status.success.fg}",
+        "$description": "on color.status.success.bg"
+      },
+      "on-status-warning": {
+        "$type": "color",
+        "$value": "{color.status.warning.fg}",
+        "$description": "on color.status.warning.bg"
+      },
+      "on-status-danger": {
+        "$type": "color",
+        "$value": "{color.status.danger.fg}",
+        "$description": "on color.status.danger.bg"
+      },
+      "on-brand": {
+        "$type": "color",
+        "$value": "{color.text.on-action}",
+        "$description": "on color.brand.bg"
+      }
+    }
+  }
+}

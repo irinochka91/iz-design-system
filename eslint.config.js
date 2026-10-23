@@ -4,6 +4,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import reactHooks from 'eslint-plugin-react-hooks';
 import storybook from 'eslint-plugin-storybook';
 import globals from 'globals';
+import iz from './tools/eslint-plugin-iz/index.js';
 
 export default tseslint.config(
   { ignores: ['dist', 'storybook-static', 'node_modules', 'playwright-report', 'test-results', 'coverage'] },
@@ -15,7 +16,11 @@ export default tseslint.config(
   {
     files: ['**/*.{ts,tsx,js,mjs}'],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
+    plugins: { iz },
     rules: {
+      // Tokens, never raw values (specs/HANDOFF.md rule 4). CSS is covered by stylelint.
+      'iz/no-raw-colors': 'error',
+      'iz/no-raw-spacing': 'error',
       // Design-system rules (see docs/CONTRIBUTING.md)
       'no-restricted-syntax': [
         'error',

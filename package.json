@@ -41,10 +41,12 @@
     "test:e2e": "playwright test",
     "tokens:build": "node scripts/tokens-build.mjs",
     "tokens:validate": "node scripts/tokens-validate.mjs",
-    "check:contrast": "node scripts/check-contrast.mjs",
+    "build:tokens": "node scripts/tokens-validate.mjs && node scripts/tokens-build.mjs",
+    "check:contrast": "node scripts/check-contrast.ts",
     "check:specs": "node scripts/check-specs.mjs",
-    "check": "npm run lint && npm run lint:css && npm run type-check && npm run tokens:validate && npm run check:contrast && npm run check:specs && npm run test",
-    "changeset": "changeset"
+    "check": "npm run lint && npm run lint:css && npm run type-check && npm run tokens:validate && npm run tokens:build && npm run check:contrast && npm run check:specs && npm run test",
+    "changeset": "changeset",
+    "tokens:sync": "echo '[tokens-sync] Phase 2: diff tokens/figma-export/*.json against tokens/' && exit 0"
   },
   "peerDependencies": {
     "react": "^19.0.0",

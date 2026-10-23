@@ -18,7 +18,7 @@ export default defineConfig({
         test: {
           name: 'unit',
           environment: 'jsdom',
-          include: ['src/**/*.test.tsx'],
+          include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
           setupFiles: ['./src/test/setup.ts'],
         },
       },
@@ -30,13 +30,16 @@ export default defineConfig({
           browser: {
             enabled: true,
             headless: true,
-            // PW_CHROMIUM_PATH is only for environments with a preinstalled Chromium; locally run `npx playwright install chromium`.
-            provider: playwright(
-              process.env.PW_CHROMIUM_PATH ? { launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } } : {},
-            ),
+            // Browser choice (see docs/CAPABILITIES.md):
+            //  - default: the installed Google Chrome (`channel: 'chrome'`) — Playwright no longer ships Chromium for macOS 12.
+            //  - PW_CHROMIUM_PATH=<path>: a specific Chromium binary (used in the cloud workspace).
+            provider: playwright({
+              launchOptions: process.env.PW_CHROMIUM_PATH
+                ? { executablePath: process.env.PW_CHROMIUM_PATH }
+                : { channel: 'chrome' },
+            }),
             instances: [{ browser: 'chromium' }],
           },
-          setupFiles: ['./.storybook/vitest.setup.ts'],
         },
       },
     ],

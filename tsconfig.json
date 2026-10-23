@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
@@ -15,9 +19,26 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "noEmit": true,
-    "types": ["vitest/globals", "@testing-library/jest-dom"],
-    "paths": { "@iz/design-system": ["./src/index.ts"] },
-    "baseUrl": "."
+    "types": [
+      "vitest/globals",
+      "@testing-library/jest-dom"
+    ],
+    "paths": {
+      "@iz/design-system": [
+        "./src/index.ts"
+      ]
+    },
+    "baseUrl": ".",
+    "allowImportingTsExtensions": true
   },
-  "include": ["src", ".storybook", "vite.config.ts", "vitest.config.ts", "playwright.config.ts", "vitest.shims.d.ts"]
+  "include": [
+    "src",
+    ".storybook",
+    "scripts",
+    "tokens/themes.config.ts",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    "vitest.shims.d.ts"
+  ]
 }

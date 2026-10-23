@@ -1,0 +1,106 @@
+{
+  "$description": "HANDOFF § Linen theme tokens — Space (4 px base, ×100 names), Radius, Motion. Aliases of existing primitives; the scaffold roles (space.inset.*, radius.sm/md/lg, duration.fast/normal/slow) are untouched. See docs/decisions.md ADR-009.",
+  "space": {
+    "100": {
+      "$type": "dimension",
+      "$value": "{space.1}",
+      "$description": "HANDOFF --iz-space-100"
+    },
+    "200": {
+      "$type": "dimension",
+      "$value": "{space.2}",
+      "$description": "HANDOFF --iz-space-200"
+    },
+    "300": {
+      "$type": "dimension",
+      "$value": "{space.3}",
+      "$description": "HANDOFF --iz-space-300"
+    },
+    "400": {
+      "$type": "dimension",
+      "$value": "{space.4}",
+      "$description": "HANDOFF --iz-space-400"
+    },
+    "500": {
+      "$type": "dimension",
+      "$value": "{space.5}",
+      "$description": "HANDOFF --iz-space-500"
+    },
+    "600": {
+      "$type": "dimension",
+      "$value": "{space.6}",
+      "$description": "HANDOFF --iz-space-600"
+    },
+    "800": {
+      "$type": "dimension",
+      "$value": "{space.8}",
+      "$description": "HANDOFF --iz-space-800"
+    },
+    "1000": {
+      "$type": "dimension",
+      "$value": "{space.10}",
+      "$description": "HANDOFF --iz-space-1000"
+    }
+  },
+  "radius": {
+    "100": {
+      "$type": "dimension",
+      "$value": "{radius-scale.1}",
+      "$description": "HANDOFF 4 px — kbd, mini chips"
+    },
+    "200": {
+      "$type": "dimension",
+      "$value": "{radius-scale.1-5}",
+      "$description": "HANDOFF 6 px — nav items, small buttons"
+    },
+    "300": {
+      "$type": "dimension",
+      "$value": "{radius-scale.2}",
+      "$description": "HANDOFF 8 px — buttons, inputs"
+    },
+    "400": {
+      "$type": "dimension",
+      "$value": "{radius-scale.3}",
+      "$description": "HANDOFF 12 px — cards"
+    },
+    "500": {
+      "$type": "dimension",
+      "$value": "{radius-scale.3-5}",
+      "$description": "HANDOFF 14 px — triage card"
+    }
+  },
+  "motion": {
+    "duration": {
+      "100": {
+        "$type": "duration",
+        "$value": "{duration.120}",
+        "$description": "HANDOFF 120 ms — hover, chip"
+      },
+      "200": {
+        "$type": "duration",
+        "$value": "{duration.200}",
+        "$description": "HANDOFF 200 ms — fade, translate"
+      },
+      "300": {
+        "$type": "duration",
+        "$value": "{duration.320}",
+        "$description": "HANDOFF 320 ms — row collapse"
+      },
+      "500": {
+        "$type": "duration",
+        "$value": "{duration.700}",
+        "$description": "HANDOFF 700 ms — goal met"
+      }
+    },
+    "ease-out": {
+      "$type": "cubicBezier",
+      "$value": "{curve.out}",
+      "$description": "HANDOFF cubic-bezier(.2,.8,.2,1)"
+    },
+    "ease-in-out": {
+      "$type": "cubicBezier",
+      "$value": "{curve.in-out}",
+      "$description": "HANDOFF cubic-bezier(.65,0,.35,1)"
+    }
+  }
+}

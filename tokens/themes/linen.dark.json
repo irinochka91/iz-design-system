@@ -1,0 +1,268 @@
+{
+  "$description": "Linen dark mode — extends linen (tokens/themes.config.ts). Colour only; type is inherited.",
+  "color": {
+    "surface": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.ink.950}",
+        "$description": "H bg-page"
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "{color.ink.850}",
+        "$description": "H bg-surface"
+      },
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.ink.990}",
+        "$description": "H bg-sunken"
+      },
+      "overlay": {
+        "$type": "color",
+        "$value": "{color.ink.800}",
+        "$description": "H bg-surface-raised"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.ink.50}",
+        "$description": "D"
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.ink.50}",
+        "$description": "H text 15.4:1"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.ink.300}",
+        "$description": "H text-subtle 7.5:1"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.ink.300}",
+        "$description": "D"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.ink.500}",
+        "$description": "D"
+      },
+      "on-action": {
+        "$type": "color",
+        "$value": "{color.ink.950}",
+        "$description": "H fg-on-accent 7.5:1"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.ink.950}",
+        "$description": "D"
+      },
+      "link": {
+        "$type": "color",
+        "$value": "{color.ultramarine.300}",
+        "$description": "H text-accent 7.5:1"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.crimson.300}",
+        "$description": "H status-critical 7.6:1"
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{color.jade.300}",
+        "$description": "H status-success 9.6:1"
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{color.ochre.300}",
+        "$description": "H status-warning 9.4:1"
+      }
+    },
+    "action": {
+      "primary": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ultramarine.300}",
+          "$description": "H bg-accent 7.5:1"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.ultramarine.200}",
+          "$description": "H"
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": "{color.ultramarine.150}",
+          "$description": "H"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.ultramarine.300}",
+          "$description": "H"
+        },
+        "bg-subtle": {
+          "$type": "color",
+          "$value": "{color.ultramarine.900}",
+          "$description": "H bg-accent-subtle"
+        }
+      },
+      "secondary": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ink.850}",
+          "$description": "D"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.ink.800}",
+          "$description": "D"
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": "{color.ink.700}",
+          "$description": "D"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.ink.500}",
+          "$description": "H border-strong 3.8:1"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.ink.50}",
+          "$description": "D"
+        }
+      },
+      "danger": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.crimson.300}",
+          "$description": "H"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.crimson.400}",
+          "$description": "D"
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": "{color.crimson.500}",
+          "$description": "D"
+        }
+      },
+      "disabled": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ink.700}",
+          "$description": "D"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.ink.500}",
+          "$description": "D"
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.ink.700}",
+        "$description": "H border"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.ink.500}",
+        "$description": "H border-strong 3.8:1"
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{color.ultramarine.300}",
+        "$description": "H border-focus"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.crimson.300}",
+        "$description": "D"
+      }
+    },
+    "status": {
+      "info": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ultramarine.900}",
+          "$description": "D"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.ultramarine.300}",
+          "$description": "D"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.ultramarine.300}",
+          "$description": "D"
+        }
+      },
+      "success": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.jade.900}",
+          "$description": "D"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.jade.300}",
+          "$description": "D"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.jade.300}",
+          "$description": "D"
+        }
+      },
+      "warning": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ochre.900}",
+          "$description": "D"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.ochre.300}",
+          "$description": "D"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.ochre.300}",
+          "$description": "D"
+        }
+      },
+      "danger": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.crimson.900}",
+          "$description": "D"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.crimson.300}",
+          "$description": "D"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.crimson.300}",
+          "$description": "D"
+        }
+      }
+    },
+    "brand": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.oxblood.300}",
+        "$description": "H brand 7.8:1"
+      }
+    }
+  }
+}

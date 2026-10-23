@@ -1,0 +1,234 @@
+{
+  "$description": "Primitive typography.",
+  "font": {
+    "family": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": [
+          "Inter",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif"
+        ]
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": [
+          "JetBrains Mono",
+          "SFMono-Regular",
+          "Menlo",
+          "monospace"
+        ]
+      },
+      "grotesk": {
+        "$value": [
+          "Space Grotesk",
+          "Inter",
+          "system-ui",
+          "sans-serif"
+        ],
+        "$description": "HANDOFF UI face",
+        "$type": "fontFamily"
+      },
+      "archivo": {
+        "$value": [
+          "Archivo",
+          "Archivo Expanded",
+          "Inter",
+          "system-ui",
+          "sans-serif"
+        ],
+        "$description": "HANDOFF display face (wdth 112, wght 700)",
+        "$type": "fontFamily"
+      },
+      "plex-mono": {
+        "$value": [
+          "IBM Plex Mono",
+          "JetBrains Mono",
+          "SFMono-Regular",
+          "monospace"
+        ],
+        "$description": "HANDOFF label/count/shortcut face",
+        "$type": "fontFamily"
+      }
+    },
+    "weight": {
+      "regular": {
+        "$type": "fontWeight",
+        "$value": 400
+      },
+      "medium": {
+        "$type": "fontWeight",
+        "$value": 500
+      },
+      "semibold": {
+        "$type": "fontWeight",
+        "$value": 600
+      },
+      "bold": {
+        "$value": 700,
+        "$description": "HANDOFF Archivo 700",
+        "$type": "fontWeight"
+      }
+    },
+    "size": {
+      "50": {
+        "$value": {
+          "value": 0.6875,
+          "unit": "rem"
+        },
+        "$description": "11 px — HANDOFF font-label",
+        "$type": "dimension"
+      },
+      "100": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        }
+      },
+      "150": {
+        "$value": {
+          "value": 0.8125,
+          "unit": "rem"
+        },
+        "$description": "13 px — HANDOFF font-meta",
+        "$type": "dimension"
+      },
+      "200": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.875,
+          "unit": "rem"
+        }
+      },
+      "250": {
+        "$value": {
+          "value": 0.9375,
+          "unit": "rem"
+        },
+        "$description": "15 px — HANDOFF font-body / font-title",
+        "$type": "dimension"
+      },
+      "300": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        }
+      },
+      "400": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.125,
+          "unit": "rem"
+        }
+      },
+      "500": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.25,
+          "unit": "rem"
+        }
+      },
+      "550": {
+        "$value": {
+          "value": 1.375,
+          "unit": "rem"
+        },
+        "$description": "22 px — HANDOFF font-figure",
+        "$type": "dimension"
+      },
+      "600": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        }
+      },
+      "700": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.875,
+          "unit": "rem"
+        }
+      },
+      "800": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2.25,
+          "unit": "rem"
+        }
+      },
+      "850": {
+        "$value": {
+          "value": 2.5,
+          "unit": "rem"
+        },
+        "$description": "40 px — HANDOFF font-figure-lg",
+        "$type": "dimension"
+      },
+      "900": {
+        "$type": "dimension",
+        "$value": {
+          "value": 3,
+          "unit": "rem"
+        }
+      },
+      "1000": {
+        "$value": {
+          "value": 3.5,
+          "unit": "rem"
+        },
+        "$description": "56 px — HANDOFF font-display",
+        "$type": "dimension"
+      }
+    }
+  },
+  "line-height": {
+    "100": {
+      "$type": "number",
+      "$value": 1,
+      "$description": "56/56 display, 40/40 figure-lg"
+    },
+    "109": {
+      "$type": "number",
+      "$value": 1.0909,
+      "$description": "22/24 figure"
+    },
+    "133": {
+      "$type": "number",
+      "$value": 1.3333,
+      "$description": "18/24 heading, 15/20 title, 12/16 code"
+    },
+    "138": {
+      "$type": "number",
+      "$value": 1.3846,
+      "$description": "13/18 meta"
+    },
+    "145": {
+      "$type": "number",
+      "$value": 1.4545,
+      "$description": "11/16 label"
+    },
+    "147": {
+      "$type": "number",
+      "$value": 1.4667,
+      "$description": "15/22 body"
+    },
+    "tight": {
+      "$type": "number",
+      "$value": 1.2
+    },
+    "normal": {
+      "$type": "number",
+      "$value": 1.5
+    },
+    "loose": {
+      "$type": "number",
+      "$value": 1.7
+    }
+  }
+}

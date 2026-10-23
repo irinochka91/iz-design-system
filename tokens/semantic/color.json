@@ -1,0 +1,243 @@
+{
+  "$description": "Semantic colour roles (light theme = base). Components consume ONLY these. Every value is an alias to a primitive.",
+  "color": {
+    "surface": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "Page background"
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Cards, panels"
+      },
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.neutral.100}",
+        "$description": "Wells, table stripes"
+      },
+      "overlay": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "Dialogs, popovers"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.neutral.900}",
+        "$description": "Tooltips, toasts"
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.neutral.900}",
+        "$description": "Body text on surface.*"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.600}",
+        "$description": "Supporting text, ≥ 4.5:1"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.neutral.500}",
+        "$description": "Placeholders, meta — still ≥ 4.5:1"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.400}",
+        "$description": "Disabled controls (exempt from contrast, kept ≥ 3:1 where possible)"
+      },
+      "on-action": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "Text on action.primary.bg / action.danger.bg"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.neutral.50}",
+        "$description": "Text on surface.inverse"
+      },
+      "link": {
+        "$type": "color",
+        "$value": "{color.blue.700}",
+        "$description": "Links and ghost/tertiary actions"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.700}",
+        "$description": "Error messages"
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{color.green.700}"
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{color.amber.700}"
+      }
+    },
+    "action": {
+      "primary": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.blue.600}",
+          "$description": "Primary button background"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.blue.700}"
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": "{color.blue.800}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.blue.700}",
+          "$description": "Primary colour as text/icon (tertiary/ghost)"
+        },
+        "bg-subtle": {
+          "$type": "color",
+          "$value": "{color.blue.50}",
+          "$description": "Active nav, stage tint — HANDOFF bg-accent-subtle"
+        }
+      },
+      "secondary": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.white}"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.neutral.100}"
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": "{color.neutral.200}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.neutral.500}",
+          "$description": "≥ 3:1 against surface — the button boundary"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.neutral.900}",
+          "$description": "Label on a secondary button"
+        }
+      },
+      "danger": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.red.600}"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.red.700}"
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": "{color.red.800}"
+        }
+      },
+      "disabled": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.neutral.200}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.neutral.500}"
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.neutral.300}",
+        "$description": "Decorative separators (no contrast requirement)"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.neutral.500}",
+        "$description": "Input and control boundaries — ≥ 3:1"
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{color.blue.700}",
+        "$description": "Focus ring — ≥ 3:1 against surface AND adjacent colours"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.600}"
+      }
+    },
+    "status": {
+      "info": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.blue.50}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.blue.800}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.blue.600}"
+        }
+      },
+      "success": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.green.50}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.green.800}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.green.600}"
+        }
+      },
+      "warning": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.amber.50}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.amber.800}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.amber.600}"
+        }
+      },
+      "danger": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.red.50}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.red.800}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.red.600}"
+        }
+      }
+    },
+    "brand": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.oxblood.600}",
+        "$description": "iz/design mark ONLY (HANDOFF rule 1) — never a UI accent"
+      }
+    }
+  }
+}

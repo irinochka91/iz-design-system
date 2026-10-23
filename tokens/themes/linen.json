@@ -1,0 +1,318 @@
+{
+  "$description": "Linen theme (light) — specs/HANDOFF.md § Linen theme tokens. $description tags: H = exact handoff value, D = derived (docs/decisions.md ADR-008).",
+  "color": {
+    "surface": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.linen.100}",
+        "$description": "H bg-page"
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "H bg-surface"
+      },
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.linen.200}",
+        "$description": "H bg-sunken"
+      },
+      "overlay": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "H bg-surface-raised (white + border)"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.ink.900}",
+        "$description": "D"
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.ink.900}",
+        "$description": "H text 15.3:1"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.ink.600}",
+        "$description": "H text-subtle 5.8:1"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.ink.600}",
+        "$description": "D — handoff has two text levels"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.linen.500}",
+        "$description": "D"
+      },
+      "on-action": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "H fg-on-accent 8.2:1"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.linen.100}",
+        "$description": "D"
+      },
+      "link": {
+        "$type": "color",
+        "$value": "{color.ultramarine.600}",
+        "$description": "H text-accent 7.5:1"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.crimson.600}",
+        "$description": "H status-critical 6.0:1"
+      },
+      "success": {
+        "$type": "color",
+        "$value": "{color.jade.600}",
+        "$description": "H status-success 4.9:1"
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "{color.ochre.600}",
+        "$description": "H status-warning 5.3:1"
+      }
+    },
+    "action": {
+      "primary": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ultramarine.600}",
+          "$description": "H bg-accent 7.5:1"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.ultramarine.700}",
+          "$description": "H bg-accent-hover"
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": "{color.ultramarine.800}",
+          "$description": "H bg-accent-active"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.ultramarine.600}",
+          "$description": "H text-accent"
+        },
+        "bg-subtle": {
+          "$type": "color",
+          "$value": "{color.ultramarine.100}",
+          "$description": "H bg-accent-subtle"
+        }
+      },
+      "secondary": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.white}",
+          "$description": "D = bg-surface"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.linen.200}",
+          "$description": "D = bg-sunken"
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": "{color.linen.300}",
+          "$description": "D = border"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.linen.500}",
+          "$description": "H border-strong 3.4:1"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.ink.900}",
+          "$description": "D = text"
+        }
+      },
+      "danger": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.crimson.600}",
+          "$description": "H status-critical"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.crimson.700}",
+          "$description": "D half-step darker"
+        },
+        "bg-active": {
+          "$type": "color",
+          "$value": "{color.crimson.800}",
+          "$description": "D two steps darker"
+        }
+      },
+      "disabled": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.linen.300}",
+          "$description": "D"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.linen.500}",
+          "$description": "D"
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.linen.300}",
+        "$description": "H border"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.linen.500}",
+        "$description": "H border-strong 3.4:1"
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{color.ultramarine.600}",
+        "$description": "H border-focus, 2 px outline + 2 px offset"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.crimson.600}",
+        "$description": "D"
+      }
+    },
+    "status": {
+      "info": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ultramarine.100}",
+          "$description": "D"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.ultramarine.800}",
+          "$description": "D"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.ultramarine.600}",
+          "$description": "D"
+        }
+      },
+      "success": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.jade.100}",
+          "$description": "D"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.jade.800}",
+          "$description": "D"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.jade.600}",
+          "$description": "D"
+        }
+      },
+      "warning": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ochre.100}",
+          "$description": "D"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.ochre.700}",
+          "$description": "D"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.ochre.600}",
+          "$description": "D"
+        }
+      },
+      "danger": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.crimson.100}",
+          "$description": "D"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.crimson.700}",
+          "$description": "D"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{color.crimson.600}",
+          "$description": "D"
+        }
+      }
+    },
+    "brand": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.oxblood.600}",
+        "$description": "H brand 8.3:1 — iz/design mark only"
+      }
+    }
+  },
+  "font": {
+    "body": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.grotesk}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.250}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.147}"
+      }
+    },
+    "label": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.plex-mono}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.50}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.145}"
+      }
+    },
+    "heading": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.grotesk}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.400}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.133}"
+      }
+    },
+    "control": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.250}"
+      }
+    }
+  }
+}
