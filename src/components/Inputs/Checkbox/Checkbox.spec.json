@@ -1,0 +1,200 @@
+{
+  "name": "Checkbox",
+  "category": "Inputs",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "A binary (or indeterminate) choice with a visible label, for forms and filters. Not for one-way actions with Undo (the ActionRow done ring is a Button), not for settings that apply the moment they change (Switch), not for mutually exclusive options (RadioGroup).",
+  "pattern": {
+    "name": "Checkbox (two-state and mixed)",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/"
+  },
+  "role": "checkbox",
+  "props": {
+    "children": {
+      "type": "ReactNode",
+      "requiredWhen": "aria-label is not given. The visible label is the default; the type union refuses a checkbox with neither.",
+      "intent": "The visible label AND the accessible name. Rendered inside a real <label>, so clicking the text toggles the box — the whole row is the target."
+    },
+    "aria-label": {
+      "type": "string",
+      "requiredWhen": "children is omitted (a bare box in a table row: 'Select Orbit — Senior Product Designer').",
+      "intent": "Name without visible text. The name must still identify the thing being selected, not just say 'Select'."
+    },
+    "isSelected": {
+      "type": "boolean",
+      "intent": "Controlled checked state. Pair with onChange."
+    },
+    "defaultSelected": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Uncontrolled initial state."
+    },
+    "onChange": {
+      "type": "(isSelected: boolean) => void",
+      "intent": "Fires with the new boolean, not the event (React Aria convention, same shape across Inputs)."
+    },
+    "isIndeterminate": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Presentational 'mixed' state for a select-all box whose children disagree. Exposed as aria-checked=\"mixed\". The parent sets it from the children's state; the box never computes it. Clicking a mixed box selects (not clears), per APG."
+    },
+    "description": {
+      "type": "string",
+      "intent": "Help text under the label, linked by aria-describedby — e.g. what a consent actually permits."
+    },
+    "errorMessage": {
+      "type": "string",
+      "intent": "Shown when isInvalid. Present in the DOM before it becomes visible, so the announcement is immediate (same contract as TextField)."
+    },
+    "isInvalid": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Sets aria-invalid and the invalid style; the form decides validity (e.g. a required consent left unchecked on submit)."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Sets aria-required plus the visible marker. Native required is not used (ADR-022), so the browser's bubble never competes with errorMessage."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Removed from the tab order and from submission. Prefer isReadOnly when the state still matters to the user."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Focusable and announced, not toggleable, still submitted — a locked choice the user must be able to see."
+    },
+    "value": {
+      "type": "string",
+      "intent": "Native form value when submitted as part of a form."
+    },
+    "name": {
+      "type": "string",
+      "intent": "Native form field name."
+    },
+    "size": {
+      "type": "'md' | 'lg'",
+      "default": "'md'",
+      "intent": "Row min-height 24 / 44 px (size.target.min / size.target.touch). The box itself is 1em of the label's text so it scales with zoom; md is dense-form density, lg is the touch default. No sm."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Focus on mount. Only for a single primary control of a view; rarely right for a checkbox."
+    }
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "selected",
+    "indeterminate",
+    "invalid",
+    "disabled",
+    "read-only"
+  ],
+  "keyboard": [
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "Moves focus to / from the checkbox. Each checkbox is its own tab stop (unlike radios)."
+    },
+    {
+      "key": "Space",
+      "action": "Toggles. Mixed → selected, selected → unselected, unselected → selected."
+    },
+    {
+      "key": "Enter",
+      "action": "Does nothing on the box (native behaviour). Inside a <form> it submits the form; the checkbox must not intercept it."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.7",
+      "2.4.11",
+      "2.5.8",
+      "3.3.1",
+      "3.3.2",
+      "4.1.2"
+    ],
+    "name": "From children (a real <label> wrapping the input), or aria-label when children is omitted — the type union requires one of the two.",
+    "announcements": "aria-checked true / false / mixed from the native input + React Aria. isInvalid → aria-invalid=\"true\" and aria-describedby lists description then error. isRequired → aria-required=\"true\". isReadOnly → aria-readonly=\"true\"; still focusable and read.",
+    "screenReaderNotes": "",
+    "targetSize": "The whole label row is the target: md ≥ 24 px tall (2.5.8 AA minimum), lg ≥ 44 (touch). A bare box without a label still gets a 24 px hit area around its 16 px glyph."
+  },
+  "tokens": [
+    "color.surface.raised",
+    "color.text.primary",
+    "color.text.secondary",
+    "color.text.danger",
+    "color.text.disabled",
+    "color.text.on-action",
+    "color.action.primary.bg",
+    "color.action.primary.bg-hover",
+    "color.action.disabled.bg",
+    "color.border.strong",
+    "color.border.focus",
+    "color.border.danger",
+    "border.width.sm",
+    "border.width.md",
+    "border.width.focus",
+    "radius.sm",
+    "size.target.min",
+    "size.target.touch",
+    "space.inline.sm",
+    "space.stack.xs",
+    "font.body.family",
+    "font.body.size",
+    "font.meta.size",
+    "font.meta.line-height",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [],
+  "composedBy": [],
+  "rules": [
+    "The ActionRow 'done' ring is NOT a Checkbox. It is a one-way action with an Undo toast — specs/HANDOFF.md makes it a <button aria-label=\"Mark done: {title}\">. A checkbox promises a toggle; a done ring does not toggle back, it undoes. Build it as a Button variant in the pattern.",
+    "Selected is never colour-only: the check-mark glyph is drawn AND aria-checked is set. A filled square with no glyph fails 1.4.1 for colour-blind users and says nothing to a screen reader.",
+    "Indeterminate is presentational (React Aria's term): the parent computes it from the children and passes it in; the box never flips itself to mixed. Clicking a mixed box selects, never clears (APG).",
+    "Space toggles; Enter does not — do not add an Enter handler 'for convenience'. Enter belongs to the form.",
+    "The label is a real <label> wrapping the input, so clicking anywhere on the text toggles. Never a <span> with an onClick.",
+    "The error element is in the DOM before it is visible (same mechanism as TextField, ADR-022: validationBehavior=\"aria\").",
+    "Focus ring is outline + outline-offset on the box, never box-shadow alone. In forced-colors mode the box keeps a FieldText border and the glyph uses the system colour, so a checked box is still distinguishable in Windows High Contrast.",
+    "A group of related checkboxes gets a <fieldset> + <legend> (CheckboxGroup, later) so the group name is announced once; do not fake it with a heading."
+  ],
+  "figma": {
+    "componentSet": "Inputs / Checkbox",
+    "properties": {
+      "Size": "size (md / lg)",
+      "State": "browser states (default/hover/focus) + isSelected + isIndeterminate + isInvalid + isDisabled + isReadOnly",
+      "Required": "isRequired",
+      "Label": "children",
+      "Description": "description (boolean show + text)",
+      "Error": "errorMessage (boolean show + text; visible only when State = invalid)"
+    }
+  },
+  "examples": [
+    {
+      "title": "Form choice",
+      "code": "<Checkbox name=\"remote\" value=\"yes\">Open to remote roles</Checkbox>"
+    },
+    {
+      "title": "Consent with description, required",
+      "code": "<Checkbox isRequired description=\"We store the lead in your tracker only.\" isInvalid={!agreed && submitted} errorMessage=\"Tick to continue\">I agree to the terms</Checkbox>"
+    },
+    {
+      "title": "Select all (indeterminate)",
+      "code": "<Checkbox isSelected={all} isIndeterminate={some && !all} onChange={selectAll}>Select all leads</Checkbox>"
+    },
+    {
+      "title": "Bare box in a table row",
+      "code": "<Checkbox aria-label=\"Select Orbit — Senior Product Designer\" isSelected={selected.has(id)} onChange={toggle(id)} />"
+    }
+  ]
+}
