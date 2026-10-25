@@ -18,7 +18,7 @@
     "size": {
       "type": "'sm' | 'md' | 'lg'",
       "default": "'md'",
-      "intent": "Target heights 24 / 32 / 44 px. lg is the touch default."
+      "intent": "Target heights 24 / 40 / 44 px. md is the desktop control height shared with TextField (ADR-021); lg is the touch default."
     },
     "isDisabled": {
       "type": "boolean",
@@ -94,7 +94,7 @@
     "name": "Computed from children; from aria-label when icon-only (TypeScript union requires it).",
     "announcements": "isPending → aria-disabled=\"true\" + data-pending (React Aria); a visually-hidden 'Loading' is appended to the name; label stays visible. Corrected 2026-10-15: the first draft said aria-busy — React Aria does not use it.",
     "screenReaderNotes": "",
-    "targetSize": "sm 24×24 (desktop-only contexts), md 32, lg 44"
+    "targetSize": "sm 24×24 (desktop-only contexts), md 40, lg 44"
   },
   "tokens": [
     "color.action.primary.bg",
@@ -120,7 +120,7 @@
     "space.inset.lg",
     "space.inline.sm",
     "size.target.min",
-    "size.target.md",
+    "size.target.lg",
     "size.target.touch",
     "radius.md",
     "font.control.size",

@@ -28,7 +28,7 @@ color.surface.raised
 space.inset.md            # padding inside a thing
 space.stack.md            # vertical gap between things
 space.inline.md           # horizontal gap between things
-size.target.min           # 24px (WCAG 2.5.8)  / size.target.touch = 44px
+size.target.min | md | lg | touch   # 24 (WCAG 2.5.8 floor) · 32 · 40 (desktop control) · 44 (touch)
 radius.sm | md | lg | full
 border.width.sm | md | focus
 shadow.raised | overlay

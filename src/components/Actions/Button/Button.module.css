@@ -7,7 +7,7 @@
   --iz-button-fg: var(--iz-color-text-primary);
   --iz-button-border: var(--iz-color-action-secondary-border);
   --iz-button-padding-x: var(--iz-space-inset-md);
-  --iz-button-height: var(--iz-size-target-md);
+  --iz-button-height: var(--iz-size-target-lg);
   --iz-button-font-size: var(--iz-font-control-size);
 
   position: relative;
@@ -89,7 +89,7 @@
   --iz-button-border: var(--iz-color-action-danger-bg-active);
 }
 
-/* ---- sizes: 24 / 32 / 44 px targets ---- */
+/* ---- sizes: 24 / 40 / 44 px targets (sm → target.min, md → target.lg, lg → target.touch; ADR-021) ---- */
 .sm {
   --iz-button-height: var(--iz-size-target-min);
   --iz-button-padding-x: var(--iz-space-inset-sm);

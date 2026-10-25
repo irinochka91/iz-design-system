@@ -24,7 +24,7 @@ export const Sizes: Story = {
   render: (args) => (
     <div className="sb-row">
       <Button {...args} size="sm">Small 24px</Button>
-      <Button {...args} size="md">Medium 32px</Button>
+      <Button {...args} size="md">Medium 40px</Button>
       <Button {...args} size="lg">Large 44px</Button>
     </div>
   ),

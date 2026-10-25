@@ -8,7 +8,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 type BaseProps = Omit<AriaButtonProps, 'children' | 'className' | 'style'> & {
   /** Visual weight. One primary per view. */
   variant?: ButtonVariant;
-  /** Target heights 24 / 32 / 44 px. lg is the touch default. */
+  /** Target heights 24 / 40 / 44 px. lg is the touch default. */
   size?: ButtonSize;
   /** Stretches to the container's inline size. */
   isFullWidth?: boolean;

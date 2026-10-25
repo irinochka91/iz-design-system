@@ -1615,6 +1615,16 @@
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
       },
+      "size.target.lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "alias": "{size.10}",
+        "css": "--iz-size-target-lg",
+        "$description": "40 px — desktop control height (specs/HANDOFF.md: buttons and inputs 40 desktop / 44 phone). Button md, TextField md. ADR-021."
+      },
       "size.target.md": {
         "$type": "dimension",
         "$value": {
@@ -3482,6 +3492,16 @@
         },
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
+      },
+      "size.target.lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "alias": "{size.10}",
+        "css": "--iz-size-target-lg",
+        "$description": "40 px — desktop control height (specs/HANDOFF.md: buttons and inputs 40 desktop / 44 phone). Button md, TextField md. ADR-021."
       },
       "size.target.md": {
         "$type": "dimension",
@@ -5351,6 +5371,16 @@
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
       },
+      "size.target.lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "alias": "{size.10}",
+        "css": "--iz-size-target-lg",
+        "$description": "40 px — desktop control height (specs/HANDOFF.md: buttons and inputs 40 desktop / 44 phone). Button md, TextField md. ADR-021."
+      },
       "size.target.md": {
         "$type": "dimension",
         "$value": {
@@ -7219,6 +7249,16 @@
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
       },
+      "size.target.lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "alias": "{size.10}",
+        "css": "--iz-size-target-lg",
+        "$description": "40 px — desktop control height (specs/HANDOFF.md: buttons and inputs 40 desktop / 44 phone). Button md, TextField md. ADR-021."
+      },
       "size.target.md": {
         "$type": "dimension",
         "$value": {
@@ -9081,6 +9121,16 @@
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
       },
+      "size.target.lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "alias": "{size.10}",
+        "css": "--iz-size-target-lg",
+        "$description": "40 px — desktop control height (specs/HANDOFF.md: buttons and inputs 40 desktop / 44 phone). Button md, TextField md. ADR-021."
+      },
       "size.target.md": {
         "$type": "dimension",
         "$value": {
@@ -10942,6 +10992,16 @@
         },
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
+      },
+      "size.target.lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 40,
+          "unit": "px"
+        },
+        "alias": "{size.10}",
+        "css": "--iz-size-target-lg",
+        "$description": "40 px — desktop control height (specs/HANDOFF.md: buttons and inputs 40 desktop / 44 phone). Button md, TextField md. ADR-021."
       },
       "size.target.md": {
         "$type": "dimension",

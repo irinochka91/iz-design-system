@@ -135,6 +135,7 @@ export type TokenName =
   | 'radius.lg'
   | 'radius.md'
   | 'radius.sm'
+  | 'size.target.lg'
   | 'size.target.md'
   | 'size.target.min'
   | 'size.target.touch'

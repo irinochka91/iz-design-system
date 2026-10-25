@@ -25,7 +25,7 @@ test.describe('Button keyboard', () => {
 
   test('every size meets the 24px minimum target; lg meets 44px', async ({ page }) => {
     await page.goto(story('actions-button--sizes'));
-    for (const [name, min] of [['Small 24px', 24], ['Medium 32px', 32], ['Large 44px', 44]] as const) {
+    for (const [name, min] of [['Small 24px', 24], ['Medium 40px', 40], ['Large 44px', 44]] as const) {
       const box = await page.getByRole('button', { name }).boundingBox();
       expect(box?.height ?? 0).toBeGreaterThanOrEqual(min);
     }

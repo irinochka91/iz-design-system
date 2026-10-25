@@ -171,6 +171,7 @@
     "space.inset.md",
     "space.inline.sm",
     "space.stack.xs",
+    "size.target.lg",
     "size.target.touch",
     "font.body.family",
     "font.body.size",
@@ -196,7 +197,7 @@
     "Focus ring is outline + outline-offset on the field box, never box-shadow alone (clipped by overflow, ignored in forced-colors). Same recipe as Button.",
     "In forced-colors mode keep a visible border (FieldText / Highlight) so the field box is visible in Windows High Contrast.",
     "The kbd hint is aria-hidden and sits inside the field box on the trailing edge; it must not shrink the editable area below 40 px or overlap the value.",
-    "Height tokens: md needs a 40 px semantic size that does not exist yet (size.target.* is 24/32/44). Decision pending — see the Phase 2 report; until then the spec lists size.target.touch only."
+    "Heights: md = size.target.lg (40 px), lg = size.target.touch (44 px) — the same two tokens Button md / lg use, so a field and its button align in a row (ADR-021)."
   ],
   "figma": {
     "componentSet": "Inputs / TextField",

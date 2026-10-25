@@ -87,6 +87,11 @@
         "$type": "dimension",
         "$value": "{size.11}",
         "$description": "Recommended touch target: 44px (not the AA minimum)"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{size.10}",
+        "$description": "40 px — desktop control height (specs/HANDOFF.md: buttons and inputs 40 desktop / 44 phone). Button md, TextField md. ADR-021."
       }
     }
   },

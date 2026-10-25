@@ -50,7 +50,7 @@ Bind sizes to `font/size/*` variables where Figma allows; enable *tabular number
 
 ## 3. Button component set (Components page)
 
-Frame → Auto Layout, horizontal, *Hug* width, *Fixed* height bound to `size/target/md` (32). Padding left/right bound to `space/inset/md`, gap `space/inline/sm`. Corner radius `radius/md`. Stroke 1 bound to `border/width/sm`, colour `color/action/secondary/border`. Fill `color/action/secondary/bg`. Text layer "Label", style `Control`, colour `color/text/primary`.
+Frame → Auto Layout, horizontal, *Hug* width, *Fixed* height bound to `size/target/lg` (40). Padding left/right bound to `space/inset/md`, gap `space/inline/sm`. Corner radius `radius/md`. Stroke 1 bound to `border/width/sm`, colour `color/action/secondary/border`. Fill `color/action/secondary/bg`. Text layer "Label", style `Control`, colour `color/text/primary`.
 
 Make it a component, then add **component properties** (right panel → +):
 
@@ -82,7 +82,7 @@ Set *Component description* to (copy verbatim):
 Pattern: WAI-ARIA APG Button. Role: button.
 Keyboard: Tab/Shift+Tab focus · Enter activates (key down) · Space activates (key up).
 Focus ring: 2px outline color/border/focus, offset 2px, on every variant.
-Targets: sm 24px (AA minimum) · md 32 · lg 44 (touch).
+Targets: sm 24px (AA minimum) · md 40 · lg 44 (touch).
 Props: variant, size, isDisabled, isPending, isFullWidth, iconStart, iconEnd; icon-only requires aria-label.
 Never use for navigation (Link). Never disable submit to signal invalid form.
 Spec: src/components/Actions/Button/Button.spec.json
