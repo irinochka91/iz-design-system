@@ -154,6 +154,7 @@
   },
   "tokens": [
     "color.surface.raised",
+    "color.surface.sunken",
     "color.text.primary",
     "color.text.secondary",
     "color.text.muted",
@@ -163,7 +164,6 @@
     "color.border.focus",
     "color.border.danger",
     "color.action.disabled.bg",
-    "color.action.disabled.fg",
     "border.width.sm",
     "border.width.md",
     "border.width.focus",
@@ -197,7 +197,8 @@
     "Focus ring is outline + outline-offset on the field box, never box-shadow alone (clipped by overflow, ignored in forced-colors). Same recipe as Button.",
     "In forced-colors mode keep a visible border (FieldText / Highlight) so the field box is visible in Windows High Contrast.",
     "The kbd hint is aria-hidden and sits inside the field box on the trailing edge; it must not shrink the editable area below 40 px or overlap the value.",
-    "Heights: md = size.target.lg (40 px), lg = size.target.touch (44 px) — the same two tokens Button md / lg use, so a field and its button align in a row (ADR-021)."
+    "Heights: md = size.target.lg (40 px), lg = size.target.touch (44 px) — the same two tokens Button md / lg use, so a field and its button align in a row (ADR-021).",
+    "validationBehavior is \"aria\", not React Aria's default \"native\": isInvalid stays fully controlled by the form or pattern, isRequired emits aria-required instead of the required attribute, and the browser's own validation bubble can never compete with errorMessage. Found by the unit test: in native mode the empty errorMessage slot is not rendered until the browser reports an error, which breaks the \"element exists before it is shown\" rule."
   ],
   "figma": {
     "componentSet": "Inputs / TextField",

@@ -1,0 +1,153 @@
+/* TextField — every value is a token (docs/TOKENS.md). States come from React Aria data-* attributes
+   on the root (data-invalid, data-disabled, data-readonly, data-required) and on the input
+   (data-hovered, data-focus-visible). Spec: TextField.spec.json · ADR-021 for the 40 px height. */
+
+.root {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-textfield-bg: var(--iz-color-surface-raised);
+  --iz-textfield-fg: var(--iz-color-text-primary);
+  --iz-textfield-border: var(--iz-color-border-strong);
+  --iz-textfield-border-width: var(--iz-border-width-sm);
+  --iz-textfield-height: var(--iz-size-target-lg);
+  --iz-textfield-padding-x: var(--iz-space-inset-md);
+
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--iz-space-stack-xs);
+  font-family: var(--iz-font-body-family);
+}
+
+.fullWidth {
+  display: flex;
+  inline-size: 100%;
+}
+
+/* ---- sizes: 40 / 44 px (md → target.lg, lg → target.touch) ---- */
+.lg {
+  --iz-textfield-height: var(--iz-size-target-touch);
+}
+
+.label {
+  font-family: var(--iz-font-label-family);
+  font-size: var(--iz-font-label-size);
+  font-weight: var(--iz-font-label-weight);
+  color: var(--iz-textfield-fg);
+}
+
+.required {
+  margin-inline-start: var(--iz-space-inline-sm);
+  color: var(--iz-color-text-danger);
+}
+
+/* The box is the target: border, background and focus ring live here, not on the bare <input>. */
+.field {
+  display: flex;
+  align-items: center;
+  gap: var(--iz-space-inline-sm);
+  min-block-size: var(--iz-textfield-height);
+  padding-inline: var(--iz-textfield-padding-x);
+  border: var(--iz-textfield-border-width) solid var(--iz-textfield-border);
+  border-radius: var(--iz-radius-md);
+  background: var(--iz-textfield-bg);
+  color: var(--iz-textfield-fg);
+  cursor: text;
+  transition:
+    border-color var(--iz-duration-fast) var(--iz-easing-standard),
+    background-color var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.input {
+  flex: 1 1 auto;
+  min-inline-size: 0; /* lets the box shrink in a row instead of overflowing */
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--iz-font-body-size);
+  outline-color: transparent; /* the ring is drawn on .field via :has() below — moved, never removed (stylelint forbids outline:none) */
+}
+
+.input::placeholder {
+  color: var(--iz-color-text-muted);
+  opacity: 1; /* Firefox dims placeholders by default; the token already carries the contrast decision */
+}
+
+/* ---- universal states ---- */
+
+/* outline (not box-shadow): survives overflow clipping and forced-colors mode. px is allowed here on purpose. */
+.field:has(.input[data-focus-visible]) {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Invalid is never colour-only: thicker border + error text + aria-invalid (rule in the spec). */
+.root[data-invalid] {
+  --iz-textfield-border: var(--iz-color-border-danger);
+  --iz-textfield-border-width: var(--iz-border-width-md);
+}
+
+.root[data-readonly] {
+  --iz-textfield-bg: var(--iz-color-surface-sunken);
+}
+
+.root[data-readonly] .field {
+  cursor: default;
+}
+
+.root[data-disabled] {
+  --iz-textfield-bg: var(--iz-color-action-disabled-bg);
+  --iz-textfield-fg: var(--iz-color-text-disabled);
+  --iz-textfield-border: var(--iz-color-action-disabled-bg);
+}
+
+.root[data-disabled] .field {
+  cursor: not-allowed;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--iz-color-text-secondary);
+}
+
+.icon > * {
+  inline-size: 1em; /* em: the icon scales with the field's text */
+  block-size: 1em;
+}
+
+.kbd {
+  flex-shrink: 0;
+  font-family: var(--iz-font-code-family);
+  font-size: var(--iz-font-code-size);
+  color: var(--iz-color-text-secondary);
+}
+
+.description,
+.error {
+  font-size: var(--iz-font-meta-size);
+  line-height: var(--iz-font-meta-line-height);
+}
+
+.description {
+  color: var(--iz-color-text-secondary);
+}
+
+.error {
+  color: var(--iz-color-text-danger);
+}
+
+.error:empty {
+  display: none; /* the element stays in the DOM for aria-describedby; it just takes no space while valid */
+}
+
+/* Windows High Contrast / forced-colors: keep a visible box and a visible focus ring. */
+@media (forced-colors: active) {
+  .field {
+    border-color: FieldText;
+  }
+
+  .field:has(.input[data-focus-visible]) {
+    outline-color: Highlight;
+  }
+}

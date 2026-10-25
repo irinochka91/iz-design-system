@@ -52,6 +52,35 @@
       },
       "status": "beta (code done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "TextField",
+      "category": "Inputs",
+      "code": {
+        "path": "src/components/Inputs/TextField/TextField.tsx",
+        "import": "import { TextField } from '@iz/design-system'"
+      },
+      "spec": "src/components/Inputs/TextField/TextField.spec.json",
+      "stories": "src/components/Inputs/TextField/TextField.stories.tsx",
+      "figma": {
+        "componentSet": "Inputs / TextField",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Size": "size",
+        "State": "browser states (default/hover/focus) + isInvalid + isDisabled + isReadOnly",
+        "Required": "isRequired",
+        "Label": "label",
+        "Description": "description",
+        "Error": "errorMessage",
+        "Icon start": "iconStart",
+        "Kbd hint": "kbdHint",
+        "Full width": "isFullWidth"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }
