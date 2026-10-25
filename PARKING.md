@@ -10,3 +10,4 @@ Ideas noticed during a phase that belong to a later one. One line each; nothing 
 - Phase 3: `tokens:validate` could reject a theme file that overrides a token not in the theme's own colour/type remit, so a future theme cannot quietly widen its scope.
 - Housekeeping: if the `storybook` vitest project fails with "Failed to fetch dynamically imported module … sb-vitest", delete `node_modules/.cache/storybook` — it is a stale cache, not a code failure.
 - Phase 2: the Figma plugin was verified with a throwaway mock-API dry run (155 + 116 variables, 696 aliases, 0 raw, 0 unset). Make it a permanent test so a token-type change cannot silently break the import.
+- Housekeeping: `docs/components.manifest.json` declares `"$schema": "./manifest.schema.json"`, which does not exist — the same class of dangling reference as `specs/ARCHITECTURE.md` was. Write the schema (and let `check:specs` validate the manifest against it) or drop the line.

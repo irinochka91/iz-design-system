@@ -1,0 +1,233 @@
+{
+  "name": "TextField",
+  "category": "Inputs",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "Single-line text entry with a visible label, optional description and an error message that screen readers announce. Not for multi-line text (TextArea), choosing from options (Select, ComboBox) or dates (DateField).",
+  "pattern": {
+    "name": "Native text input — no APG widget pattern; semantics come from <input> + <label>. Follows the WAI Forms tutorial for labels, instructions and error identification.",
+    "url": "https://www.w3.org/WAI/tutorials/forms/"
+  },
+  "role": "textbox",
+  "props": {
+    "label": {
+      "type": "string",
+      "requiredWhen": "aria-label is not given. A visible label is the default; the type union refuses a field with neither.",
+      "intent": "The accessible name AND the visible label. Rendered as a real <label> bound by React Aria; clicking it focuses the input."
+    },
+    "aria-label": {
+      "type": "string",
+      "requiredWhen": "label is omitted (e.g. the Today quick-add, where the field is the whole row and a visible label would be noise).",
+      "intent": "Name without a visible label. Use sparingly: 2.4.6 and 3.3.2 are easier to meet with a visible label."
+    },
+    "description": {
+      "type": "string",
+      "intent": "Help text under the field, linked by aria-describedby. Format hints go here, never in placeholder."
+    },
+    "errorMessage": {
+      "type": "string",
+      "intent": "Shown when isInvalid. Present in the DOM before it becomes visible, so aria-invalid + aria-describedby announce it the moment the state flips (docs/ACCESSIBILITY.md § Inputs)."
+    },
+    "isInvalid": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Sets aria-invalid and the invalid style. The field never decides validity itself; the form or pattern does, so the same rule can run on submit and on server response."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Sets aria-required and shows the required marker next to the label. Native HTML required is NOT used, so the browser's own bubble never competes with our error message."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Removes from tab order and from form submission. Prefer isReadOnly when the value still matters."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Focusable, selectable, copyable, not editable; still submitted. Use for values the user must be able to read and copy but not change."
+    },
+    "value": {
+      "type": "string",
+      "intent": "Controlled value. Pair with onChange."
+    },
+    "defaultValue": {
+      "type": "string",
+      "intent": "Uncontrolled initial value."
+    },
+    "onChange": {
+      "type": "(value: string) => void",
+      "intent": "Fires with the string, not the event (React Aria convention; same signature across all Inputs)."
+    },
+    "type": {
+      "type": "'text' | 'email' | 'url' | 'tel' | 'search' | 'password'",
+      "default": "'text'",
+      "intent": "Native input type: drives the mobile keyboard, browser autofill and password managers. Not 'number' — use NumberField when it exists."
+    },
+    "inputMode": {
+      "type": "'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url'",
+      "intent": "Mobile keyboard override when type alone is wrong (e.g. type=text with inputMode=numeric for a postcode)."
+    },
+    "autoComplete": {
+      "type": "string",
+      "intent": "HTML autocomplete token (e.g. 'email', 'given-name', 'organization'). Required for personal-data fields: WCAG 1.3.5 Identify Input Purpose."
+    },
+    "name": {
+      "type": "string",
+      "intent": "Form field name for native submission."
+    },
+    "placeholder": {
+      "type": "string",
+      "intent": "Example value only, in muted text. Never the label, never the instructions: it disappears on first keystroke and fails contrast by design."
+    },
+    "size": {
+      "type": "'md' | 'lg'",
+      "default": "'md'",
+      "intent": "Field heights 40 / 44 px (specs/HANDOFF.md: inputs 40 desktop, 44 phone). lg is the touch default. No sm: a 32 px text field fails the 44 px touch guidance and is rarely right for text entry."
+    },
+    "isFullWidth": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Stretches to the container's inline size; typical in forms and the quick-add row."
+    },
+    "iconStart": {
+      "type": "ReactNode",
+      "intent": "Decorative leading icon inside the field (search, @). aria-hidden applied automatically; it never carries meaning."
+    },
+    "kbdHint": {
+      "type": "string",
+      "intent": "Trailing <kbd> showing the shortcut that focuses this field (the handoff's 'N' for quick-add). aria-hidden: the shortcut is documented in the list header, not announced per field."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Focus on mount. Only for the single primary field of a view (quick-add); never on a field below the fold."
+    }
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "invalid",
+    "disabled",
+    "read-only"
+  ],
+  "keyboard": [
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "Moves focus to / from the input. The label, description, error and kbd hint are never tab stops."
+    },
+    {
+      "key": "Typing",
+      "action": "Edits the value; onChange fires with the string. Native editing keys (Home/End, Shift+Arrow, ⌘A, ⌘Z) are untouched."
+    },
+    {
+      "key": "Enter",
+      "action": "Not handled by the field. Inside a <form> it submits natively; a pattern (quick-add) may listen, but the field never calls preventDefault on it."
+    },
+    {
+      "key": "Escape",
+      "action": "Not handled by the field. The quick-add pattern clears on Escape; a Dialog closes on it. The field must not stop propagation, or those break."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "1.3.5",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.6",
+      "2.4.7",
+      "2.4.11",
+      "2.5.8",
+      "3.3.1",
+      "3.3.2",
+      "3.3.3",
+      "4.1.2"
+    ],
+    "name": "From the visible label (a real <label for>, via React Aria's Label), or from aria-label when label is omitted — the type union requires one of the two.",
+    "announcements": "isInvalid → aria-invalid=\"true\"; aria-describedby lists description then error, so the error is read on focus and on the state change. isRequired → aria-required=\"true\" plus a visible marker. isReadOnly → aria-readonly=\"true\"; the value is still read.",
+    "screenReaderNotes": "",
+    "targetSize": "md 40×40 (meets 2.5.8 AA minimum 24; desktop default per handoff), lg 44 (touch). The whole field box is the target, not just the text."
+  },
+  "tokens": [
+    "color.surface.raised",
+    "color.text.primary",
+    "color.text.secondary",
+    "color.text.muted",
+    "color.text.danger",
+    "color.text.disabled",
+    "color.border.strong",
+    "color.border.focus",
+    "color.border.danger",
+    "color.action.disabled.bg",
+    "color.action.disabled.fg",
+    "border.width.sm",
+    "border.width.md",
+    "border.width.focus",
+    "radius.md",
+    "space.inset.md",
+    "space.inline.sm",
+    "space.stack.xs",
+    "size.target.touch",
+    "font.body.family",
+    "font.body.size",
+    "font.label.family",
+    "font.label.size",
+    "font.label.weight",
+    "font.meta.size",
+    "font.meta.line-height",
+    "font.code.family",
+    "font.code.size",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [],
+  "composedBy": [],
+  "rules": [
+    "A visible label is the default. placeholder is never the label and never the instructions — it vanishes on the first keystroke and its muted colour is below AA by design (3.3.2, 2.4.6).",
+    "The error message is in the DOM before it is visible (hidden with the visually-hidden utility, not display:none), so flipping isInvalid announces it immediately through aria-describedby (3.3.1).",
+    "Invalid is never colour-only: the border changes AND the error text appears AND aria-invalid is set. Colour-blind users and screen-reader users get the same information (1.4.1).",
+    "The field never calls preventDefault or stopPropagation on Enter or Escape. Quick-add (Enter adds, Esc clears) and Dialog (Esc closes) own those keys at the pattern level.",
+    "Global shortcuts (J/K/D/S/N/F) are the app's responsibility to suppress inside editable elements: the app's handler checks event.target.isContentEditable || tagName in INPUT/TEXTAREA/SELECT. The field does not need to know about them.",
+    "Personal-data fields set autoComplete (email, name, organization, …): WCAG 1.3.5 and the single biggest usability win on mobile.",
+    "Focus ring is outline + outline-offset on the field box, never box-shadow alone (clipped by overflow, ignored in forced-colors). Same recipe as Button.",
+    "In forced-colors mode keep a visible border (FieldText / Highlight) so the field box is visible in Windows High Contrast.",
+    "The kbd hint is aria-hidden and sits inside the field box on the trailing edge; it must not shrink the editable area below 40 px or overlap the value.",
+    "Height tokens: md needs a 40 px semantic size that does not exist yet (size.target.* is 24/32/44). Decision pending — see the Phase 2 report; until then the spec lists size.target.touch only."
+  ],
+  "figma": {
+    "componentSet": "Inputs / TextField",
+    "properties": {
+      "Size": "size (md / lg)",
+      "State": "browser states (default/hover/focus) + isInvalid + isDisabled + isReadOnly",
+      "Required": "isRequired",
+      "Label": "label",
+      "Description": "description (boolean show + text)",
+      "Error": "errorMessage (boolean show + text; visible only when State = invalid)",
+      "Icon start": "iconStart",
+      "Kbd hint": "kbdHint (boolean show + text)",
+      "Full width": "isFullWidth"
+    }
+  },
+  "examples": [
+    {
+      "title": "Labelled field",
+      "code": "<TextField label=\"Company\" name=\"company\" autoComplete=\"organization\" />"
+    },
+    {
+      "title": "Email with description",
+      "code": "<TextField label=\"Email\" type=\"email\" autoComplete=\"email\" description=\"We only use this for the digest.\" />"
+    },
+    {
+      "title": "Invalid with error",
+      "code": "<TextField label=\"Salary floor\" inputMode=\"numeric\" isInvalid errorMessage=\"Enter a number, e.g. 120000\" />"
+    },
+    {
+      "title": "Quick-add row (no visible label)",
+      "code": "<TextField aria-label=\"Add an action\" placeholder=\"Email Priya @Orbit tomorrow 10am\" kbdHint=\"N\" isFullWidth autoFocus />"
+    }
+  ]
+}
