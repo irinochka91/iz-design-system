@@ -2,10 +2,28 @@
   "$schema": "./manifest.schema.json",
   "note": "Figma ↔ code mapping. This is a manifest, not Figma Code Connect. Use null/pending for unknown values; never invent node IDs or URLs.",
   "figmaFile": {
-    "url": null,
-    "fileKey": null,
-    "plan": "unknown",
-    "codeConnect": "unavailable (assumed: requires Organization/Enterprise)"
+    "url": "https://www.figma.com/design/knHNCZRCBhL759fmCcnm1f/IZ-Design-System",
+    "fileKey": "knHNCZRCBhL759fmCcnm1f",
+    "plan": "Professional (since 2026-10-25)",
+    "codeConnect": "unavailable (requires Organization/Enterprise)",
+    "variables": {
+      "importedOn": "2026-10-25",
+      "by": "tools/figma-plugin (ADR-018/020)",
+      "collections": {
+        "Primitives": 155,
+        "Semantic": 116
+      },
+      "modes": [
+        "light",
+        "dark",
+        "hc-light",
+        "hc-dark",
+        "linen",
+        "linen-dark"
+      ],
+      "aliasAssignments": 696,
+      "skipped": "6 cubicBezier tokens — Figma has no variable type for a curve"
+    }
   },
   "components": [
     {
