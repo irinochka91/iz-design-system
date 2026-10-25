@@ -182,12 +182,26 @@ async function importTokens(doc) {
   return report.join('\n');
 }
 
-figma.showUI(__html__, { width: 380, height: 420 });
+figma.showUI(__html__, { width: 380, height: 440 });
+
+// `npm run build` prepends the current dist/figma/tokens.json to this file as IZ_TOKENS, so the
+// normal path needs no file picker: open the plugin, press Import. Picking a file still works
+// and wins over the baked-in copy — for importing a branch's tokens without rebuilding.
+const baked = typeof IZ_TOKENS !== 'undefined' ? IZ_TOKENS : null;
+if (baked) {
+  const count = Object.keys(baked.Primitives || {}).length + Object.keys(baked.Semantic || {}).length;
+  figma.ui.postMessage({ type: 'baked', count, builtAt: typeof IZ_TOKENS_BUILT_AT !== 'undefined' ? IZ_TOKENS_BUILT_AT : null });
+}
 
 figma.ui.onmessage = async (msg) => {
   if (msg.type !== 'import') return;
+  const doc = msg.payload || baked;
+  if (!doc) {
+    figma.ui.postMessage({ ok: false, report: 'No tokens to import. Run "npm run build" in the repo, then re-run this plugin — or pick dist/figma/tokens.json.' });
+    return;
+  }
   try {
-    const report = await importTokens(msg.payload);
+    const report = await importTokens(doc);
     figma.ui.postMessage({ ok: true, report });
     figma.notify('IZ tokens imported');
   } catch (error) {

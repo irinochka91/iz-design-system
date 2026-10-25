@@ -7,7 +7,7 @@ import globals from 'globals';
 import iz from './tools/eslint-plugin-iz/index.js';
 
 export default tseslint.config(
-  { ignores: ['dist', 'storybook-static', 'node_modules', 'playwright-report', 'test-results', 'coverage'] },
+  { ignores: ['dist', 'storybook-static', 'node_modules', 'playwright-report', 'test-results', 'coverage', 'tools/figma-plugin/code.js'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   jsxA11y.flatConfigs.strict,
@@ -34,6 +34,6 @@ export default tseslint.config(
     // Figma plugin sandbox: `figma` and `__html__` are injected globals, and the UI half runs in an
     // iframe. Not part of the library build — see tools/figma-plugin/README.md.
     files: ['tools/figma-plugin/**/*.js'],
-    languageOptions: { globals: { figma: 'readonly', __html__: 'readonly' } },
+    languageOptions: { globals: { figma: 'readonly', __html__: 'readonly', IZ_TOKENS: 'readonly', IZ_TOKENS_BUILT_AT: 'readonly' } },
   },
 );

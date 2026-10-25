@@ -11,8 +11,9 @@ Create a Figma file **IZ Design System**. Pages, in this order: `Start here`, `F
 ## 2. Variable collections (mirror the token tiers)
 
 **Do this with the plugin, not by hand.** `tools/figma-plugin/` creates both collections, all six
-modes, 271 variables and 696 alias assignments from `dist/figma/tokens.json` in one run — see
-`tools/figma-plugin/README.md`. Re-running it is also how a later token change reaches Figma.
+modes, 271 variables and 696 alias assignments in one run — the tokens are baked into the plugin by
+`npm run build`, so running it is: open the plugin, press **Import**. See `tools/figma-plugin/README.md`.
+Re-running it after a build is also how a later token change reaches Figma.
 
 Entering 271 variables by hand takes hours and gets an alias wrong somewhere; the plugin's report
 tells you if any alias failed to resolve. The manual steps below are the specification of what

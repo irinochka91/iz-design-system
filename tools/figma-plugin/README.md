@@ -5,16 +5,33 @@ Creates the `Primitives` and `Semantic` variable collections in the open Figma f
 
 ## Install (once)
 
-1. `npm run build` in this repo — it writes `dist/figma/tokens.json`.
-2. Figma → menu → **Plugins → Development → Import plugin from manifest…**
-3. Choose `tools/figma-plugin/manifest.json`.
+1. `npm run build` in this repo — it writes `dist/figma/tokens.json` **and bakes it into the plugin**
+   (`tools/figma-plugin/code.js`, generated from `src/code.js`; gitignored).
+2. Figma desktop → menu → **Plugins → Development → Import plugin from manifest…**
+3. Choose `tools/figma-plugin/manifest.json`. Nothing visible happens — that is expected; importing
+   registers the plugin, it does not run it.
 
 ## Run
 
-Open the target Figma file → **Plugins → Development → IZ tokens → Variables** → pick
-`dist/figma/tokens.json` → **Import**. The panel prints what it did.
+Open the target Figma file → **⌘ /** → type `IZ tokens` → Enter (or **Plugins → Development →
+IZ tokens → Variables**). The panel shows the baked-in token count and build time. Press **Import**.
 
-It reads a file you choose from your own disk. `networkAccess` is `none`: nothing is sent anywhere.
+After a token change: `npm run build`, then run the plugin again — Figma re-reads a development
+plugin's files on every run, so no re-import. The file picker underneath is for importing a
+different `tokens.json` (another branch, say) without rebuilding; a picked file wins over the baked copy.
+
+`networkAccess` is `none`: nothing is sent anywhere.
+
+## Layout
+
+```
+tools/figma-plugin/
+  manifest.json     points at code.js / ui.html
+  src/code.js       hand-written — edit this
+  src/ui.html       hand-written — edit this
+  code.js           GENERATED: IZ_TOKENS + IZ_TOKENS_BUILT_AT + src/code.js   (gitignored)
+  ui.html           GENERATED: copy of src/ui.html                             (gitignored)
+```
 
 ## What it creates
 

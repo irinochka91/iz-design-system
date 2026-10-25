@@ -7,18 +7,28 @@
   .drop.over { border-color: #2b3fbf; color: #2b3fbf; }
   button { margin-top: 10px; width: 100%; padding: 9px; border: 0; border-radius: 8px; background: #2b3fbf; color: #fff; font: inherit; font-weight: 500; cursor: pointer; }
   button:disabled { background: #e4e0d8; color: #8a8578; cursor: default; }
+  .or { text-align: center; margin: 12px 0 6px; }
   pre { margin: 10px 0 0; max-height: 220px; overflow: auto; background: #f7f5f0; padding: 8px; border-radius: 6px; white-space: pre-wrap; }
 </style>
 
 <h1>IZ tokens → Variables</h1>
-<p>Pick <code>dist/figma/tokens.json</code> (run <code>npm run build</code> first). Nothing leaves your machine.</p>
 
-<div class="drop" id="drop">Drop the file here, or click to choose</div>
+<div id="baked" hidden>
+  <p id="bakedInfo"></p>
+  <button id="runBaked">Import</button>
+  <p class="or">— or —</p>
+</div>
+
+<p id="pickHint">Pick <code>dist/figma/tokens.json</code> (run <code>npm run build</code> first). Nothing leaves your machine.</p>
+<div class="drop" id="drop">Drop a tokens.json here, or click to choose</div>
 <input id="file" type="file" accept="application/json,.json" hidden />
-<button id="run" disabled>Import</button>
+<button id="run" disabled>Import this file instead</button>
 <pre id="log" hidden></pre>
 
 <script>
+  const baked = document.getElementById('baked');
+  const bakedInfo = document.getElementById('bakedInfo');
+  const runBaked = document.getElementById('runBaked');
   const drop = document.getElementById('drop');
   const file = document.getElementById('file');
   const run = document.getElementById('run');
@@ -55,11 +65,25 @@
   drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove('over'); if (e.dataTransfer.files[0]) load(e.dataTransfer.files[0]); };
   run.onclick = () => { run.disabled = true; drop.textContent = 'Importing…'; parent.postMessage({ pluginMessage: { type: 'import', payload } }, '*'); };
 
+  runBaked.onclick = () => {
+    runBaked.disabled = true; run.disabled = true;
+    bakedInfo.textContent = 'Importing…';
+    parent.postMessage({ pluginMessage: { type: 'import' } }, '*');
+  };
+
   onmessage = (e) => {
     const msg = e.data.pluginMessage;
     if (!msg) return;
+    if (msg.type === 'baked') {
+      baked.hidden = false;
+      const when = msg.builtAt ? ` · built ${new Date(msg.builtAt).toLocaleString()}` : '';
+      bakedInfo.innerHTML = `<strong>${msg.count} variables</strong> from the last <code>npm run build</code>${when}`;
+      document.getElementById('pickHint').textContent = 'Different file? Pick another tokens.json:';
+      return;
+    }
     log.hidden = false;
     log.textContent = msg.report;
     drop.textContent = msg.ok ? 'Done — check Local variables' : 'Failed, see below';
+    if (!baked.hidden) bakedInfo.textContent = msg.ok ? 'Done — check Local variables' : 'Failed, see below';
   };
 </script>
