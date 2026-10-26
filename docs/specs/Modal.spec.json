@@ -1,0 +1,179 @@
+{
+  "name": "Modal",
+  "category": "Overlay",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "A blocking dialog for a decision that must be made now — confirm an irreversible step, pick a date, the ⌘K palette. Focus moves in and stays in; Escape or Cancel returns it. Rare by design: the product's default is 'confirm nothing, Undo instead' (specs/HANDOFF.md), so most actions never open one. Not for information (Toast, Banner) and not for a form that fits inline.",
+  "pattern": {
+    "name": "Dialog (Modal)",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+  },
+  "role": "dialog",
+  "props": {
+    "trigger": {
+      "type": "ReactElement<ButtonProps>",
+      "intent": "Optional. A Button that opens the dialog (DialogTrigger wires aria-haspopup=\"dialog\" / aria-expanded and focus return). Omit when the dialog opens programmatically — the ⌘K palette — and control isOpen instead; focus still returns to the element that had it."
+    },
+    "isOpen": {
+      "type": "boolean",
+      "intent": "Controlled open state. Pair with onOpenChange."
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Uncontrolled initial state."
+    },
+    "onOpenChange": {
+      "type": "(isOpen: boolean) => void",
+      "intent": "Closed by any means: Escape, Cancel, a choice, the backdrop (when dismissable)."
+    },
+    "title": {
+      "type": "string",
+      "requiredWhen": "aria-label is not given. Rendered as the dialog's heading (Heading slot=\"title\") and read first.",
+      "intent": "The accessible name AND the visible heading. For an alertdialog it is the question: 'Withdraw this application?'"
+    },
+    "aria-label": {
+      "type": "string",
+      "requiredWhen": "title is omitted — the ⌘K palette ('Search and commands') has an input where a heading would be.",
+      "intent": "Name without a visible heading."
+    },
+    "children": {
+      "type": "ReactNode | ((close: () => void) => ReactNode)",
+      "intent": "ModalBody and ModalFooter (ModalHeader is rendered from title). The function form receives close() so footer buttons can dismiss."
+    },
+    "role": {
+      "type": "'dialog' | 'alertdialog'",
+      "default": "'dialog'",
+      "intent": "alertdialog for a destructive confirmation: screen readers announce it as an alert and read the title immediately. Everything else is a dialog."
+    },
+    "size": {
+      "type": "'sm' | 'md' | 'lg'",
+      "default": "'md'",
+      "intent": "Max width 400 / 560 / 720 px (10 / 14 / 18 × size.target.lg). sm for a yes/no, md for the palette and a date pick, lg for a form. Always full-width minus the gutter on narrow screens."
+    },
+    "padding": {
+      "type": "'md' | 'lg'",
+      "default": "'lg'",
+      "intent": "Panel inset 16 / 24 px (space.inset.md / lg). The pattern chooses md on phone; Modal contains no media query (CONTRIBUTING)."
+    },
+    "isDismissable": {
+      "type": "boolean",
+      "default": "true",
+      "intent": "A click on the backdrop closes. false for a destructive confirmation (a mis-click must not dismiss the question) and for anything with unsaved input."
+    },
+    "isKeyboardDismissDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Escape always closes unless this is set. Set it only when Escape would lose typed input, and then Cancel must be in the footer."
+    }
+  },
+  "states": [
+    "closed",
+    "open",
+    "focus",
+    "entering",
+    "leaving"
+  ],
+  "keyboard": [
+    {
+      "key": "Enter / Space (on the trigger)",
+      "action": "Opens. Focus moves to the first focusable element inside, or to the dialog itself if there is none (docs/ACCESSIBILITY.md)."
+    },
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "Cycle through the dialog's controls only — focus is trapped (2.1.2 allows it: Escape is the documented exit). The page behind is inert and hidden from assistive technology."
+    },
+    {
+      "key": "Escape",
+      "action": "Closes and returns focus to the trigger (or to the element that had focus). Disabled only by isKeyboardDismissDisabled."
+    },
+    {
+      "key": "Enter (on a footer button)",
+      "action": "Activates it. The primary action is never auto-submitted by Enter elsewhere in the dialog."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "2.4.11",
+      "2.5.8",
+      "4.1.2"
+    ],
+    "name": "From title — a real heading wired by aria-labelledby — or from aria-label when there is no heading. The type union requires one of the two.",
+    "announcements": "role=\"dialog\" (or alertdialog) with aria-modal=\"true\". While open, the rest of the page is aria-hidden (React Aria ariaHideOutside) and body scroll is locked (usePreventScroll); both are undone on close. The title is read first; an alertdialog is announced as an alert.",
+    "screenReaderNotes": "",
+    "targetSize": "Footer buttons are Buttons (md 40 / lg 44); the close button, when present, is an icon-only Button at 40. The backdrop is a dismiss target only when isDismissable."
+  },
+  "tokens": [
+    "color.backdrop",
+    "color.surface.overlay",
+    "color.border.default",
+    "shadow.overlay",
+    "radius.lg",
+    "border.width.sm",
+    "space.inset.md",
+    "space.inset.lg",
+    "space.stack.md",
+    "space.inline.sm",
+    "size.target.lg",
+    "color.text.primary",
+    "font.heading.family",
+    "font.heading.size",
+    "font.heading.line-height",
+    "font.heading.weight",
+    "font.body.family",
+    "font.body.size",
+    "font.body.line-height",
+    "duration.normal",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [
+    "Button"
+  ],
+  "composedBy": [],
+  "rules": [
+    "Rare by design. The product confirms nothing it can undo (Undo toast instead). A Modal is for a decision that cannot be undone, needs input, or needs the user's full attention — and nothing else.",
+    "Focus moves in on open (first focusable, else the dialog), is trapped while open, and returns to the trigger on close. Never leave focus on body (2.4.3).",
+    "The 'focus' state is the dialog element itself holding focus — it happens when the dialog has no focusable child (a pure confirmation with the buttons rendered later, or an info dialog). It shows the same 2 px ring as every control, inset, so the trapped focus is never invisible (2.4.7).",
+    "The title is a real heading (Heading slot=\"title\", rendered as h2) and the first thing read. A dialog without a title needs aria-label; the palette is the one case.",
+    "Footer order: Cancel first in reading order, the primary action last (trailing edge). One primary per dialog. Button labels are verbs — 'Withdraw application', never 'OK'.",
+    "Destructive confirmation = role='alertdialog' + the question in the title + isDismissable=false. A mis-click on the backdrop must not dismiss a question about something irreversible.",
+    "Never stack modals. A dialog that needs a second dialog is a flow, and a flow is a page.",
+    "The backdrop is color.backdrop — translucent, so the page stays visible underneath and the user keeps their place. Separation comes from the panel's surface and shadow.overlay, not from blacking out the page.",
+    "Never obscures focus (2.4.11): the dialog IS the focus. A Toast that fires while a Modal is open is still announced (its live region is outside the dialog and aria-hidden — React Aria hides it; accept that a toast during a modal is lost, and do not fire one).",
+    "No z-index token yet (PARKING.md): the Modal portals to the end of body after Toast's region, so it stacks above by DOM order. The first real stacking conflict adds the z.* scale.",
+    "Enter / leave: fade over duration.normal / duration.fast; the panel does not fly in. Under prefers-reduced-motion the duration tokens are 0 and the dialog simply appears."
+  ],
+  "figma": {
+    "componentSet": "Overlay / Modal",
+    "properties": {
+      "Size": "size (sm / md / lg)",
+      "Role": "role (dialog / alertdialog)",
+      "Dismissable": "isDismissable",
+      "Title": "title",
+      "Footer": "boolean — ModalFooter with Cancel + primary"
+    }
+  },
+  "examples": [
+    {
+      "title": "Destructive confirmation (alertdialog)",
+      "code": "<Modal trigger={<Button>Withdraw…</Button>} role=\"alertdialog\" title=\"Withdraw this application?\" isDismissable={false} size=\"sm\">{(close) => (<><ModalBody>Orbit will not be notified. The stage becomes Withdrawn and the actions are archived.</ModalBody><ModalFooter><Button onPress={close}>Cancel</Button><Button variant=\"danger\" onPress={() => { withdraw(); close(); }}>Withdraw application</Button></ModalFooter></>)}</Modal>"
+    },
+    {
+      "title": "Pick a date (from the Snooze menu)",
+      "code": "<Modal isOpen={picking} onOpenChange={setPicking} title=\"Snooze until\">{(close) => (<><ModalBody><DateField label=\"Date\" /></ModalBody><ModalFooter><Button onPress={close}>Cancel</Button><Button variant=\"primary\" onPress={() => { snooze(date); close(); }}>Snooze</Button></ModalFooter></>)}</Modal>"
+    },
+    {
+      "title": "⌘K palette (no heading)",
+      "code": "<Modal isOpen={paletteOpen} onOpenChange={setPaletteOpen} aria-label=\"Search and commands\" size=\"md\" padding=\"md\"><ModalBody><CommandPalette /></ModalBody></Modal>"
+    }
+  ],
+  "source": "src/components/Overlay/Modal/Modal.spec.json"
+}

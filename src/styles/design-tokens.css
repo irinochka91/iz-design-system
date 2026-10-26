@@ -20,6 +20,7 @@
   --iz-color-action-secondary-bg-hover: #EEF0F3;
   --iz-color-action-secondary-border: #646D7A;
   --iz-color-action-secondary-fg: #171A1F;
+  --iz-color-backdrop: rgb(0 0 0 / 0.4);
   --iz-color-bg-accent: var(--iz-color-action-primary-bg);
   --iz-color-bg-accent-active: var(--iz-color-action-primary-bg-active);
   --iz-color-bg-accent-hover: var(--iz-color-action-primary-bg-hover);

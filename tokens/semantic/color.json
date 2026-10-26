@@ -238,6 +238,11 @@
         "$value": "{color.oxblood.600}",
         "$description": "iz/design mark ONLY (HANDOFF rule 1) — never a UI accent"
       }
+    },
+    "backdrop": {
+      "$type": "color",
+      "$value": "{color.scrim}",
+      "$description": "The scrim behind a Modal. Nothing is written on it, so it has no fg.on-* partner. ADR-030."
     }
   }
 }

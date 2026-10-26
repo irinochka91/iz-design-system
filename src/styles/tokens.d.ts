@@ -18,6 +18,7 @@ export type TokenName =
   | 'color.action.secondary.bg-hover'
   | 'color.action.secondary.border'
   | 'color.action.secondary.fg'
+  | 'color.backdrop'
   | 'color.bg.accent'
   | 'color.bg.accent-active'
   | 'color.bg.accent-hover'

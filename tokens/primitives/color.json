@@ -578,6 +578,20 @@
         "alpha": 0
       },
       "$description": "Fully transparent — dark themes drop the overlay shadow by pointing shadow.overlay.color here."
+    },
+    "scrim": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "hex": "#000000",
+        "alpha": 0.4
+      },
+      "$description": "Translucent black for the modal backdrop — the page stays visible underneath. ADR-030."
     }
   }
 }

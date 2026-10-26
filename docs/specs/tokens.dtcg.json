@@ -245,6 +245,22 @@
         "css": "--iz-color-action-secondary-fg",
         "$description": "Label on a secondary button"
       },
+      "color.backdrop": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "hex": "#000000",
+          "alpha": 0.4
+        },
+        "alias": "{color.scrim}",
+        "css": "--iz-color-backdrop",
+        "$description": "The scrim behind a Modal. Nothing is written on it, so it has no fg.on-* partner. ADR-030."
+      },
       "color.bg.accent": {
         "$type": "color",
         "$value": {
@@ -2204,6 +2220,22 @@
         "alias": "{color.neutral.50}",
         "css": "--iz-color-action-secondary-fg",
         "$description": "Label on a secondary button"
+      },
+      "color.backdrop": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "hex": "#000000",
+          "alpha": 0.4
+        },
+        "alias": "{color.scrim}",
+        "css": "--iz-color-backdrop",
+        "$description": "The scrim behind a Modal. Nothing is written on it, so it has no fg.on-* partner. ADR-030."
       },
       "color.bg.accent": {
         "$type": "color",
@@ -4165,6 +4197,22 @@
         "css": "--iz-color-action-secondary-fg",
         "$description": "Label on a secondary button"
       },
+      "color.backdrop": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "hex": "#000000",
+          "alpha": 0.4
+        },
+        "alias": "{color.scrim}",
+        "css": "--iz-color-backdrop",
+        "$description": "The scrim behind a Modal. Nothing is written on it, so it has no fg.on-* partner. ADR-030."
+      },
       "color.bg.accent": {
         "$type": "color",
         "$value": {
@@ -6124,6 +6172,22 @@
         "alias": "{color.white}",
         "css": "--iz-color-action-secondary-fg",
         "$description": "Label on a secondary button"
+      },
+      "color.backdrop": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "hex": "#000000",
+          "alpha": 0.4
+        },
+        "alias": "{color.scrim}",
+        "css": "--iz-color-backdrop",
+        "$description": "The scrim behind a Modal. Nothing is written on it, so it has no fg.on-* partner. ADR-030."
       },
       "color.bg.accent": {
         "$type": "color",
@@ -8085,6 +8149,22 @@
         "css": "--iz-color-action-secondary-fg",
         "$description": "Label on a secondary button"
       },
+      "color.backdrop": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "hex": "#000000",
+          "alpha": 0.4
+        },
+        "alias": "{color.scrim}",
+        "css": "--iz-color-backdrop",
+        "$description": "The scrim behind a Modal. Nothing is written on it, so it has no fg.on-* partner. ADR-030."
+      },
       "color.bg.accent": {
         "$type": "color",
         "$value": {
@@ -10036,6 +10116,22 @@
         "alias": "{color.ink.50}",
         "css": "--iz-color-action-secondary-fg",
         "$description": "Label on a secondary button"
+      },
+      "color.backdrop": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0,
+            0,
+            0
+          ],
+          "hex": "#000000",
+          "alpha": 0.4
+        },
+        "alias": "{color.scrim}",
+        "css": "--iz-color-backdrop",
+        "$description": "The scrim behind a Modal. Nothing is written on it, so it has no fg.on-* partner. ADR-030."
       },
       "color.bg.accent": {
         "$type": "color",
