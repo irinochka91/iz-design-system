@@ -17,7 +17,8 @@ function toFigma(type, value) {
   switch (type) {
     case 'color': {
       const [r, g, b] = value.components;
-      return { resolvedType: 'COLOR', value: { r, g, b, a: 1 } };
+      // DTCG alpha is optional; Figma colours always carry one (shadow inks are translucent).
+      return { resolvedType: 'COLOR', value: { r, g, b, a: value.alpha === undefined ? 1 : value.alpha } };
     }
     case 'dimension': {
       // Figma numbers are unitless px. rem is 16 px here; em (letter-spacing) becomes a percentage.

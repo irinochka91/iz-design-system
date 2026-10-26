@@ -28,7 +28,7 @@ const decls = (theme, names, indent = '  ') => {
   return [...names].sort().map((n) => {
     if (isAliasLayer(all, n)) return `${indent}${cssName(n)}: var(${cssName(aliasTarget(all.get(n).value))});`;
     const r = resolve(all, n);
-    return `${indent}${cssName(n)}: ${toCss(r.type, r.value)};`;
+    return `${indent}${cssName(n)}: ${toCss(r.type, r.value, all)};`;
   }).join('\n');
 };
 

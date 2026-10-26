@@ -1,0 +1,16 @@
+{
+  "$description": "Elevation. Cards have none (a 1 px border does the work); only overlays — Popover, Toast, the command palette — carry shadow.overlay. Dark themes override it to a transparent, zero-size shadow (the handoff drops the shadow in dark mode). ADR-027.",
+  "shadow": {
+    "overlay": {
+      "$type": "shadow",
+      "$value": {
+        "color": "{color.overlay-shadow}",
+        "offsetX": "{space.0}",
+        "offsetY": "{space.2}",
+        "blur": "{space.6}",
+        "spread": "{space.0}"
+      },
+      "$description": "0 8px 24px rgb(0 0 0 / 0.18) — popovers and the toast body"
+    }
+  }
+}

@@ -143,6 +143,7 @@
   --iz-radius-md: 8px;
   --iz-radius-sm: 4px;
   --iz-radius-xl: 14px;
+  --iz-shadow-overlay: 0px 8px 24px 0px rgb(0 0 0 / 0.18);
   --iz-size-target-lg: 40px;
   --iz-size-target-md: 32px;
   --iz-size-target-min: 24px;
@@ -225,6 +226,7 @@
   --iz-color-text-secondary: #C3C9D1;
   --iz-color-text-success: #86EFAC;
   --iz-color-text-warning: #FCD34D;
+  --iz-shadow-overlay: 0px 0px 0px 0px rgb(0 0 0 / 0);
   color-scheme: dark;
 }
 
@@ -331,6 +333,7 @@
   --iz-color-text-secondary: #EEF0F3;
   --iz-color-text-success: #86EFAC;
   --iz-color-text-warning: #FCD34D;
+  --iz-shadow-overlay: 0px 0px 0px 0px rgb(0 0 0 / 0);
   color-scheme: dark;
 }
 
@@ -459,6 +462,7 @@
   --iz-font-label-family: "IBM Plex Mono", "JetBrains Mono", SFMono-Regular, monospace;
   --iz-font-label-line-height: 1.4545;
   --iz-font-label-size: 0.6875rem;
+  --iz-shadow-overlay: 0px 0px 0px 0px rgb(0 0 0 / 0);
   color-scheme: dark;
 }
 
@@ -512,6 +516,7 @@
     --iz-color-text-secondary: #C3C9D1;
     --iz-color-text-success: #86EFAC;
     --iz-color-text-warning: #FCD34D;
+    --iz-shadow-overlay: 0px 0px 0px 0px rgb(0 0 0 / 0);
     color-scheme: dark;
   }
 }
@@ -618,6 +623,7 @@
     --iz-color-text-secondary: #EEF0F3;
     --iz-color-text-success: #86EFAC;
     --iz-color-text-warning: #FCD34D;
+    --iz-shadow-overlay: 0px 0px 0px 0px rgb(0 0 0 / 0);
     color-scheme: dark;
   }
 }

@@ -83,9 +83,19 @@ export function resolve(all, name, seen = []) {
 
 export const cssName = (name) => `--iz-${name.replace(/\./g, '-')}`;
 
-export function toCss(type, value) {
+/** `all` is needed only for composites (shadow), whose parts are aliases resolved here. */
+export function toCss(type, value, all) {
   switch (type) {
-    case 'color': return value.hex ?? `rgb(${value.components.map((c) => Math.round(c * 255)).join(' ')})`;
+    case 'color': {
+      const rgb = value.components.map((c) => Math.round(c * 255)).join(' ');
+      if (value.alpha !== undefined && value.alpha < 1) return `rgb(${rgb} / ${value.alpha})`;
+      return value.hex ?? `rgb(${rgb})`;
+    }
+    case 'shadow': {
+      if (!all) throw new Error('toCss(shadow) needs the token map to resolve its parts');
+      const part = (k) => { const r = resolve(all, aliasTarget(value[k])); return toCss(r.type, r.value, all); };
+      return `${part('offsetX')} ${part('offsetY')} ${part('blur')} ${part('spread')} ${part('color')}`;
+    }
     case 'dimension': return `${value.value}${value.unit}`;
     case 'duration': return `${value.value}${value.unit}`;
     case 'cubicBezier': return `cubic-bezier(${value.join(', ')})`;

@@ -217,5 +217,17 @@
         "$value": "{color.oxblood.300}"
       }
     }
+  },
+  "shadow": {
+    "overlay": {
+      "$type": "shadow",
+      "$value": {
+        "color": "{color.transparent}",
+        "offsetX": "{space.0}",
+        "offsetY": "{space.0}",
+        "blur": "{space.0}",
+        "spread": "{space.0}"
+      }
+    }
   }
 }

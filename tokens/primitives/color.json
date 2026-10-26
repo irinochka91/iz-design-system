@@ -1,5 +1,5 @@
 {
-  "$description": "Primitive colour ramps. Never referenced by components \u2014 only by semantic tokens.",
+  "$description": "Primitive colour ramps. Never referenced by components — only by semantic tokens.",
   "color": {
     "white": {
       "$type": "color",
@@ -550,6 +550,34 @@
           "hex": "#78350F"
         }
       }
+    },
+    "overlay-shadow": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "hex": "#000000",
+        "alpha": 0.18
+      },
+      "$description": "Shadow ink for overlays — rgb(0 0 0 / 0.18) (specs/HANDOFF.md § Elevation). ADR-027."
+    },
+    "transparent": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0,
+          0,
+          0
+        ],
+        "hex": "#000000",
+        "alpha": 0
+      },
+      "$description": "Fully transparent — dark themes drop the overlay shadow by pointing shadow.overlay.color here."
     }
   }
 }

@@ -1668,6 +1668,25 @@
         "css": "--iz-radius-xl",
         "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
       },
+      "shadow.overlay": {
+        "$type": "shadow",
+        "$value": {
+          "color": "{color.overlay-shadow}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.2}",
+          "blur": "{space.6}",
+          "spread": "{space.0}"
+        },
+        "alias": {
+          "color": "{color.overlay-shadow}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.2}",
+          "blur": "{space.6}",
+          "spread": "{space.0}"
+        },
+        "css": "--iz-shadow-overlay",
+        "$description": "0 8px 24px rgb(0 0 0 / 0.18) — popovers and the toast body"
+      },
       "size.target.lg": {
         "$type": "dimension",
         "$value": {
@@ -3608,6 +3627,25 @@
         "alias": "{radius-scale.3-5}",
         "css": "--iz-radius-xl",
         "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
+      },
+      "shadow.overlay": {
+        "$type": "shadow",
+        "$value": {
+          "color": "{color.transparent}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.0}",
+          "blur": "{space.0}",
+          "spread": "{space.0}"
+        },
+        "alias": {
+          "color": "{color.transparent}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.0}",
+          "blur": "{space.0}",
+          "spread": "{space.0}"
+        },
+        "css": "--iz-shadow-overlay",
+        "$description": "0 8px 24px rgb(0 0 0 / 0.18) — popovers and the toast body"
       },
       "size.target.lg": {
         "$type": "dimension",
@@ -5550,6 +5588,25 @@
         "css": "--iz-radius-xl",
         "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
       },
+      "shadow.overlay": {
+        "$type": "shadow",
+        "$value": {
+          "color": "{color.overlay-shadow}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.2}",
+          "blur": "{space.6}",
+          "spread": "{space.0}"
+        },
+        "alias": {
+          "color": "{color.overlay-shadow}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.2}",
+          "blur": "{space.6}",
+          "spread": "{space.0}"
+        },
+        "css": "--iz-shadow-overlay",
+        "$description": "0 8px 24px rgb(0 0 0 / 0.18) — popovers and the toast body"
+      },
       "size.target.lg": {
         "$type": "dimension",
         "$value": {
@@ -7491,6 +7548,25 @@
         "css": "--iz-radius-xl",
         "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
       },
+      "shadow.overlay": {
+        "$type": "shadow",
+        "$value": {
+          "color": "{color.transparent}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.0}",
+          "blur": "{space.0}",
+          "spread": "{space.0}"
+        },
+        "alias": {
+          "color": "{color.transparent}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.0}",
+          "blur": "{space.0}",
+          "spread": "{space.0}"
+        },
+        "css": "--iz-shadow-overlay",
+        "$description": "0 8px 24px rgb(0 0 0 / 0.18) — popovers and the toast body"
+      },
       "size.target.lg": {
         "$type": "dimension",
         "$value": {
@@ -9424,6 +9500,25 @@
         "css": "--iz-radius-xl",
         "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
       },
+      "shadow.overlay": {
+        "$type": "shadow",
+        "$value": {
+          "color": "{color.overlay-shadow}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.2}",
+          "blur": "{space.6}",
+          "spread": "{space.0}"
+        },
+        "alias": {
+          "color": "{color.overlay-shadow}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.2}",
+          "blur": "{space.6}",
+          "spread": "{space.0}"
+        },
+        "css": "--iz-shadow-overlay",
+        "$description": "0 8px 24px rgb(0 0 0 / 0.18) — popovers and the toast body"
+      },
       "size.target.lg": {
         "$type": "dimension",
         "$value": {
@@ -11356,6 +11451,25 @@
         "alias": "{radius-scale.3-5}",
         "css": "--iz-radius-xl",
         "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
+      },
+      "shadow.overlay": {
+        "$type": "shadow",
+        "$value": {
+          "color": "{color.transparent}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.0}",
+          "blur": "{space.0}",
+          "spread": "{space.0}"
+        },
+        "alias": {
+          "color": "{color.transparent}",
+          "offsetX": "{space.0}",
+          "offsetY": "{space.0}",
+          "blur": "{space.0}",
+          "spread": "{space.0}"
+        },
+        "css": "--iz-shadow-overlay",
+        "$description": "0 8px 24px rgb(0 0 0 / 0.18) — popovers and the toast body"
       },
       "size.target.lg": {
         "$type": "dimension",

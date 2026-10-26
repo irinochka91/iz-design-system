@@ -8,7 +8,10 @@ const isAliasLayer = (file) => /\.(pairs|handoff)\.json$/.test(file ?? '');
 
 const errors = [];
 const shape = {
-  color: (v) => v && v.colorSpace === 'srgb' && Array.isArray(v.components) && v.components.length === 3 && /^#[0-9A-F]{6}$/.test(v.hex ?? ''),
+  color: (v) => v && v.colorSpace === 'srgb' && Array.isArray(v.components) && v.components.length === 3 && /^#[0-9A-F]{6}$/.test(v.hex ?? '')
+    && (v.alpha === undefined || (typeof v.alpha === 'number' && v.alpha >= 0 && v.alpha <= 1)),
+  // DTCG shadow composite: every part is an alias (to a colour / dimension primitive) — never a raw value.
+  shadow: (v) => v && ['color', 'offsetX', 'offsetY', 'blur', 'spread'].every((k) => isAlias(v[k])),
   dimension: (v) => v && typeof v.value === 'number' && ['px', 'rem', 'em'].includes(v.unit),
   duration: (v) => v && typeof v.value === 'number' && ['ms', 's'].includes(v.unit),
   cubicBezier: (v) => Array.isArray(v) && v.length === 4 && v.every((n) => typeof n === 'number'),
@@ -27,7 +30,8 @@ for (const theme of THEMES) {
     } else if (shape[t.type] && !shape[t.type](t.value)) {
       errors.push(`${theme}: ${name} has a malformed ${t.type} $value: ${JSON.stringify(t.value)}`);
     }
-    if (semanticNames.has(name) && !isAlias(t.value)) errors.push(`${theme}: semantic token ${name} holds a raw value — alias a primitive instead`);
+    // A composite (shadow) is "all aliases" by its shape check; its parts point at primitives.
+    if (semanticNames.has(name) && !isAlias(t.value) && t.type !== 'shadow') errors.push(`${theme}: semantic token ${name} holds a raw value — alias a primitive instead`);
     if (semanticNames.has(name) && isAlias(t.value) && semanticNames.has(aliasTarget(t.value)) && !isAliasLayer(t.file))
       errors.push(`${theme}: semantic token ${name} aliases another semantic token (${aliasTarget(t.value)}) — only *.pairs.json / *.handoff.json may do that`);
     if (primitiveNames.has(name) && isAlias(t.value)) errors.push(`${theme}: primitive token ${name} must not alias`);

@@ -1,0 +1,141 @@
+{
+  "name": "Toast",
+  "category": "Feedback",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "A brief, polite status message at the bottom-centre of the screen — 'Done: Email Priya · Undo' — that never steals focus, dismisses itself after 6 s (paused while hovered or focused) and is replaced, not stacked, when a new one arrives. Not for errors that need a response (Alert, Dialog) and not for anything the user must not miss.",
+  "pattern": {
+    "name": "WAI-ARIA status message (4.1.3) in a polite live region; the region itself is a landmark so assistive tech can jump to it",
+    "url": "https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html"
+  },
+  "role": "status",
+  "props": {
+    "isOpen": {
+      "type": "boolean",
+      "intent": "Controlled. The app or pattern owns the single toast; showing a new message while open replaces the content and restarts the timer — there is never more than one."
+    },
+    "onClose": {
+      "type": "(reason: 'timeout' | 'dismiss' | 'action') => void",
+      "intent": "Fires when the toast should go away: the timer ran out, the user pressed Escape or the close button, or the action was taken. The owner sets isOpen=false."
+    },
+    "children": {
+      "type": "ReactNode",
+      "intent": "The message. One short sentence; it is read once by a screen reader and vanishes in 6 s, so no detail that matters only here."
+    },
+    "action": {
+      "type": "{ label: string; onPress: () => void }",
+      "intent": "An optional single action — Undo. Rendered as a tertiary Button inside the toast. The same outcome must be reachable elsewhere (e.g. the done row can be un-done from the list), because a toast can be missed."
+    },
+    "timeout": {
+      "type": "number",
+      "default": "6000",
+      "intent": "Milliseconds before auto-dismiss. Minimum 5000 (docs/ACCESSIBILITY.md); 0 means persistent, allowed only with an action and a visible close button. Pauses while hovered or focused and restarts on leave."
+    },
+    "announceKey": {
+      "type": "string | number",
+      "intent": "Change it to re-announce the same text twice (a live region only speaks when its content changes): 'Done.' then 'Done.' needs a new key."
+    },
+    "regionLabel": {
+      "type": "string",
+      "default": "'Notifications'",
+      "intent": "Accessible name of the landmark region that holds the toast. Localise it."
+    }
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "paused",
+    "entering",
+    "leaving"
+  ],
+  "keyboard": [
+    {
+      "key": "Landmark navigation (screen reader) / F6 if the app binds it",
+      "action": "Moves to the Notifications region. The toast never takes focus on its own (it is a status, not a dialog); the app may bind F6 or Ctrl+Alt+T to focus the region and must document it."
+    },
+    {
+      "key": "Tab / Shift+Tab (inside the region)",
+      "action": "Reaches the action (Undo) and the close button, in that order. Leaving the region resumes the timer."
+    },
+    {
+      "key": "Enter / Space",
+      "action": "Activates the focused action or close button."
+    },
+    {
+      "key": "Escape (while focus is inside the toast)",
+      "action": "Dismisses. A global Escape does nothing — Dialog and quick-add own that key elsewhere."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.2.1",
+      "2.4.7",
+      "2.4.11",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "name": "The region is named by regionLabel ('Notifications'). The toast itself has no name; its content is the message.",
+    "announcements": "The message element is role=\"status\" (aria-live=\"polite\", aria-atomic=\"true\"), so it is read after the current utterance, once, without moving focus. Replacing the content announces the new message; the same text twice needs a new announceKey. The action button is announced by its label ('Undo').",
+    "screenReaderNotes": "",
+    "targetSize": "The toast is not a target. Its action and close buttons are Buttons (md, 40 px) and meet 2.5.8 on their own."
+  },
+  "tokens": [
+    "color.surface.overlay",
+    "color.border.default",
+    "color.text.primary",
+    "shadow.overlay",
+    "radius.lg",
+    "border.width.sm",
+    "space.inset.md",
+    "space.inset.lg",
+    "space.inline.md",
+    "font.body.family",
+    "font.body.size",
+    "font.body.line-height",
+    "duration.normal",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [
+    "Button"
+  ],
+  "composedBy": [],
+  "rules": [
+    "One toast, ever. A new message replaces the current one and restarts the timer; there is no stack and no queue. Two things worth saying at once means one of them is not a toast.",
+    "Never steal focus. Showing a toast moves nothing; the user keeps typing. Focus reaches it only by landmark navigation, F6 (if the app binds it) or Tab when the region happens to be next in order.",
+    "Timing is adjustable (2.2.1): auto-dismiss is 6 s, never below 5, and pauses while the pointer or focus is inside — a user who starts reading or reaching for Undo is never cut off.",
+    "A toast can be missed, so it never carries the only way to do something. Undo in the toast is a convenience; the row can be un-done from the list as well.",
+    "Never obscures focus (2.4.11): fixed bottom-centre, inset by space.inset.lg; the app shell sets scroll-padding-block-end at least the toast's height so a focused element near the bottom scrolls clear of it.",
+    "Body is Card variant='raised' (color.surface.overlay + border) with shadow.overlay — the only elevation in the system besides Popover. Dark themes drop the shadow through the token, not through component code.",
+    "Enter motion: translate 8 px up + fade over duration.normal; leave: fade. Under prefers-reduced-motion the generated token CSS zeroes durations and the transform must not exceed 4 px — the component sets no motion the tokens cannot switch off.",
+    "Escape inside the toast dismisses; the component never listens to Escape on the document — that key belongs to Dialog and quick-add.",
+    "Built on React Aria hooks (useHover, useFocusWithin) and the system Button, not on UNSTABLE_Toast: its alertdialog role and FIFO queue are the opposite of a polite, replacing status (ADR-028)."
+  ],
+  "figma": {
+    "componentSet": "Feedback / Toast",
+    "properties": {
+      "Action": "action (boolean show + label)",
+      "Message": "children",
+      "State": "default / hover / focus (paused is the same visual as hover)"
+    }
+  },
+  "examples": [
+    {
+      "title": "Done with Undo (ActionRow)",
+      "code": "<Toast isOpen={toast !== null} onClose={() => setToast(null)} action={{ label: 'Undo', onPress: undoDone }}>Done: Email Priya</Toast>"
+    },
+    {
+      "title": "Status only",
+      "code": "<Toast isOpen={saved} onClose={() => setSaved(false)}>Saved to pipeline</Toast>"
+    },
+    {
+      "title": "Same message twice",
+      "code": "<Toast isOpen announceKey={count} onClose={clear}>Done.</Toast>"
+    }
+  ],
+  "source": "src/components/Feedback/Toast/Toast.spec.json"
+}

@@ -141,6 +141,7 @@ export type TokenName =
   | 'radius.md'
   | 'radius.sm'
   | 'radius.xl'
+  | 'shadow.overlay'
   | 'size.target.lg'
   | 'size.target.md'
   | 'size.target.min'
