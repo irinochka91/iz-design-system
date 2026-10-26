@@ -1,0 +1,179 @@
+{
+  "name": "Popover",
+  "category": "Overlay",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "A small surface anchored to its trigger for one or two controls or a short explanation — adjust the weekly target, edit a priority, 'what counts as a quality application'. Non-blocking in look, modal for assistive technology by default (the page is hidden and focus is contained, as in Menu); isNonModal exists for combobox-style surfaces only. Not for a decision (Modal), not for a list of actions (Menu), not for a one-line hint on hover (Tooltip).",
+  "pattern": {
+    "name": "Dialog (non-modal popover) — APG dialog pattern in a positioned overlay",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+  },
+  "role": "dialog",
+  "props": {
+    "trigger": {
+      "type": "ReactElement<ButtonProps>",
+      "intent": "The Button it is anchored to. DialogTrigger wires aria-haspopup=\"dialog\", aria-expanded and focus return."
+    },
+    "title": {
+      "type": "string",
+      "requiredWhen": "aria-label is not given. Rendered as a small heading (Heading slot=\"title\", h3) and read first.",
+      "intent": "The accessible name AND the visible heading: 'Weekly target'."
+    },
+    "aria-label": {
+      "type": "string",
+      "requiredWhen": "title is omitted — a popover that is a single control with its own label.",
+      "intent": "Name without a visible heading."
+    },
+    "children": {
+      "type": "ReactNode | ((close: () => void) => ReactNode)",
+      "intent": "At most a couple of controls and a sentence. The function form receives close() so a Done button can dismiss. More than that is a Modal."
+    },
+    "placement": {
+      "type": "'bottom start' | 'bottom' | 'bottom end' | 'top start' | 'top' | 'top end' | 'start' | 'end'",
+      "default": "'bottom'",
+      "intent": "Preferred side and alignment; flips when there is no room. Gap to the trigger is space.200 (8 px), read from the token at runtime — React Aria positions with a number."
+    },
+    "isOpen": {
+      "type": "boolean",
+      "intent": "Controlled. Pair with onOpenChange."
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Uncontrolled initial state."
+    },
+    "onOpenChange": {
+      "type": "(isOpen: boolean) => void",
+      "intent": "Closed by any means: Escape, close(), a click outside (modal) or focus leaving (non-modal)."
+    },
+    "isNonModal": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "false (default): the page is hidden from assistive technology, scroll is locked, Tab is contained, a click outside closes — React Aria's default, safe for screen readers. true: the page stays reachable and the popover closes when focus leaves it. React Aria warns this degrades the screen-reader experience; use it only for a combobox-style surface, never for a form."
+    },
+    "isKeyboardDismissDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Escape always closes unless set. Set only when Escape would lose typed input — then a Done/Cancel control must be inside."
+    },
+    "showArrow": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "A decorative arrow pointing at the trigger (OverlayArrow). Visual only; it carries no meaning and no colour of its own."
+    },
+    "size": {
+      "type": "'sm' | 'md'",
+      "default": "'sm'",
+      "intent": "Max width 320 / 400 px (8 / 10 × size.target.lg). A popover wider than that is a Modal."
+    },
+    "padding": {
+      "type": "'sm' | 'md'",
+      "default": "'md'",
+      "intent": "Inset 8 / 16 px (space.inset.sm / md). sm for a single control."
+    }
+  },
+  "states": [
+    "closed",
+    "open",
+    "focus",
+    "entering",
+    "leaving"
+  ],
+  "keyboard": [
+    {
+      "key": "Enter / Space (on the trigger)",
+      "action": "Opens. Focus moves to the first focusable control inside, or to the popover itself if there is none."
+    },
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "Default (modal for AT): cycle inside only — contained, as in Menu (ADR-029). isNonModal: focus leaves and the popover closes."
+    },
+    {
+      "key": "Escape",
+      "action": "Closes and returns focus to the trigger (unless isKeyboardDismissDisabled)."
+    },
+    {
+      "key": "Click / tap outside",
+      "action": "Closes (modal: interact-outside; non-modal: the blur does it) and returns focus to the trigger."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "2.4.11",
+      "4.1.2"
+    ],
+    "name": "From title (a heading wired by aria-labelledby) or aria-label — the type union requires one of the two.",
+    "announcements": "role=\"dialog\"; the trigger gets aria-haspopup=\"dialog\" and aria-expanded. Default mode hides everything outside with aria-hidden (React Aria ariaHideOutside) and locks scroll; both are undone on close. React Aria omits aria-modal (inconsistent AT support) — the same as Modal.",
+    "screenReaderNotes": "",
+    "targetSize": "Not a target itself. The trigger is a Button; controls inside are system components and meet their own sizes."
+  },
+  "tokens": [
+    "color.surface.overlay",
+    "color.border.default",
+    "shadow.overlay",
+    "radius.lg",
+    "border.width.sm",
+    "border.width.focus",
+    "color.border.focus",
+    "space.inset.sm",
+    "space.inset.md",
+    "space.stack.sm",
+    "space.200",
+    "size.target.lg",
+    "color.text.primary",
+    "font.title.family",
+    "font.title.size",
+    "font.title.line-height",
+    "font.title.weight",
+    "font.body.family",
+    "font.body.size",
+    "font.body.line-height",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [
+    "Button"
+  ],
+  "composedBy": [],
+  "rules": [
+    "One or two controls, or a sentence. If it needs a footer with Cancel and a primary, it is a Modal. If it is a list of actions, it is a Menu. If it is a one-line hint, it is a Tooltip.",
+    "Modal for assistive technology by default (Menu precedent, ADR-029): the page is hidden, scroll locked, Tab contained, a click outside closes. isNonModal is the exception for combobox-style surfaces and is never used for a form — React Aria's own warning.",
+    "Focus moves in on open — the first control, or the popover itself — and returns to the trigger on close (2.4.3). The popover element shows the inset ring when it holds focus itself.",
+    "The title is a real heading (h3, Heading slot=\"title\") and the first thing read; without one, aria-label. Never an unlabelled dialog.",
+    "The gap to the trigger is space.200, read from the token at runtime because React Aria positions with a number. This is the one place a token value crosses into JavaScript; it is read, never typed.",
+    "Never nest popovers, and never open a Menu from inside one. One overlay at a time.",
+    "The body uses Card-raised tokens plus shadow.overlay (dark themes drop the shadow through the token); it is not a Card, because a popover's inset is 8 / 16 px.",
+    "The arrow is decorative: optional, no meaning, no separate colour (it is the surface and border, rotated). No z-index token yet (PARKING.md); the portal's DOM order stacks it above Toast."
+  ],
+  "figma": {
+    "componentSet": "Overlay / Popover",
+    "properties": {
+      "Placement": "placement (top / bottom / start / end × start / end alignment)",
+      "Size": "size (sm / md)",
+      "Arrow": "showArrow",
+      "Title": "title"
+    }
+  },
+  "examples": [
+    {
+      "title": "Adjust the weekly target",
+      "code": "<Popover trigger={<Button variant=\"tertiary\">Adjust</Button>} title=\"Weekly target\" placement=\"bottom end\">{(close) => (<><TextField label=\"Applications per week\" inputMode=\"numeric\" defaultValue=\"5\" /><Button variant=\"primary\" onPress={close}>Done</Button></>)}</Popover>"
+    },
+    {
+      "title": "A short explanation",
+      "code": "<Popover trigger={<Button variant=\"tertiary\" aria-label=\"What counts?\" iconStart={<InfoIcon />} />} title=\"What counts as quality\" showArrow>Fit ≥ 70, or an application you marked Stretch on purpose.</Popover>"
+    },
+    {
+      "title": "Combobox-style surface (non-modal)",
+      "code": "<Popover trigger={<Button>Filter…</Button>} aria-label=\"Filter leads\" isNonModal size=\"md\"><TextField aria-label=\"Search filters\" /></Popover>"
+    }
+  ],
+  "source": "src/components/Overlay/Popover/Popover.spec.json"
+}
