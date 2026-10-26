@@ -141,7 +141,13 @@ const loaded = Object.fromEntries(THEMES.map((t) => [t, loadTheme(t)]));
 const semantic = Object.fromEntries(allNames.filter((n) => !aliasLayer(n)).map((n) => {
   const modes = Object.fromEntries(THEMES.map((theme) => {
     const { all } = loaded[theme];
-    return [modeName(theme), { alias: figmaName(aliasTarget(all.get(n).value)), resolved: resolve(all, n).value }];
+    const src = all.get(n).value;
+    // A composite (shadow) holds one alias per part, not a single alias; Figma has no variable type for
+    // it, so the export carries the parts for a hand-made effect style and the plugin skips it.
+    const alias = isAlias(src)
+      ? figmaName(aliasTarget(src))
+      : Object.fromEntries(Object.entries(src).map(([k, v]) => [k, isAlias(v) ? figmaName(aliasTarget(v)) : v]));
+    return [modeName(theme), { alias, resolved: resolve(all, n).value }];
   }));
   return [figmaName(n), {
     $type: base.all.get(n).type,

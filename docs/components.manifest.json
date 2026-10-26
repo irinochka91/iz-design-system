@@ -155,6 +155,29 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "Toast",
+      "category": "Feedback",
+      "code": {
+        "path": "src/components/Feedback/Toast/Toast.tsx",
+        "import": "import { Toast } from '@iz/design-system'"
+      },
+      "spec": "src/components/Feedback/Toast/Toast.spec.json",
+      "stories": "src/components/Feedback/Toast/Toast.stories.tsx",
+      "figma": {
+        "componentSet": "Feedback / Toast",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; shadow.overlay is an effect style by hand; component set not built"
+      },
+      "propMap": {
+        "Action": "action",
+        "Message": "children",
+        "State": "default / hover / focus (paused shares the hover visual)"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

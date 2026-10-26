@@ -1,0 +1,71 @@
+/* Toast — every value is a token (docs/TOKENS.md). The region is a fixed, bottom-centre landmark;
+   the toast body is a raised surface with the system's only non-popover shadow (dark themes drop it
+   through the token). Spec: Toast.spec.json · ADR-027 for shadow.overlay, ADR-028 for the build. */
+
+.region {
+  position: fixed;
+  inset-block-end: var(--iz-space-inset-lg);
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  display: flex;
+  justify-content: center;
+  max-inline-size: calc(100% - 2 * var(--iz-space-inset-lg));
+  pointer-events: none; /* the region never blocks the page; the toast re-enables them */
+}
+
+.toast {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-toast-bg: var(--iz-color-surface-overlay);
+  --iz-toast-fg: var(--iz-color-text-primary);
+  --iz-toast-border: var(--iz-color-border-default);
+
+  display: flex;
+  align-items: center;
+  gap: var(--iz-space-inline-md);
+  padding: var(--iz-space-inset-md);
+  border: var(--iz-border-width-sm) solid var(--iz-toast-border);
+  border-radius: var(--iz-radius-lg);
+  background: var(--iz-toast-bg);
+  color: var(--iz-toast-fg);
+  box-shadow: var(--iz-shadow-overlay);
+  font-family: var(--iz-font-body-family);
+  font-size: var(--iz-font-body-size);
+  line-height: var(--iz-font-body-line-height);
+  pointer-events: auto;
+  animation: iz-toast-in var(--iz-duration-normal) var(--iz-easing-standard);
+}
+
+/* hidden attribute wins over display:flex (reset.css keeps [hidden]); the leave fade is on the owner's
+   next render, so the exit is a plain fade via the fast duration on opacity. */
+.toast[hidden] {
+  display: none;
+}
+
+.message {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+/* Enter: 8 px up + fade. Under prefers-reduced-motion the duration tokens are 0, so this is instant. */
+@keyframes iz-toast-in {
+  from {
+    opacity: 0;
+    translate: 0 var(--iz-space-200);
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.region[data-paused] .toast {
+  transition: opacity var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+/* Windows High Contrast / forced-colors: the border is the only separation once the shadow is gone. */
+@media (forced-colors: active) {
+  .toast {
+    border-color: CanvasText;
+  }
+}

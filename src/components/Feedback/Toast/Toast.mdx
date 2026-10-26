@@ -1,0 +1,47 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ToastStories from './Toast.stories';
+
+<Meta of={ToastStories} />
+
+# Toast
+
+A brief, **polite** status at the bottom-centre — "Done: Email Priya · Undo". It never steals focus, dismisses itself after 6 s (paused while hovered or focused), and is **replaced, not stacked**, when a new one arrives. Not for errors that need a response (`Alert`, `Dialog`), and never the only way to do something.
+
+Pattern: [WCAG 4.1.3 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html) · Behaviour: React events + the system `Button` (not `UNSTABLE_Toast` — ADR-028) · Spec: `Toast.spec.json`
+
+<Canvas of={ToastStories.Playground} />
+<Controls of={ToastStories.Default} />
+
+## Anatomy
+
+`role="region"` landmark named *Notifications* (always mounted) → toast body (raised surface, `shadow.overlay`) → `role="status"` message (`aria-live="polite"`, `aria-atomic`) · optional action Button · Dismiss Button.
+
+The live region exists before the first message so assistive tech has registered it — otherwise the first toast is often not announced. The same text twice needs a new `announceKey`.
+
+## Timing
+
+`timeout` defaults to 6 000 ms and is clamped to a 5 s floor (WCAG 2.2.1). It pauses while the pointer or focus is inside and restarts on leave. `0` is persistent — allowed only with an action and the visible close button.
+
+<Canvas of={ToastStories.WithAction} />
+
+## Keyboard
+
+| Key | Action |
+|---|---|
+| Landmark navigation / `F6` (if the app binds it) | Moves to the *Notifications* region; the toast never takes focus on its own |
+| `Tab` / `Shift+Tab` inside | Undo, then Dismiss; leaving the region resumes the timer |
+| `Enter` / `Space` | Activates the focused button |
+| `Escape` **inside the toast** | Dismisses. A global Escape does nothing — Dialog and quick-add own it |
+
+## Do / Don't
+
+- Do keep the message to one sentence; it is read once.
+- Do make the Undo outcome reachable elsewhere — a toast can be missed.
+- Don't stack or queue; a second message means one of them is not a toast.
+- Don't put a shadow anywhere else; this and Popover are the only elevated surfaces.
+
+## Tokens consumed
+
+See `tokens` in `Toast.spec.json`; `check:specs` verifies the list against the CSS. Dark themes override `shadow.overlay` to a transparent shadow — the component has no theme code.
+
+<Stories />
