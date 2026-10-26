@@ -313,6 +313,12 @@
         "$type": "dimension",
         "$value": "{font.size.250}"
       }
+    },
+    "caption": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.grotesk}"
+      }
     }
   }
 }

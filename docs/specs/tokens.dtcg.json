@@ -1168,6 +1168,42 @@
         "alias": "{font.weight.regular}",
         "css": "--iz-font-body-weight"
       },
+      "font.caption.family": {
+        "$type": "fontFamily",
+        "$value": [
+          "Inter",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif"
+        ],
+        "alias": "{font.family.sans}",
+        "css": "--iz-font-caption-family"
+      },
+      "font.caption.line-height": {
+        "$type": "number",
+        "$value": 1.3333,
+        "alias": "{line-height.133}",
+        "css": "--iz-font-caption-line-height",
+        "$description": "12/16"
+      },
+      "font.caption.size": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        },
+        "alias": "{font.size.100}",
+        "css": "--iz-font-caption-size",
+        "$description": "12 px — chip labels, badges, fine print that is still a control label (never below 12). ADR-024."
+      },
+      "font.caption.weight": {
+        "$type": "fontWeight",
+        "$value": 500,
+        "alias": "{font.weight.medium}",
+        "css": "--iz-font-caption-weight"
+      },
       "font.code.family": {
         "$type": "fontFamily",
         "$value": [
@@ -1643,6 +1679,16 @@
         "alias": "{size.6}",
         "css": "--iz-size-target-min",
         "$description": "WCAG 2.2 AA minimum (2.5.8): 24px"
+      },
+      "size.target.sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "alias": "{size.7}",
+        "css": "--iz-size-target-sm",
+        "$description": "28 px — chips and other compact controls. Above the 24 px AA floor, below the 44 px touch guidance; the pattern provides spacing (2.5.8 spacing exception). ADR-024."
       },
       "size.target.touch": {
         "$type": "dimension",
@@ -3046,6 +3092,42 @@
         "alias": "{font.weight.regular}",
         "css": "--iz-font-body-weight"
       },
+      "font.caption.family": {
+        "$type": "fontFamily",
+        "$value": [
+          "Inter",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif"
+        ],
+        "alias": "{font.family.sans}",
+        "css": "--iz-font-caption-family"
+      },
+      "font.caption.line-height": {
+        "$type": "number",
+        "$value": 1.3333,
+        "alias": "{line-height.133}",
+        "css": "--iz-font-caption-line-height",
+        "$description": "12/16"
+      },
+      "font.caption.size": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        },
+        "alias": "{font.size.100}",
+        "css": "--iz-font-caption-size",
+        "$description": "12 px — chip labels, badges, fine print that is still a control label (never below 12). ADR-024."
+      },
+      "font.caption.weight": {
+        "$type": "fontWeight",
+        "$value": 500,
+        "alias": "{font.weight.medium}",
+        "css": "--iz-font-caption-weight"
+      },
       "font.code.family": {
         "$type": "fontFamily",
         "$value": [
@@ -3521,6 +3603,16 @@
         "alias": "{size.6}",
         "css": "--iz-size-target-min",
         "$description": "WCAG 2.2 AA minimum (2.5.8): 24px"
+      },
+      "size.target.sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "alias": "{size.7}",
+        "css": "--iz-size-target-sm",
+        "$description": "28 px — chips and other compact controls. Above the 24 px AA floor, below the 44 px touch guidance; the pattern provides spacing (2.5.8 spacing exception). ADR-024."
       },
       "size.target.touch": {
         "$type": "dimension",
@@ -4924,6 +5016,42 @@
         "alias": "{font.weight.regular}",
         "css": "--iz-font-body-weight"
       },
+      "font.caption.family": {
+        "$type": "fontFamily",
+        "$value": [
+          "Inter",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif"
+        ],
+        "alias": "{font.family.sans}",
+        "css": "--iz-font-caption-family"
+      },
+      "font.caption.line-height": {
+        "$type": "number",
+        "$value": 1.3333,
+        "alias": "{line-height.133}",
+        "css": "--iz-font-caption-line-height",
+        "$description": "12/16"
+      },
+      "font.caption.size": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        },
+        "alias": "{font.size.100}",
+        "css": "--iz-font-caption-size",
+        "$description": "12 px — chip labels, badges, fine print that is still a control label (never below 12). ADR-024."
+      },
+      "font.caption.weight": {
+        "$type": "fontWeight",
+        "$value": 500,
+        "alias": "{font.weight.medium}",
+        "css": "--iz-font-caption-weight"
+      },
       "font.code.family": {
         "$type": "fontFamily",
         "$value": [
@@ -5399,6 +5527,16 @@
         "alias": "{size.6}",
         "css": "--iz-size-target-min",
         "$description": "WCAG 2.2 AA minimum (2.5.8): 24px"
+      },
+      "size.target.sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "alias": "{size.7}",
+        "css": "--iz-size-target-sm",
+        "$description": "28 px — chips and other compact controls. Above the 24 px AA floor, below the 44 px touch guidance; the pattern provides spacing (2.5.8 spacing exception). ADR-024."
       },
       "size.target.touch": {
         "$type": "dimension",
@@ -6802,6 +6940,42 @@
         "alias": "{font.weight.regular}",
         "css": "--iz-font-body-weight"
       },
+      "font.caption.family": {
+        "$type": "fontFamily",
+        "$value": [
+          "Inter",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif"
+        ],
+        "alias": "{font.family.sans}",
+        "css": "--iz-font-caption-family"
+      },
+      "font.caption.line-height": {
+        "$type": "number",
+        "$value": 1.3333,
+        "alias": "{line-height.133}",
+        "css": "--iz-font-caption-line-height",
+        "$description": "12/16"
+      },
+      "font.caption.size": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        },
+        "alias": "{font.size.100}",
+        "css": "--iz-font-caption-size",
+        "$description": "12 px — chip labels, badges, fine print that is still a control label (never below 12). ADR-024."
+      },
+      "font.caption.weight": {
+        "$type": "fontWeight",
+        "$value": 500,
+        "alias": "{font.weight.medium}",
+        "css": "--iz-font-caption-weight"
+      },
       "font.code.family": {
         "$type": "fontFamily",
         "$value": [
@@ -7277,6 +7451,16 @@
         "alias": "{size.6}",
         "css": "--iz-size-target-min",
         "$description": "WCAG 2.2 AA minimum (2.5.8): 24px"
+      },
+      "size.target.sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "alias": "{size.7}",
+        "css": "--iz-size-target-sm",
+        "$description": "28 px — chips and other compact controls. Above the 24 px AA floor, below the 44 px touch guidance; the pattern provides spacing (2.5.8 spacing exception). ADR-024."
       },
       "size.target.touch": {
         "$type": "dimension",
@@ -8678,6 +8862,40 @@
         "alias": "{font.weight.regular}",
         "css": "--iz-font-body-weight"
       },
+      "font.caption.family": {
+        "$type": "fontFamily",
+        "$value": [
+          "Space Grotesk",
+          "Inter",
+          "system-ui",
+          "sans-serif"
+        ],
+        "alias": "{font.family.grotesk}",
+        "css": "--iz-font-caption-family"
+      },
+      "font.caption.line-height": {
+        "$type": "number",
+        "$value": 1.3333,
+        "alias": "{line-height.133}",
+        "css": "--iz-font-caption-line-height",
+        "$description": "12/16"
+      },
+      "font.caption.size": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        },
+        "alias": "{font.size.100}",
+        "css": "--iz-font-caption-size",
+        "$description": "12 px — chip labels, badges, fine print that is still a control label (never below 12). ADR-024."
+      },
+      "font.caption.weight": {
+        "$type": "fontWeight",
+        "$value": 500,
+        "alias": "{font.weight.medium}",
+        "css": "--iz-font-caption-weight"
+      },
       "font.code.family": {
         "$type": "fontFamily",
         "$value": [
@@ -9149,6 +9367,16 @@
         "alias": "{size.6}",
         "css": "--iz-size-target-min",
         "$description": "WCAG 2.2 AA minimum (2.5.8): 24px"
+      },
+      "size.target.sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "alias": "{size.7}",
+        "css": "--iz-size-target-sm",
+        "$description": "28 px — chips and other compact controls. Above the 24 px AA floor, below the 44 px touch guidance; the pattern provides spacing (2.5.8 spacing exception). ADR-024."
       },
       "size.target.touch": {
         "$type": "dimension",
@@ -10550,6 +10778,40 @@
         "alias": "{font.weight.regular}",
         "css": "--iz-font-body-weight"
       },
+      "font.caption.family": {
+        "$type": "fontFamily",
+        "$value": [
+          "Space Grotesk",
+          "Inter",
+          "system-ui",
+          "sans-serif"
+        ],
+        "alias": "{font.family.grotesk}",
+        "css": "--iz-font-caption-family"
+      },
+      "font.caption.line-height": {
+        "$type": "number",
+        "$value": 1.3333,
+        "alias": "{line-height.133}",
+        "css": "--iz-font-caption-line-height",
+        "$description": "12/16"
+      },
+      "font.caption.size": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        },
+        "alias": "{font.size.100}",
+        "css": "--iz-font-caption-size",
+        "$description": "12 px — chip labels, badges, fine print that is still a control label (never below 12). ADR-024."
+      },
+      "font.caption.weight": {
+        "$type": "fontWeight",
+        "$value": 500,
+        "alias": "{font.weight.medium}",
+        "css": "--iz-font-caption-weight"
+      },
       "font.code.family": {
         "$type": "fontFamily",
         "$value": [
@@ -11021,6 +11283,16 @@
         "alias": "{size.6}",
         "css": "--iz-size-target-min",
         "$description": "WCAG 2.2 AA minimum (2.5.8): 24px"
+      },
+      "size.target.sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 28,
+          "unit": "px"
+        },
+        "alias": "{size.7}",
+        "css": "--iz-size-target-sm",
+        "$description": "28 px — chips and other compact controls. Above the 24 px AA floor, below the 44 px touch guidance; the pattern provides spacing (2.5.8 spacing exception). ADR-024."
       },
       "size.target.touch": {
         "$type": "dimension",

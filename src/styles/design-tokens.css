@@ -86,6 +86,10 @@
   --iz-font-body-line-height: 1.5;
   --iz-font-body-size: 1rem;
   --iz-font-body-weight: 400;
+  --iz-font-caption-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --iz-font-caption-line-height: 1.3333;
+  --iz-font-caption-size: 0.75rem;
+  --iz-font-caption-weight: 500;
   --iz-font-code-family: "IBM Plex Mono", "JetBrains Mono", SFMono-Regular, monospace;
   --iz-font-code-line-height: 1.3333;
   --iz-font-code-size: 0.75rem;
@@ -140,6 +144,7 @@
   --iz-size-target-lg: 40px;
   --iz-size-target-md: 32px;
   --iz-size-target-min: 24px;
+  --iz-size-target-sm: 28px;
   --iz-size-target-touch: 44px;
   --iz-space-100: var(--iz-space-1);
   --iz-space-1000: var(--iz-space-10);
@@ -380,6 +385,7 @@
   --iz-font-body-family: "Space Grotesk", Inter, system-ui, sans-serif;
   --iz-font-body-line-height: 1.4667;
   --iz-font-body-size: 0.9375rem;
+  --iz-font-caption-family: "Space Grotesk", Inter, system-ui, sans-serif;
   --iz-font-control-size: 0.9375rem;
   --iz-font-heading-family: "Space Grotesk", Inter, system-ui, sans-serif;
   --iz-font-heading-line-height: 1.3333;
@@ -443,6 +449,7 @@
   --iz-font-body-family: "Space Grotesk", Inter, system-ui, sans-serif;
   --iz-font-body-line-height: 1.4667;
   --iz-font-body-size: 0.9375rem;
+  --iz-font-caption-family: "Space Grotesk", Inter, system-ui, sans-serif;
   --iz-font-control-size: 0.9375rem;
   --iz-font-heading-family: "Space Grotesk", Inter, system-ui, sans-serif;
   --iz-font-heading-line-height: 1.3333;

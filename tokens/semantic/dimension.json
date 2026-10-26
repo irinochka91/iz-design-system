@@ -79,19 +79,24 @@
         "$value": "{size.6}",
         "$description": "WCAG 2.2 AA minimum (2.5.8): 24px"
       },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{size.7}",
+        "$description": "28 px — chips and other compact controls. Above the 24 px AA floor, below the 44 px touch guidance; the pattern provides spacing (2.5.8 spacing exception). ADR-024."
+      },
       "md": {
         "$type": "dimension",
         "$value": "{size.8}"
-      },
-      "touch": {
-        "$type": "dimension",
-        "$value": "{size.11}",
-        "$description": "Recommended touch target: 44px (not the AA minimum)"
       },
       "lg": {
         "$type": "dimension",
         "$value": "{size.10}",
         "$description": "40 px — desktop control height (specs/HANDOFF.md: buttons and inputs 40 desktop / 44 phone). Button md, TextField md. ADR-021."
+      },
+      "touch": {
+        "$type": "dimension",
+        "$value": "{size.11}",
+        "$description": "Recommended touch target: 44px (not the AA minimum)"
       }
     }
   },

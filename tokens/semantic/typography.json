@@ -182,6 +182,26 @@
         "$type": "fontWeight",
         "$value": "{font.weight.regular}"
       }
+    },
+    "caption": {
+      "family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.sans}"
+      },
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.100}",
+        "$description": "12 px — chip labels, badges, fine print that is still a control label (never below 12). ADR-024."
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{line-height.133}",
+        "$description": "12/16"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.medium}"
+      }
     }
   }
 }

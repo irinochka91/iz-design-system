@@ -87,6 +87,14 @@
         "unit": "px"
       }
     },
+    "7": {
+      "$type": "dimension",
+      "$value": {
+        "value": 28,
+        "unit": "px"
+      },
+      "$description": "28 px — chip height (specs/HANDOFF.md). ADR-024."
+    },
     "8": {
       "$type": "dimension",
       "$value": {
