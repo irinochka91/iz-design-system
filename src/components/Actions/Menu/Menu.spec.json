@@ -1,0 +1,200 @@
+{
+  "name": "Menu",
+  "category": "Actions",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "A list of actions behind a trigger button — Snooze presets, 'set stage', row actions. Opens as a non-modal popover, is driven entirely from the keyboard, closes on choice or Escape and returns focus to the trigger. Not for choosing a value (Select, ComboBox) and never for navigation between pages (Link).",
+  "pattern": {
+    "name": "Menu Button (menu + menuitem; menuitemradio in single-selection mode)",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/"
+  },
+  "role": "menu",
+  "props": {
+    "trigger": {
+      "type": "ReactElement<ButtonProps>",
+      "intent": "The Button that opens the menu. React Aria wires aria-haspopup=\"menu\", aria-expanded and aria-controls onto it. The menu takes its accessible name from this button unless aria-label is given."
+    },
+    "children": {
+      "type": "MenuItem | MenuSection | Separator",
+      "intent": "Items, optionally grouped in sections with a Header. A MenuItem has an id, a visible label, an optional description (Text slot) and an optional keyboard hint (Keyboard slot)."
+    },
+    "onAction": {
+      "type": "(key: Key) => void",
+      "intent": "Fires with the chosen item's id. One handler for the whole menu — the pattern switches on the key ('tomorrow' | '+3d' | 'mon' | 'pick')."
+    },
+    "isOpen": {
+      "type": "boolean",
+      "intent": "Controlled open state. Pair with onOpenChange. The ActionRow opens the snooze menu from the S key by setting this."
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Uncontrolled initial state. Almost always false."
+    },
+    "onOpenChange": {
+      "type": "(isOpen: boolean) => void",
+      "intent": "Open or closed by any means: trigger press, choice, Escape, Tab out, click outside."
+    },
+    "placement": {
+      "type": "'bottom start' | 'bottom end' | 'top start' | 'top end'",
+      "default": "'bottom start'",
+      "intent": "Preferred side and alignment; flips when there is no room. 'end' aligns to the trigger's trailing edge — right for a trigger at the end of a row."
+    },
+    "selectionMode": {
+      "type": "'none' | 'single'",
+      "default": "'none'",
+      "intent": "none = actions (menuitem). single = one checked option (menuitemradio with aria-checked) for 'set stage' style menus; the checked item shows a tick AND aria-checked."
+    },
+    "selectedKey": {
+      "type": "Key",
+      "intent": "single mode only: the checked item. Controlled."
+    },
+    "disabledKeys": {
+      "type": "Key[]",
+      "intent": "Items shown but not actionable (aria-disabled, skipped by arrows? No — reachable, announced as dimmed). Prefer hiding an item that can never apply."
+    },
+    "aria-label": {
+      "type": "string",
+      "requiredWhen": "the trigger's visible text does not describe the menu (an icon-only '…' trigger).",
+      "intent": "Name of the menu as a whole: 'Snooze until', 'Row actions'."
+    },
+    "shouldCloseOnSelect": {
+      "type": "boolean",
+      "default": "true",
+      "intent": "Close after a choice. false only for multi-step menus, which this product does not have."
+    }
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "selected",
+    "disabled",
+    "open",
+    "entering",
+    "leaving"
+  ],
+  "keyboard": [
+    {
+      "key": "Enter / Space / ArrowDown (on the trigger)",
+      "action": "Opens the menu and moves focus to the first item."
+    },
+    {
+      "key": "ArrowUp (on the trigger)",
+      "action": "Opens the menu and moves focus to the last item."
+    },
+    {
+      "key": "ArrowDown / ArrowUp",
+      "action": "Move focus between items, wrapping at the ends. Disabled items are reachable and announced as dimmed."
+    },
+    {
+      "key": "Home / End",
+      "action": "First / last item."
+    },
+    {
+      "key": "Typing a character",
+      "action": "Type-ahead: focus moves to the next item whose label starts with the typed characters."
+    },
+    {
+      "key": "Enter / Space",
+      "action": "Activates the focused item (onAction), closes the menu, returns focus to the trigger."
+    },
+    {
+      "key": "Escape",
+      "action": "Closes without a choice and returns focus to the trigger."
+    },
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "Closes the menu (no focus trap — it is a non-modal popover) and moves focus on in the page order."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.1.2",
+      "2.4.3",
+      "2.4.7",
+      "2.4.11",
+      "2.5.8",
+      "4.1.2"
+    ],
+    "name": "The menu is labelled by its trigger (aria-labelledby) — 'Snooze' — or by aria-label when the trigger is an icon. Each item's name is its label text; description and keyboard hint are read after it.",
+    "announcements": "Trigger: aria-haspopup=\"menu\", aria-expanded true/false. Items: role=\"menuitem\" (menuitemradio + aria-checked in single mode); aria-disabled for disabledKeys. Opening announces the menu's name and the focused item; choosing or Escape returns focus to the trigger, which is announced again.",
+    "screenReaderNotes": "",
+    "targetSize": "Items are 40 px tall (size.target.lg) and span the popover's full width; the trigger is a Button and meets its own size. The popover is at least 160 px wide so short labels are not tiny targets."
+  },
+  "tokens": [
+    "color.surface.overlay",
+    "color.border.default",
+    "shadow.overlay",
+    "radius.lg",
+    "border.width.sm",
+    "border.width.focus",
+    "color.border.focus",
+    "space.inset.sm",
+    "space.inset.md",
+    "space.inline.sm",
+    "size.target.lg",
+    "color.text.primary",
+    "color.text.secondary",
+    "color.text.disabled",
+    "color.action.secondary.bg-hover",
+    "color.action.secondary.bg-active",
+    "color.action.primary.bg-subtle",
+    "color.action.primary.fg",
+    "font.body.family",
+    "font.body.size",
+    "font.body.line-height",
+    "font.label.family",
+    "font.label.size",
+    "font.label.weight",
+    "font.code.family",
+    "font.code.size",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [
+    "Button",
+    "Card"
+  ],
+  "composedBy": [],
+  "rules": [
+    "Menu is for actions, not values. 'Snooze until…' is a menu; 'Stage: Interview' as a form field is a Select. The role tells a screen-reader user what Enter will do.",
+    "The split button (ActionRow's Snooze) is a composition, not a component: a Button that applies the default (+3d) next to a MenuTrigger whose Button is icon-only with aria-label='More snooze options'. Two buttons, two names, one visual group. The pattern owns it.",
+    "Focus always returns to the trigger on close — choice, Escape, Tab or click outside (2.4.3). Never leave focus on body.",
+    "No focus trap (2.1.2): Tab closes and moves on. A menu that traps is a dialog.",
+    "The focused item is marked two ways: a background change AND an inset outline ring. The hover background alone is ~1.1:1 against the surface and is not a focus indicator (2.4.7, 1.4.11).",
+    "Items hold text, an optional description and an optional keyboard hint — never a nested button, link-button or input. An item that needs a form is a Dialog.",
+    "Seven items or fewer in one list; more than that gets sections with headers, or is not a menu.",
+    "Destructive actions ('Withdraw application') are plain items that open a confirmation Dialog; no red text in menus — status colours belong to text and rings in the patterns, and one accent per screen.",
+    "The popover body is Card variant='raised' with shadow.overlay (dark themes drop it through the token). It renders in a portal at the end of body; no z-index token exists yet — see PARKING.md.",
+    "Keyboard hints (Keyboard slot) show the shortcut that triggers the same action outside the menu ('S' for the default snooze). They are informative text, read after the label; they never duplicate the item's name."
+  ],
+  "figma": {
+    "componentSet": "Actions / Menu",
+    "properties": {
+      "Placement": "placement (bottom start / bottom end / top start / top end)",
+      "Item state": "default / hover / focus / active / selected / disabled",
+      "Sections": "boolean — MenuSection with Header",
+      "Hint": "boolean — Keyboard slot on items"
+    }
+  },
+  "examples": [
+    {
+      "title": "Snooze presets",
+      "code": "<Menu trigger={<Button>Snooze</Button>} onAction={(key) => snooze(key)}><MenuItem id=\"tomorrow\">Tomorrow</MenuItem><MenuItem id=\"+3d\">In 3 days<Keyboard>S</Keyboard></MenuItem><MenuItem id=\"mon\">Monday</MenuItem><Separator /><MenuItem id=\"pick\">Pick a date…</MenuItem></Menu>"
+    },
+    {
+      "title": "Split button (composed in ActionRow)",
+      "code": "<div role=\"group\" aria-label=\"Snooze\"><Button onPress={() => snooze('+3d')}>Snooze</Button><Menu trigger={<Button aria-label=\"More snooze options\" iconStart={<ChevronIcon />} />} placement=\"bottom end\" onAction={snooze}>…</Menu></div>"
+    },
+    {
+      "title": "Set stage (single selection, with a terminal section)",
+      "code": "<Menu trigger={<Button>Stage: Screen</Button>} selectionMode=\"single\" selectedKey={stage} onAction={setStage}><MenuSection><Header>Pipeline</Header><MenuItem id=\"applied\">Applied</MenuItem><MenuItem id=\"screen\">Screen</MenuItem><MenuItem id=\"interview\">Interview</MenuItem><MenuItem id=\"offer\">Offer</MenuItem></MenuSection><MenuSection><Header>Close</Header><MenuItem id=\"rejected\">Rejected</MenuItem><MenuItem id=\"withdrawn\">Withdrawn</MenuItem></MenuSection></Menu>"
+    }
+  ]
+}
