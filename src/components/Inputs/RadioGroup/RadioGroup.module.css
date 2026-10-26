@@ -1,0 +1,183 @@
+/* RadioGroup — every value is a token (docs/TOKENS.md). States come from React Aria data-* attributes:
+   on the group (data-orientation, data-invalid, data-disabled, data-readonly, data-required) and on each
+   radio label (data-selected, data-hovered, data-pressed, data-focus-visible, data-disabled).
+   Spec: RadioGroup.spec.json */
+
+.root {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-radiogroup-bg: var(--iz-color-surface-raised);
+  --iz-radiogroup-border: var(--iz-color-border-strong);
+  --iz-radiogroup-border-width: var(--iz-border-width-sm);
+  --iz-radiogroup-dot: var(--iz-color-action-primary-bg);
+  --iz-radiogroup-fg: var(--iz-color-text-primary);
+  --iz-radiogroup-min-height: var(--iz-size-target-min);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--iz-space-stack-xs);
+  font-family: var(--iz-font-body-family);
+  font-size: var(--iz-font-body-size);
+  line-height: var(--iz-font-body-line-height);
+  color: var(--iz-radiogroup-fg);
+}
+
+/* ---- sizes: row min-heights 24 / 44 px per radio ---- */
+.lg {
+  --iz-radiogroup-min-height: var(--iz-size-target-touch);
+}
+
+/* The group name reads as the question: body weight, not a heading. */
+.label {
+  font-weight: var(--iz-font-body-weight);
+}
+
+.required {
+  margin-inline-start: var(--iz-space-inline-sm);
+  color: var(--iz-color-text-danger);
+}
+
+.description,
+.error {
+  font-size: var(--iz-font-meta-size);
+  line-height: var(--iz-font-meta-line-height);
+}
+
+.description {
+  color: var(--iz-color-text-secondary);
+}
+
+.error {
+  color: var(--iz-color-text-danger);
+}
+
+.error:empty {
+  display: none; /* stays in the DOM for aria-describedby; takes no space while valid */
+}
+
+/* ---- the options: a column by default; horizontal wraps rather than overflows ---- */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--iz-space-stack-sm);
+}
+
+.root[data-orientation="horizontal"] .options {
+  flex-flow: row wrap;
+  gap: var(--iz-space-stack-sm) var(--iz-space-inline-md);
+}
+
+/* Each radio is a <label> around the hidden input: the whole row is the target. */
+.radio {
+  display: inline-flex;
+  align-items: start;
+  gap: var(--iz-space-inline-sm);
+  min-block-size: var(--iz-radiogroup-min-height);
+  cursor: pointer;
+}
+
+/* A cell one text line tall, so the circle centres on the first line of the label. em is allowed on min-block-size. */
+.circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: calc(var(--iz-font-body-line-height) * 1em);
+}
+
+/* The ring is 1em of the label's text, so it scales with zoom; the dot inside is 50% of it. */
+.dot {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 1em;
+  block-size: 1em;
+  border: var(--iz-radiogroup-border-width) solid var(--iz-radiogroup-border);
+  border-radius: var(--iz-radius-full);
+  background: var(--iz-radiogroup-bg);
+  transition:
+    background-color var(--iz-duration-fast) var(--iz-easing-standard),
+    border-color var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+/* Selected is never colour-only: the dot is drawn AND aria-checked is set. */
+.dot::after {
+  content: "";
+  inline-size: 50%;
+  block-size: 50%;
+  border-radius: var(--iz-radius-full);
+  background: var(--iz-radiogroup-dot);
+  opacity: 0;
+  transition: opacity var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.radio[data-selected] {
+  --iz-radiogroup-border: var(--iz-color-action-primary-bg);
+}
+
+.radio[data-selected] .dot::after {
+  opacity: 1;
+}
+
+.radioLabel {
+  flex: 1;
+}
+
+/* ---- universal states ---- */
+
+.radio[data-hovered] {
+  --iz-radiogroup-border: var(--iz-color-action-primary-bg-hover);
+  --iz-radiogroup-dot: var(--iz-color-action-primary-bg-hover);
+}
+
+/* outline (not box-shadow): survives overflow clipping and forced-colors mode. px is allowed here on purpose. */
+.radio[data-focus-visible] .dot {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Invalid is group-level and never colour-only: thicker danger border on every radio + one error text + aria-invalid. */
+.root[data-invalid] {
+  --iz-radiogroup-border: var(--iz-color-border-danger);
+  --iz-radiogroup-border-width: var(--iz-border-width-md);
+}
+
+.root[data-readonly] .radio {
+  cursor: default;
+}
+
+.root[data-disabled],
+.radio[data-disabled] {
+  --iz-radiogroup-bg: var(--iz-color-action-disabled-bg);
+  --iz-radiogroup-border: var(--iz-color-action-disabled-bg);
+  --iz-radiogroup-dot: var(--iz-color-text-disabled);
+  --iz-radiogroup-fg: var(--iz-color-text-disabled);
+}
+
+.radio[data-disabled] {
+  color: var(--iz-radiogroup-fg);
+  cursor: not-allowed;
+}
+
+/* Windows High Contrast / forced-colors: keep a visible circle, a system-colour dot and a visible ring. */
+@media (forced-colors: active) {
+  .dot {
+    border-color: FieldText;
+    background: Field;
+  }
+
+  .dot::after {
+    background: FieldText;
+  }
+
+  .radio[data-selected] .dot {
+    border-color: Highlight;
+  }
+
+  .radio[data-selected] .dot::after {
+    background: Highlight;
+  }
+
+  .radio[data-focus-visible] .dot {
+    outline-color: Highlight;
+  }
+}

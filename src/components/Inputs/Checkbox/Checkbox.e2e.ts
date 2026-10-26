@@ -17,8 +17,9 @@ test.describe('Checkbox keyboard', () => {
   });
 
   test('Space toggles; Enter does not', async ({ page }) => {
-    await page.goto(story('inputs-checkbox--keyboard'));
-    const input = page.getByRole('checkbox', { name: 'Press Space' });
+    // Default, not Keyboard: that story's play() presses Space itself on load, and racing it made this flaky.
+    await page.goto(story('inputs-checkbox--default'));
+    const input = page.getByRole('checkbox', { name: 'Open to remote roles' });
     await input.focus();
     await page.keyboard.press('Space');
     await expect(input).toBeChecked();

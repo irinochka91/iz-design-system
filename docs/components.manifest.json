@@ -299,6 +299,34 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "RadioGroup",
+      "category": "Inputs",
+      "code": {
+        "path": "src/components/Inputs/RadioGroup/RadioGroup.tsx",
+        "import": "import { RadioGroup, Radio } from '@iz/design-system'"
+      },
+      "spec": "src/components/Inputs/RadioGroup/RadioGroup.spec.json",
+      "stories": "src/components/Inputs/RadioGroup/RadioGroup.stories.tsx",
+      "figma": {
+        "componentSet": "Inputs / RadioGroup",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Orientation": "orientation",
+        "Size": "size",
+        "State": "isInvalid / isDisabled / isReadOnly",
+        "Required": "isRequired",
+        "Label": "label",
+        "Description": "description",
+        "Error": "errorMessage",
+        "Radio / Label": "Radio children"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

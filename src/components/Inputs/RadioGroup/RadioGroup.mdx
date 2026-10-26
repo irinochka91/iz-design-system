@@ -1,0 +1,43 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as RadioGroupStories from './RadioGroup.stories';
+
+<Meta of={RadioGroupStories} />
+
+# RadioGroup
+
+**One choice from a short, fully visible list** of mutually exclusive options — two to about six. More is a `Select`; one is a `Checkbox` or a `Switch`; several picks are Checkboxes. Ships as two parts: `RadioGroup` (the question, description, error, orientation) and `Radio` (one option).
+
+Pattern: [WAI-ARIA APG — Radio Group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/) · Behaviour: React Aria `RadioGroup` + `Radio` · Spec: `RadioGroup.spec.json`
+
+<Canvas of={RadioGroupStories.Default} />
+<Controls of={RadioGroupStories.Default} />
+
+## One tab stop
+
+The group is a single stop in the tab order: `Tab` lands on the selected radio, or the first enabled one. Arrow keys move focus **and** select — there is no "move without choosing" in a radio group, by design. `Space` selects the focused radio; nothing ever deselects.
+
+<Canvas of={RadioGroupStories.Keyboard} />
+
+## How it is read
+
+`role="radiogroup"` named once by the label — the ARIA form of `fieldset` + `legend` — then each radio's own label with "selected, 2 of 3". Put the question in `label`, never in every option.
+
+## Ask the question, or preselect a safe default
+
+Omit `defaultValue` for a question the user must answer and let the form mark the group invalid on submit. Preselect only when the default is harmless (a 14-day window), never to dodge the empty state.
+
+<Canvas of={RadioGroupStories.Invalid} />
+
+Invalid is **group-level**: `aria-invalid` and the error text live on the group; the danger ring shows on every radio. Never an error per option.
+
+## Horizontal is layout, not semantics
+
+<Canvas of={RadioGroupStories.WithDescription} />
+
+Both arrow axes work in both orientations; a horizontal row wraps on narrow viewports instead of overflowing. Keep it to 2–3 short labels.
+
+## Tokens consumed
+
+See `tokens` in `RadioGroup.spec.json`; `check:specs` verifies the list against the CSS. The circle is `1em` of the label's text so it scales with zoom; rows meet 24 / 44 px (`size.target.min` / `size.target.touch`).
+
+<Stories />
