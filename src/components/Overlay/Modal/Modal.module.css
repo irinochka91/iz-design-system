@@ -1,0 +1,110 @@
+/* Modal — every value is a token (docs/TOKENS.md). The overlay is the translucent backdrop; the panel
+   is a raised surface with shadow.overlay; focus, inert and scroll-lock come from React Aria.
+   Spec: Modal.spec.json · ADR-030 for color.backdrop. */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--iz-space-inset-lg); /* the gutter on narrow screens */
+  background: var(--iz-color-backdrop);
+}
+
+.panel {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-modal-bg: var(--iz-color-surface-overlay);
+  --iz-modal-border: var(--iz-color-border-default);
+  --iz-modal-padding: var(--iz-space-inset-lg);
+  --iz-modal-max-width: calc(14 * var(--iz-size-target-lg)); /* md: 560 px */
+
+  inline-size: 100%;
+  max-inline-size: var(--iz-modal-max-width);
+  max-block-size: 100%;
+  border: var(--iz-border-width-sm) solid var(--iz-modal-border);
+  border-radius: var(--iz-radius-lg);
+  background: var(--iz-modal-bg);
+  box-shadow: var(--iz-shadow-overlay);
+  color: var(--iz-color-text-primary);
+  font-family: var(--iz-font-body-family);
+  font-size: var(--iz-font-body-size);
+  line-height: var(--iz-font-body-line-height);
+}
+
+/* ---- sizes: 400 / 560 / 720 px ---- */
+.sm {
+  --iz-modal-max-width: calc(10 * var(--iz-size-target-lg));
+}
+
+.lg {
+  --iz-modal-max-width: calc(18 * var(--iz-size-target-lg));
+}
+
+.paddingMd {
+  --iz-modal-padding: var(--iz-space-inset-md);
+}
+
+/* Enter / leave: a fade on both backdrop and panel. Under prefers-reduced-motion the duration tokens
+   are 0, so the dialog simply appears. */
+.overlay[data-entering] {
+  animation: iz-modal-in var(--iz-duration-normal) var(--iz-easing-standard);
+}
+
+.overlay[data-exiting] {
+  animation: iz-modal-in var(--iz-duration-fast) var(--iz-easing-standard) reverse;
+}
+
+@keyframes iz-modal-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* The dialog element holds focus when it has no focusable child: same ring as every control, inset. */
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--iz-space-stack-md);
+  max-block-size: inherit;
+  padding: var(--iz-modal-padding);
+  outline-color: transparent;
+}
+
+.dialog:focus-visible {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: -2px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--iz-font-heading-family);
+  font-size: var(--iz-font-heading-size);
+  font-weight: var(--iz-font-heading-weight);
+  line-height: var(--iz-font-heading-line-height);
+}
+
+.body {
+  min-block-size: 0;
+  overflow: auto;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--iz-space-inline-sm);
+}
+
+/* Windows High Contrast / forced-colors: the panel edge is the only separation once the scrim is gone. */
+@media (forced-colors: active) {
+  .panel {
+    border-color: CanvasText;
+  }
+
+  .dialog:focus-visible {
+    outline-color: Highlight;
+  }
+}

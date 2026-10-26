@@ -77,7 +77,7 @@
   "keyboard": [
     {
       "key": "Enter / Space (on the trigger)",
-      "action": "Opens. Focus moves to the first focusable element inside, or to the dialog itself if there is none (docs/ACCESSIBILITY.md)."
+      "action": "Opens. Focus moves to the first focusable control (for a confirmation that is Cancel, the least destructive action), or to the dialog itself if there is none. React Aria focuses the dialog element; the component moves it on."
     },
     {
       "key": "Tab / Shift+Tab",
@@ -106,7 +106,7 @@
       "4.1.2"
     ],
     "name": "From title — a real heading wired by aria-labelledby — or from aria-label when there is no heading. The type union requires one of the two.",
-    "announcements": "role=\"dialog\" (or alertdialog) with aria-modal=\"true\". While open, the rest of the page is aria-hidden (React Aria ariaHideOutside) and body scroll is locked (usePreventScroll); both are undone on close. The title is read first; an alertdialog is announced as an alert.",
+    "announcements": "role=\"dialog\" (or alertdialog). Modality is conveyed by hiding everything outside the dialog with aria-hidden (React Aria ariaHideOutside) — not by aria-modal, which React Aria omits because assistive-technology support for it is inconsistent; body scroll is locked (usePreventScroll). Both are undone on close. The title is read first; an alertdialog is announced as an alert.",
     "screenReaderNotes": "",
     "targetSize": "Footer buttons are Buttons (md 40 / lg 44); the close button, when present, is an icon-only Button at 40. The backdrop is a dismiss target only when isDismissable."
   },
@@ -117,6 +117,8 @@
     "shadow.overlay",
     "radius.lg",
     "border.width.sm",
+    "color.border.focus",
+    "border.width.focus",
     "space.inset.md",
     "space.inset.lg",
     "space.stack.md",

@@ -35,7 +35,7 @@ These are the APG defaults. A component may add keys but never remove one.
 - **Menu** (APG menu button): `Enter`/`Space`/`Down` open and focus first item; `Up` opens and focuses last; `Up/Down` move; `Home/End`; type-ahead; `Enter` activates; `Escape` closes and returns focus to the trigger; `Tab` closes.
 
 ### Overlay
-- **Modal**: focus moves into the dialog on open (first focusable, or the dialog itself if none); focus is trapped; `Escape` closes; on close focus returns to the element that opened it; `role="dialog" aria-modal="true" aria-labelledby`; background is `inert`.
+- **Modal**: focus moves into the dialog on open (first focusable, or the dialog itself if none); focus is trapped; `Escape` closes; on close focus returns to the element that opened it; `role="dialog"` + `aria-labelledby`; modality is conveyed by hiding everything outside with `aria-hidden` (React Aria's `ariaHideOutside`) rather than `aria-modal`, which assistive technology supports inconsistently; body scroll is locked.
 - **Popover** (non-modal — ComboBox listbox, Tooltip-like surfaces): same open/close/return rules, no trap; `Tab` out closes.
 - **Menu** (modal popover, per React Aria): opens with focus on an item, `Escape` / a choice / click outside close and return focus to the trigger; while open the rest of the page is hidden from assistive technology and `Tab` is contained (does nothing). Not `isNonModal` — see ADR-029.
 - **Tooltip**: shown on focus *and* hover; `Escape` dismisses; never contains interactive content; `role="tooltip"` + `aria-describedby` on the trigger. Hover-only tooltips are forbidden.

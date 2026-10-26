@@ -27,3 +27,7 @@ export type { CardProps, CardVariant, CardPadding, CardRadius, CardElement } fro
 // Feedback
 export { Toast } from './components/Feedback/Toast';
 export type { ToastProps, ToastCloseReason } from './components/Feedback/Toast';
+
+// Overlay
+export { Modal, ModalBody, ModalFooter } from './components/Overlay/Modal';
+export type { ModalProps, ModalSize, ModalPadding, ModalRole } from './components/Overlay/Modal';

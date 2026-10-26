@@ -1,0 +1,52 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ModalStories from './Modal.stories';
+
+<Meta of={ModalStories} />
+
+# Modal
+
+A **blocking** dialog for a decision that must be made now — confirm an irreversible step, pick a date, the ⌘K palette. Focus moves in and stays in; Escape or Cancel returns it. **Rare by design**: the product confirms nothing it can undo (Undo toast instead).
+
+Pattern: [WAI-ARIA APG — Dialog (Modal)](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) · Behaviour: React Aria `DialogTrigger` + `ModalOverlay` + `Modal` + `Dialog` · Spec: `Modal.spec.json`
+
+<Canvas of={ModalStories.Open} />
+<Controls of={ModalStories.Confirm} />
+
+## Anatomy
+
+backdrop (`color.backdrop`, translucent — the page stays visible) → panel (surface.overlay, border, `shadow.overlay`, 400 / 560 / 720 px) → `role="dialog"` (`aria-modal`) → `title` as an `h2` (`aria-labelledby`) · `ModalBody` (scrolls) · `ModalFooter` (Cancel first, one primary last).
+
+While open, the rest of the page is hidden from assistive technology and body scroll is locked (React Aria); both are undone on close.
+
+## Destructive confirmation
+
+`role="alertdialog"`, the question in the title, `isDismissable={false}` so a mis-click on the backdrop cannot dismiss it, and a verb on the primary — "Withdraw application", never "OK".
+
+<Canvas of={ModalStories.Confirm} />
+
+## Without a heading
+
+The ⌘K palette has an input where a heading would be: `aria-label="Search and commands"`, opened programmatically with `isOpen`.
+
+<Canvas of={ModalStories.Palette} />
+
+## Keyboard
+
+| Key | Action |
+|---|---|
+| `Enter` / `Space` on the trigger | Opens; focus moves to the first control (or the dialog itself) |
+| `Tab` / `Shift+Tab` | Cycle inside only — trapped; 2.1.2 is satisfied by the documented Escape |
+| `Escape` | Closes, focus returns to the trigger (unless `isKeyboardDismissDisabled`) |
+
+## Do / Don't
+
+- Do put Cancel first and the single primary last; label buttons with verbs.
+- Do use `alertdialog` + `isDismissable={false}` for anything irreversible.
+- Don't stack modals — a dialog that needs a second dialog is a flow, and a flow is a page.
+- Don't fire a Toast while a Modal is open; it is hidden with the rest of the page.
+
+## Tokens consumed
+
+See `tokens` in `Modal.spec.json`; `check:specs` verifies the list against the CSS. The backdrop is one translucent scrim in every theme (ADR-030).
+
+<Stories />

@@ -202,6 +202,31 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "Modal",
+      "category": "Overlay",
+      "code": {
+        "path": "src/components/Overlay/Modal/Modal.tsx",
+        "import": "import { Modal, ModalBody, ModalFooter } from '@iz/design-system'"
+      },
+      "spec": "src/components/Overlay/Modal/Modal.spec.json",
+      "stories": "src/components/Overlay/Modal/Modal.stories.tsx",
+      "figma": {
+        "componentSet": "Overlay / Modal",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Size": "size",
+        "Role": "role",
+        "Dismissable": "isDismissable",
+        "Title": "title",
+        "Footer": "ModalFooter"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }
