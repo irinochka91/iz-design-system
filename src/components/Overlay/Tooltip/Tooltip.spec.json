@@ -1,0 +1,145 @@
+{
+  "name": "Tooltip",
+  "category": "Overlay",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "A short plain-text hint that describes a focusable control — 'Open application', 'Mark done (D)' — shown on keyboard focus and after a hover delay, dismissed with Escape. Supplementary by definition: the control must make sense without it, and an icon-only button keeps its aria-label. Never interactive content; a hint that needs a link or a button is a Popover.",
+  "pattern": {
+    "name": "Tooltip (WAI-ARIA role tooltip, WCAG 1.4.13 content on hover or focus)",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/"
+  },
+  "role": "tooltip",
+  "props": {
+    "trigger": {
+      "type": "ReactElement<ButtonProps>",
+      "intent": "The focusable control the tooltip describes. React Aria adds aria-describedby to it while the tooltip is shown. Must be focusable — a tooltip on a static span is unreachable from the keyboard and therefore forbidden."
+    },
+    "children": {
+      "type": "string",
+      "intent": "The hint. Plain text, one line or two; no headings, links or controls. Read as the trigger's description, after its name."
+    },
+    "placement": {
+      "type": "'top' | 'bottom' | 'start' | 'end'",
+      "default": "'top'",
+      "intent": "Preferred side; flips when there is no room. Gap to the trigger is space.200, read from the token at runtime (shared with Popover)."
+    },
+    "showOn": {
+      "type": "'hover' | 'focus'",
+      "default": "'hover'",
+      "intent": "'hover' shows on pointer hover AND on keyboard focus — the only mode that satisfies the no-hover-only rule. 'focus' shows on keyboard focus only, for triggers where hover would be noise. Maps to React Aria's trigger option; named showOn here because trigger is the element."
+    },
+    "delay": {
+      "type": "number",
+      "default": "1500",
+      "intent": "Hover warm-up in ms before the first tooltip appears (React Aria's global warm-up: once one is shown, siblings open instantly). Keyboard focus shows immediately regardless."
+    },
+    "closeDelay": {
+      "type": "number",
+      "default": "500",
+      "intent": "ms the tooltip stays after the pointer leaves, so it can be moved onto the tooltip itself (WCAG 1.4.13 hoverable)."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Suppresses the tooltip without disabling the trigger."
+    },
+    "isOpen": {
+      "type": "boolean",
+      "intent": "Controlled visibility, for stories and tests. Normally uncontrolled."
+    },
+    "onOpenChange": {
+      "type": "(isOpen: boolean) => void",
+      "intent": "Shown or hidden by any means."
+    },
+    "showArrow": {
+      "type": "boolean",
+      "default": "true",
+      "intent": "A decorative arrow pointing at the trigger (OverlayArrow), in the tooltip's own surface colour."
+    }
+  },
+  "states": [
+    "closed",
+    "open",
+    "focus",
+    "entering",
+    "leaving"
+  ],
+  "keyboard": [
+    {
+      "key": "Tab / Shift+Tab (keyboard focus on the trigger)",
+      "action": "Shows the tooltip immediately — only for keyboard-visible focus, so a mouse click on the trigger does not flash it. Leaving the trigger hides it."
+    },
+    {
+      "key": "Escape",
+      "action": "Hides the tooltip; focus stays on the trigger (WCAG 1.4.13 dismissable)."
+    },
+    {
+      "key": "Pointer hover",
+      "action": "Shows after `delay`; stays while the pointer is over the trigger or the tooltip itself; hides `closeDelay` after it leaves (1.4.13 hoverable, persistent)."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.4.3",
+      "1.4.11",
+      "1.4.13",
+      "2.1.1",
+      "4.1.2"
+    ],
+    "name": "The tooltip has no name of its own and never names the trigger. It is the trigger's description (aria-describedby), read after the trigger's name. An icon-only trigger still needs aria-label.",
+    "announcements": "role=\"tooltip\"; aria-describedby is added to the trigger while shown, so on focus a screen reader reads the trigger's name, then the hint. Nothing is announced on hover alone.",
+    "screenReaderNotes": "",
+    "targetSize": "Not a target. The trigger is a Button and meets its own size; the tooltip never contains anything to press."
+  },
+  "tokens": [
+    "color.surface.inverse",
+    "color.text.inverse",
+    "radius.sm",
+    "space.inset.sm",
+    "space.200",
+    "size.target.lg",
+    "font.caption.family",
+    "font.caption.size",
+    "font.caption.line-height",
+    "font.caption.weight",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [
+    "Button"
+  ],
+  "composedBy": [],
+  "rules": [
+    "Hover-only tooltips are forbidden (docs/ACCESSIBILITY.md): showOn='hover' also shows on keyboard focus, and the trigger must be focusable. A tooltip on a static element is a tooltip nobody on a keyboard can reach.",
+    "Supplementary, never load-bearing. The control must make sense without the hint, and an icon-only button keeps its aria-label — the tooltip describes, it does not name (4.1.2).",
+    "Plain text only. No links, buttons, inputs or headings inside; the pointer may move onto the tooltip to read it (1.4.13), not to use it. A hint that needs a control is a Popover.",
+    "WCAG 1.4.13, all three: dismissable (Escape, focus stays), hoverable (closeDelay lets the pointer reach it; hovering it keeps it open), persistent (stays until hover or focus leaves).",
+    "Shows on keyboard-visible focus only — a mouse click on the trigger does not flash it (React Aria's focus-visible logic). That is what makes a tooltip on every icon button tolerable.",
+    "Not on disabled controls: they receive neither focus nor hover, so the hint is unreachable. Put the explanation beside the control instead.",
+    "Inverse surface (color.surface.inverse / text.inverse — the pair the token layer defines for tooltips) and no border or shadow: the contrast with the page is the separation, on every theme.",
+    "One or two lines, 12 px caption text, max 320 px wide. If it needs more, it is not a tooltip.",
+    "No z-index token yet (PARKING.md); the portal's DOM order stacks it above page content."
+  ],
+  "figma": {
+    "componentSet": "Overlay / Tooltip",
+    "properties": {
+      "Placement": "placement (top / bottom / start / end)",
+      "Arrow": "showArrow",
+      "Text": "children"
+    }
+  },
+  "examples": [
+    {
+      "title": "Icon-only button",
+      "code": "<Tooltip trigger={<Button aria-label=\"Open application\" iconStart={<OpenIcon />} />}>Open application</Tooltip>"
+    },
+    {
+      "title": "Shortcut hint",
+      "code": "<Tooltip trigger={<Button aria-label=\"Mark done: Email Priya\">…</Button>} placement=\"bottom\">Mark done (D)</Tooltip>"
+    },
+    {
+      "title": "Focus only",
+      "code": "<Tooltip trigger={<Button variant=\"tertiary\">Stretch</Button>} showOn=\"focus\">Counts against the 1-in-5 stretch quota</Tooltip>"
+    }
+  ]
+}
