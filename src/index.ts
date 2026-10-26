@@ -31,3 +31,5 @@ export type { ToastProps, ToastCloseReason } from './components/Feedback/Toast';
 // Overlay
 export { Modal, ModalBody, ModalFooter } from './components/Overlay/Modal';
 export type { ModalProps, ModalSize, ModalPadding, ModalRole } from './components/Overlay/Modal';
+export { Popover } from './components/Overlay/Popover';
+export type { PopoverProps, PopoverPlacement, PopoverSize, PopoverPadding } from './components/Overlay/Popover';

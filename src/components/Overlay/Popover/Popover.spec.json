@@ -12,7 +12,7 @@
   "props": {
     "trigger": {
       "type": "ReactElement<ButtonProps>",
-      "intent": "The Button it is anchored to. DialogTrigger wires aria-haspopup=\"dialog\", aria-expanded and focus return."
+      "intent": "The Button it is anchored to. DialogTrigger wires aria-expanded and aria-controls and restores focus on close. React Aria does not emit aria-haspopup for dialogs — the name of the popover, read on open, tells the user what it is."
     },
     "title": {
       "type": "string",
@@ -110,7 +110,7 @@
       "4.1.2"
     ],
     "name": "From title (a heading wired by aria-labelledby) or aria-label — the type union requires one of the two.",
-    "announcements": "role=\"dialog\"; the trigger gets aria-haspopup=\"dialog\" and aria-expanded. Default mode hides everything outside with aria-hidden (React Aria ariaHideOutside) and locks scroll; both are undone on close. React Aria omits aria-modal (inconsistent AT support) — the same as Modal.",
+    "announcements": "role=\"dialog\"; the trigger gets aria-expanded and aria-controls (React Aria emits no aria-haspopup for dialogs). Default mode hides everything outside with aria-hidden (React Aria ariaHideOutside) and locks scroll; both are undone on close. React Aria omits aria-modal (inconsistent AT support) — the same as Modal.",
     "screenReaderNotes": "",
     "targetSize": "Not a target itself. The trigger is a Button; controls inside are system components and meet their own sizes."
   },

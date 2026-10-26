@@ -1,0 +1,106 @@
+/* Popover — every value is a token (docs/TOKENS.md). The body uses Card-raised tokens plus
+   shadow.overlay; React Aria positions it (data-placement) and animates open/close (data-entering /
+   data-exiting). Spec: Popover.spec.json */
+
+.popover {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-popover-bg: var(--iz-color-surface-overlay);
+  --iz-popover-border: var(--iz-color-border-default);
+  --iz-popover-padding: var(--iz-space-inset-md);
+  --iz-popover-max-width: calc(8 * var(--iz-size-target-lg)); /* sm: 320 px */
+  --iz-popover-gap: var(--iz-space-200); /* the gap to the trigger; Popover.tsx reads the same token for React Aria's offset */
+
+  max-inline-size: var(--iz-popover-max-width);
+  border: var(--iz-border-width-sm) solid var(--iz-popover-border);
+  border-radius: var(--iz-radius-lg);
+  background: var(--iz-popover-bg);
+  box-shadow: var(--iz-shadow-overlay);
+  color: var(--iz-color-text-primary);
+  font-family: var(--iz-font-body-family);
+  font-size: var(--iz-font-body-size);
+  line-height: var(--iz-font-body-line-height);
+}
+
+.md {
+  --iz-popover-max-width: calc(10 * var(--iz-size-target-lg)); /* 400 px */
+}
+
+.paddingSm {
+  --iz-popover-padding: var(--iz-space-inset-sm);
+}
+
+/* Enter / leave: a fade. Under prefers-reduced-motion the duration token is 0, so it is instant. */
+.popover[data-entering] {
+  animation: iz-popover-in var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.popover[data-exiting] {
+  animation: iz-popover-in var(--iz-duration-fast) var(--iz-easing-standard) reverse;
+}
+
+@keyframes iz-popover-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* The popover element holds focus when it has no focusable child: same ring as every control, inset. */
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--iz-space-stack-sm);
+  padding: var(--iz-popover-padding);
+  outline-color: transparent;
+}
+
+.dialog:focus-visible {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: -2px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--iz-font-title-family);
+  font-size: var(--iz-font-title-size);
+  font-weight: var(--iz-font-title-weight);
+  line-height: var(--iz-font-title-line-height);
+}
+
+/* The arrow is the surface and its border, rotated per placement by React Aria's data-placement. */
+.arrow svg {
+  display: block;
+  fill: var(--iz-popover-bg);
+  stroke: var(--iz-popover-border);
+  stroke-width: var(--iz-border-width-sm);
+}
+
+.popover[data-placement="top"] .arrow svg {
+  transform: translateY(calc(-1 * var(--iz-border-width-sm))); /* overlap the seam by exactly the border width */
+}
+
+.popover[data-placement="bottom"] .arrow svg {
+  transform: rotate(180deg) translateY(calc(-1 * var(--iz-border-width-sm)));
+}
+
+.popover[data-placement="left"] .arrow svg {
+  transform: rotate(-90deg) translateY(calc(-1 * var(--iz-border-width-sm)));
+}
+
+.popover[data-placement="right"] .arrow svg {
+  transform: rotate(90deg) translateY(calc(-1 * var(--iz-border-width-sm)));
+}
+
+/* Windows High Contrast / forced-colors: the edge is the only separation once the shadow is gone. */
+@media (forced-colors: active) {
+  .popover {
+    border-color: CanvasText;
+  }
+
+  .dialog:focus-visible {
+    outline-color: Highlight;
+  }
+}

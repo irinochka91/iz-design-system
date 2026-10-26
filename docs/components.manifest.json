@@ -227,6 +227,30 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "Popover",
+      "category": "Overlay",
+      "code": {
+        "path": "src/components/Overlay/Popover/Popover.tsx",
+        "import": "import { Popover } from '@iz/design-system'"
+      },
+      "spec": "src/components/Overlay/Popover/Popover.spec.json",
+      "stories": "src/components/Overlay/Popover/Popover.stories.tsx",
+      "figma": {
+        "componentSet": "Overlay / Popover",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Placement": "placement",
+        "Size": "size",
+        "Arrow": "showArrow",
+        "Title": "title"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

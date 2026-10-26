@@ -1,0 +1,48 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as PopoverStories from './Popover.stories';
+
+<Meta of={PopoverStories} />
+
+# Popover
+
+A small surface anchored to its trigger for **one or two controls or a sentence** — adjust the weekly target, edit a priority, a short explanation. Non-blocking in look; **modal for assistive technology by default** (the page is hidden and focus is contained, as in Menu). Not for a decision (`Modal`), not for a list of actions (`Menu`), not for a hover hint (`Tooltip`).
+
+Pattern: [APG Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) in a positioned overlay · Behaviour: React Aria `DialogTrigger` + `Popover` + `Dialog` · Spec: `Popover.spec.json`
+
+<Canvas of={PopoverStories.Open} />
+<Controls of={PopoverStories.Default} />
+
+## Anatomy
+
+trigger (a Button with `aria-haspopup="dialog"` / `aria-expanded`) → positioned surface (surface.overlay, border, `shadow.overlay`, 320 / 400 px, optional arrow) → `role="dialog"` named by the `title` (an `h3`) or `aria-label` → your controls.
+
+The gap to the trigger is `space.200`, read from the token at runtime — React Aria positions with a number, and this is the one place a token value crosses into JavaScript.
+
+## Two modes
+
+**Default** — the page is hidden from assistive technology, scroll is locked, Tab cycles inside, a click outside closes. The safe default for anything with a control in it.
+
+**`isNonModal`** — the page stays reachable and the popover closes when focus leaves it. For combobox-style surfaces only; React Aria warns it degrades the screen-reader experience, so never for a form.
+
+<Canvas of={PopoverStories.Explanation} />
+
+## Keyboard
+
+| Key | Action |
+|---|---|
+| `Enter` / `Space` on the trigger | Opens; focus moves to the first control (or the popover itself) |
+| `Tab` / `Shift+Tab` | Default: cycle inside · `isNonModal`: focus leaves and the popover closes |
+| `Escape` | Closes, focus returns to the trigger |
+
+## Do / Don't
+
+- Do keep it to a couple of controls; a footer with Cancel and a primary is a Modal.
+- Do give an icon-only trigger an `aria-label`; the popover still needs its own `title` or `aria-label`.
+- Don't nest popovers or open a Menu from inside one.
+- Don't use `isNonModal` for a form.
+
+## Tokens consumed
+
+See `tokens` in `Popover.spec.json`; `check:specs` verifies the list against the CSS.
+
+<Stories />

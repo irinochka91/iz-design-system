@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, type ReactElement, type ReactNode } from 'react';
+import { forwardRef, type ReactElement, type ReactNode } from 'react';
 import {
   DialogTrigger as AriaDialogTrigger,
   ModalOverlay as AriaModalOverlay,
@@ -7,6 +7,7 @@ import {
   Heading as AriaHeading,
 } from 'react-aria-components';
 import type { ButtonProps } from '../../Actions/Button';
+import { FocusFirstControl } from '../focusFirstControl';
 import styles from './Modal.module.css';
 
 export type ModalSize = 'sm' | 'md' | 'lg';
@@ -105,30 +106,6 @@ export const Modal = forwardRef<HTMLElement, ModalProps>(function Modal(
     overlay
   );
 });
-
-const TABBABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-/**
- * React Aria focuses the dialog element itself on open. docs/ACCESSIBILITY.md and APG want the first
- * focusable control (for a confirmation that is Cancel, the least destructive action), falling back to
- * the dialog when there is none. This mounts only while the dialog is open, so a mount effect is exact.
- */
-const FocusFirstControl = () => {
-  const marker = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    // A child's effect runs before React Aria's own focus effect in the ancestors, so defer one macrotask:
-    // by then the library has focused the dialog element, and we move focus on to the first control.
-    const id = setTimeout(() => {
-      const dialog = marker.current?.closest<HTMLElement>('[role="dialog"], [role="alertdialog"]');
-      if (!dialog) return;
-      const active = document.activeElement;
-      if (active && active !== dialog && dialog.contains(active)) return; // something inside already has focus
-      dialog.querySelector<HTMLElement>(TABBABLE)?.focus();
-    }, 0);
-    return () => clearTimeout(id);
-  }, []);
-  return <span ref={marker} hidden />;
-};
 
 /** The content. Scrolls on its own when the dialog is taller than the viewport. */
 export const ModalBody = ({ children, className }: { children: ReactNode; className?: string }) => (

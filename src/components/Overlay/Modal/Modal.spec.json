@@ -12,7 +12,7 @@
   "props": {
     "trigger": {
       "type": "ReactElement<ButtonProps>",
-      "intent": "Optional. A Button that opens the dialog (DialogTrigger wires aria-haspopup=\"dialog\" / aria-expanded and focus return). Omit when the dialog opens programmatically — the ⌘K palette — and control isOpen instead; focus still returns to the element that had it."
+      "intent": "Optional. A Button that opens the dialog (DialogTrigger wires aria-expanded / aria-controls and focus return; React Aria emits no aria-haspopup for dialogs). Omit when the dialog opens programmatically — the ⌘K palette — and control isOpen instead; focus still returns to the element that had it."
     },
     "isOpen": {
       "type": "boolean",
