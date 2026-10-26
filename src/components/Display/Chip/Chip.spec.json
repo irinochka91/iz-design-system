@@ -1,0 +1,169 @@
+{
+  "name": "Chip",
+  "category": "Display",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "A 28 px pill with a short text label: a property (static), a stage (static, or pressable to advance), or a filter (toggle with aria-pressed). The variant decides whether it is a <span> or a <button>. Not for removable items (there are none in the product) and not for status with a semantic colour — Chip has no tone.",
+  "pattern": {
+    "name": "Toggle button (filter) via WAI-ARIA APG Button with aria-pressed; plain button (cycling stage); no pattern for the static forms",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/"
+  },
+  "role": "button",
+  "props": {
+    "children": {
+      "type": "string",
+      "intent": "The visible label and the accessible name. Short — one or two words: 'Orbit', 'Interview', 'Hybrid'. A chip always has visible text; there is no icon-only chip."
+    },
+    "variant": {
+      "type": "'property' | 'stage' | 'filter'",
+      "default": "'property'",
+      "intent": "property = static fact (company, location) → <span>. stage = pipeline stage → <span>, or <button> when onPress is given (cycling). filter = toggle → <button aria-pressed>. The variant is the only thing that decides the element."
+    },
+    "emphasis": {
+      "type": "'quiet' | 'tint' | 'strong'",
+      "default": "'quiet'",
+      "intent": "Visual weight without semantic meaning. quiet = border + text-subtle (every stage by default). tint = accent-subtle bg + accent text (the handoff's Interview). strong = accent bg + on-accent (Offer). One strong per screen — it is the accent. The stage → emphasis mapping lives in the StageChip pattern, not here."
+    },
+    "isSelected": {
+      "type": "boolean",
+      "intent": "filter only. Controlled pressed state → aria-pressed. Selected is never colour-only: inverse colours AND a heavier weight."
+    },
+    "defaultSelected": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "filter only. Uncontrolled initial state."
+    },
+    "onChange": {
+      "type": "(isSelected: boolean) => void",
+      "intent": "filter only. Fires with the new boolean. Giving onChange to a non-filter chip is a type error."
+    },
+    "onPress": {
+      "type": "(e: PressEvent) => void",
+      "intent": "stage only. Turns the chip into a <button>; the pattern advances the stage, swaps the label and shows the Undo toast. Shift+→ / Shift+← are the pattern's keys, not the chip's."
+    },
+    "aria-label": {
+      "type": "string",
+      "intent": "Only for a cycling stage, to say what pressing does: 'Stage: Screen. Press to advance'. Never on a static chip — the label is the name."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Interactive variants only. A disabled filter stays visible so the user sees the option exists."
+    },
+    "iconStart": {
+      "type": "ReactNode",
+      "intent": "Decorative, aria-hidden — the tick / dash on a priority chip. The meaning (met / not met) must also be in text: pass it as a visually-hidden suffix in children, never rely on the glyph."
+    }
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "selected",
+    "disabled"
+  ],
+  "keyboard": [
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "Moves focus to / from an interactive chip (filter, or stage with onPress). Static chips are never tab stops."
+    },
+    {
+      "key": "Space / Enter",
+      "action": "filter: toggles aria-pressed. stage with onPress: presses (the pattern advances the stage)."
+    },
+    {
+      "key": "Shift+→ / Shift+←",
+      "action": "Not the chip's. The StageChip pattern binds them on the row to advance / revert."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.7",
+      "2.4.11",
+      "2.5.8",
+      "4.1.2"
+    ],
+    "name": "The label text. A cycling stage may override with aria-label to describe the action ('Stage: Screen. Press to advance').",
+    "announcements": "filter → aria-pressed=\"true\" / \"false\" (React Aria ToggleButton). Cycling stage → the label text changes; the stage change itself is announced by the pattern's Undo toast (role=\"status\"), so the chip adds no live region of its own. Static chips have no role and announce nothing.",
+    "screenReaderNotes": "",
+    "targetSize": "28 × 28 px (size.target.sm): above the 24 px AA floor (2.5.8), below the 44 px touch guidance. Relies on the spacing exception — the pattern keeps ≥ 8 px (space.200) between chips so adjacent targets do not overlap. Static chips are not targets."
+  },
+  "tokens": [
+    "color.text.primary",
+    "color.text.secondary",
+    "color.text.inverse",
+    "color.text.on-action",
+    "color.surface.inverse",
+    "color.action.primary.bg",
+    "color.action.primary.bg-subtle",
+    "color.action.primary.fg",
+    "color.action.secondary.bg-hover",
+    "color.action.disabled.bg",
+    "color.action.disabled.fg",
+    "color.border.default",
+    "color.border.strong",
+    "color.border.focus",
+    "border.width.sm",
+    "border.width.focus",
+    "radius.full",
+    "size.target.sm",
+    "space.200",
+    "space.inline.xs",
+    "font.caption.family",
+    "font.caption.size",
+    "font.caption.line-height",
+    "font.caption.weight",
+    "font.caption.weight-strong",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [],
+  "composedBy": [],
+  "rules": [
+    "The variant decides the element. property and stage render a <span> with no role; filter renders a <button aria-pressed>; stage renders a <button> only when onPress is given. Interactivity never comes from onClick on a span.",
+    "Selected (filter) is never colour-only: inverse background + inverse text + weight-strong + aria-pressed. Remove any one of the four and a group of users loses the state.",
+    "A filter chip's border is color.border.strong (3:1 against the surface — it is a control, 1.4.11). Static chips use color.border.default, which is decorative and exempt.",
+    "No tone. The product rule is one accent per screen; emphasis (quiet / tint / strong) is the only colour axis, and strong is that single accent. Status colours belong to text and rings in the patterns, not to chips.",
+    "A tick / dash glyph on a priority chip is decorative. The state is in text: children = 'Hybrid' + a visually-hidden ', met' — so the name reads 'Hybrid, met' and the glyph can be dropped without loss.",
+    "The cycling stage chip announces by changing its own label; the stage change is confirmed by the pattern's toast (role=status). Do not add aria-live to the chip — two announcements for one change.",
+    "28 px is a deliberate compact target: patterns must keep ≥ 8 px between chips (2.5.8 spacing exception). Do not shrink the gap to fit a row; wrap instead.",
+    "Focus ring is outline + outline-offset on the pill, never box-shadow alone; in forced-colors mode the pill keeps a ButtonText border and selected uses Highlight / HighlightText."
+  ],
+  "figma": {
+    "componentSet": "Display / Chip",
+    "properties": {
+      "Variant": "variant (property / stage / filter)",
+      "Emphasis": "emphasis (quiet / tint / strong)",
+      "State": "browser states (default/hover/focus/active) + isSelected + isDisabled — interactive variants only",
+      "Label": "children",
+      "Icon start": "iconStart"
+    }
+  },
+  "examples": [
+    {
+      "title": "Property (static)",
+      "code": "<Chip>Orbit</Chip>"
+    },
+    {
+      "title": "Stage, tinted (static)",
+      "code": "<Chip variant=\"stage\" emphasis=\"tint\">Interview</Chip>"
+    },
+    {
+      "title": "Stage, cycling",
+      "code": "<Chip variant=\"stage\" aria-label=\"Stage: Screen. Press to advance\" onPress={advance}>Screen</Chip>"
+    },
+    {
+      "title": "Filter toggle",
+      "code": "<Chip variant=\"filter\" isSelected={onlyMatches} onChange={setOnlyMatches}>Matches my priorities</Chip>"
+    },
+    {
+      "title": "Priority with a decorative tick",
+      "code": "<Chip emphasis=\"tint\" iconStart={<TickIcon />}>Hybrid<span className=\"iz-visually-hidden\">, met</span></Chip>"
+    }
+  ]
+}

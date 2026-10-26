@@ -201,6 +201,11 @@
       "weight": {
         "$type": "fontWeight",
         "$value": "{font.weight.medium}"
+      },
+      "weight-strong": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}",
+        "$description": "Selected chip label — selection is shown by weight as well as colour (ADR-024)."
       }
     }
   }

@@ -1204,6 +1204,13 @@
         "alias": "{font.weight.medium}",
         "css": "--iz-font-caption-weight"
       },
+      "font.caption.weight-strong": {
+        "$type": "fontWeight",
+        "$value": 600,
+        "alias": "{font.weight.semibold}",
+        "css": "--iz-font-caption-weight-strong",
+        "$description": "Selected chip label — selection is shown by weight as well as colour (ADR-024)."
+      },
       "font.code.family": {
         "$type": "fontFamily",
         "$value": [
@@ -3127,6 +3134,13 @@
         "$value": 500,
         "alias": "{font.weight.medium}",
         "css": "--iz-font-caption-weight"
+      },
+      "font.caption.weight-strong": {
+        "$type": "fontWeight",
+        "$value": 600,
+        "alias": "{font.weight.semibold}",
+        "css": "--iz-font-caption-weight-strong",
+        "$description": "Selected chip label — selection is shown by weight as well as colour (ADR-024)."
       },
       "font.code.family": {
         "$type": "fontFamily",
@@ -5052,6 +5066,13 @@
         "alias": "{font.weight.medium}",
         "css": "--iz-font-caption-weight"
       },
+      "font.caption.weight-strong": {
+        "$type": "fontWeight",
+        "$value": 600,
+        "alias": "{font.weight.semibold}",
+        "css": "--iz-font-caption-weight-strong",
+        "$description": "Selected chip label — selection is shown by weight as well as colour (ADR-024)."
+      },
       "font.code.family": {
         "$type": "fontFamily",
         "$value": [
@@ -6976,6 +6997,13 @@
         "alias": "{font.weight.medium}",
         "css": "--iz-font-caption-weight"
       },
+      "font.caption.weight-strong": {
+        "$type": "fontWeight",
+        "$value": 600,
+        "alias": "{font.weight.semibold}",
+        "css": "--iz-font-caption-weight-strong",
+        "$description": "Selected chip label — selection is shown by weight as well as colour (ADR-024)."
+      },
       "font.code.family": {
         "$type": "fontFamily",
         "$value": [
@@ -8896,6 +8924,13 @@
         "alias": "{font.weight.medium}",
         "css": "--iz-font-caption-weight"
       },
+      "font.caption.weight-strong": {
+        "$type": "fontWeight",
+        "$value": 600,
+        "alias": "{font.weight.semibold}",
+        "css": "--iz-font-caption-weight-strong",
+        "$description": "Selected chip label — selection is shown by weight as well as colour (ADR-024)."
+      },
       "font.code.family": {
         "$type": "fontFamily",
         "$value": [
@@ -10811,6 +10846,13 @@
         "$value": 500,
         "alias": "{font.weight.medium}",
         "css": "--iz-font-caption-weight"
+      },
+      "font.caption.weight-strong": {
+        "$type": "fontWeight",
+        "$value": 600,
+        "alias": "{font.weight.semibold}",
+        "css": "--iz-font-caption-weight-strong",
+        "$description": "Selected chip label — selection is shown by weight as well as colour (ADR-024)."
       },
       "font.code.family": {
         "$type": "fontFamily",

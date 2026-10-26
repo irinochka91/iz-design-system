@@ -88,6 +88,7 @@ export type TokenName =
   | 'font.caption.line-height'
   | 'font.caption.size'
   | 'font.caption.weight'
+  | 'font.caption.weight-strong'
   | 'font.code.family'
   | 'font.code.line-height'
   | 'font.code.size'

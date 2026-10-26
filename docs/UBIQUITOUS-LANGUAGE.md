@@ -9,6 +9,7 @@ One vocabulary across React props, CSS tokens, Figma properties, specs and docs.
 | Visual importance | `variant` | `Variant` | `primary \| secondary \| tertiary \| ghost \| danger` (Actions); `outlined \| filled` (Inputs) |
 | Size | `size` | `Size` | `sm \| md \| lg` — never `small/medium/large`, never `xs` unless added here |
 | Semantic colour | `tone` | `Tone` | `neutral \| info \| success \| warning \| danger` (Display, Feedback) |
+| Visual emphasis (no semantic meaning) | `emphasis` | `Emphasis` | `quiet \| tint \| strong` (Chip; one accent per screen — `strong` is the single highlight) |
 | Disabled | `isDisabled` | `State = disabled` | boolean |
 | Read-only | `isReadOnly` | `State = read-only` | boolean |
 | Required | `isRequired` | `Required` | boolean |
@@ -52,7 +53,7 @@ PascalCase, singular, no prefix in React (`Button`, not `IZButton`); web compone
 | Select (closed list) / ComboBox (filterable) | Dropdown |
 | Menu (actions) / Select (choice) | Dropdown |
 | Toast (transient) / Alert (persistent, inline) | Notification, Banner, Snackbar |
-| Tag (static) / Chip (removable, interactive) | Pill, Label |
+| Chip (static or interactive — `variant` decides; see Chip.spec.json) | Tag, Pill, Label |
 | Tone | Color, Status, Severity, Intent |
 | Variant | Type, Kind, Appearance, Style |
 | Pending | Loading, Busy |
