@@ -132,6 +132,29 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "Card",
+      "category": "Display",
+      "code": {
+        "path": "src/components/Display/Card/Card.tsx",
+        "import": "import { Card } from '@iz/design-system'"
+      },
+      "spec": "src/components/Display/Card/Card.spec.json",
+      "stories": "src/components/Display/Card/Card.stories.tsx",
+      "figma": {
+        "componentSet": "Display / Card",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Variant": "variant",
+        "Padding": "padding",
+        "Radius": "radius"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

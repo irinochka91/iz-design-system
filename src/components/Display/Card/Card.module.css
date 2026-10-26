@@ -1,0 +1,41 @@
+/* Card — every value is a token (docs/TOKENS.md). No states: a card is never interactive as a whole.
+   No shadow on any theme: the 1 px edge separates it from the page; elevation belongs to overlays.
+   Spec: Card.spec.json · ADR-026 for radius.xl. */
+
+.root {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-card-bg: var(--iz-color-surface-raised);
+  --iz-card-border: var(--iz-color-border-default);
+  --iz-card-padding: var(--iz-space-inset-lg);
+  --iz-card-radius: var(--iz-radius-lg);
+
+  display: block;
+  padding: var(--iz-card-padding);
+  border: var(--iz-border-width-sm) solid var(--iz-card-border);
+  border-radius: var(--iz-card-radius);
+  background: var(--iz-card-bg);
+
+  /* no margin: layout is the parent's job (Stack, Grid) */
+}
+
+/* ---- variant: which surface the box sits on ---- */
+.raised {
+  --iz-card-bg: var(--iz-color-surface-overlay);
+}
+
+/* ---- padding: 16 (phone, chosen by the pattern) / 24 ---- */
+.paddingMd {
+  --iz-card-padding: var(--iz-space-inset-md);
+}
+
+/* ---- radius: 12 / 14 (triage card) ---- */
+.radiusXl {
+  --iz-card-radius: var(--iz-radius-xl);
+}
+
+/* Windows High Contrast / forced-colors: keep the edge visible — it is the only separation from the page. */
+@media (forced-colors: active) {
+  .root {
+    border-color: CanvasText;
+  }
+}

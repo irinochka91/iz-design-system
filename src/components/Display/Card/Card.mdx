@@ -1,0 +1,46 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CardStories from './Card.stories';
+
+<Meta of={CardStories} />
+
+# Card
+
+A bordered box that groups related content on a surface. **Never interactive as a whole** — buttons and links live inside it. **No shadow** on any theme: the 1 px edge does the work; elevation belongs to overlays. **No outer margin**: layout is the parent's job.
+
+Behaviour: none (a silent container) · Spec: `Card.spec.json`
+
+<Canvas of={CardStories.Surface} />
+<Controls of={CardStories.Surface} />
+
+## Variant, padding, radius
+
+`variant="surface"` is a card on the page (`color.surface.raised` — white on linen's warm page). `variant="raised"` is the body of a popover, palette or toast (`color.surface.overlay`); the overlay adds the shadow, the card never does.
+
+`padding` is 24 px by default and 16 px for phone — the **pattern** chooses `md` because it knows its viewport; Card contains no media query. `radius="xl"` (14 px) is the triage card; everything else is `lg` (12 px).
+
+<Canvas of={CardStories.Triage} />
+
+## Semantics
+
+`as="section"` + `aria-labelledby` makes the card a named region — one per screen is plenty. `as="article"` for a self-contained item (an application, an experiment). `as="li"` inside a list of cards. The default `div` has no semantics and announces nothing.
+
+<Canvas of={CardStories.NamedRegion} />
+
+## The linen check
+
+On linen the card is white on a warm page and the edge is 1.21:1 — separation comes from the surface contrast, not the border. This story is the test: switch the Theme toolbar to `linen` and judge six cards in a row. If it does not read, the fix is the page surface, not a shadow.
+
+<Canvas of={CardStories.LinenSeparation} />
+
+## Do / Don't
+
+- Do put the action in a Button or Link inside the card; let the heading be the link text.
+- Don't make the whole card clickable — it hides the target and makes nested buttons invalid HTML.
+- Don't add a shadow "for depth"; use `variant="raised"` inside an overlay instead.
+- Don't give a card a margin; wrap cards in a Stack or Grid.
+
+## Tokens consumed
+
+See `tokens` in `Card.spec.json`; `check:specs` verifies the list against the CSS.
+
+<Stories />

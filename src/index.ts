@@ -18,3 +18,5 @@ export type { CheckboxProps, CheckboxSize } from './components/Inputs/Checkbox';
 // Display
 export { Chip } from './components/Display/Chip';
 export type { ChipProps, ChipVariant, ChipEmphasis, ChipPropertyProps, ChipStageProps, ChipFilterProps } from './components/Display/Chip';
+export { Card } from './components/Display/Card';
+export type { CardProps, CardVariant, CardPadding, CardRadius, CardElement } from './components/Display/Card';
