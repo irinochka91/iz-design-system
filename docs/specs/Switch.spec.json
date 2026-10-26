@@ -1,0 +1,180 @@
+{
+  "name": "Switch",
+  "category": "Inputs",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "An on/off setting that applies the moment it changes — focus-mode timer, theme follows system, reminders. Not for a choice collected by a form (Checkbox), not for an action (Button), never for consent. Two states only; no indeterminate, no invalid, no required.",
+  "pattern": {
+    "name": "Switch",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/switch/"
+  },
+  "role": "switch",
+  "props": {
+    "children": {
+      "type": "ReactNode",
+      "requiredWhen": "aria-label is not given. The visible label is the default; the type union refuses a switch with neither.",
+      "intent": "The visible label AND the accessible name — the name of the setting, stated as what is on ('Focus timer', 'Follow system theme'), never as a question or an action. Rendered in a real <label>, so clicking the text toggles."
+    },
+    "aria-label": {
+      "type": "string",
+      "requiredWhen": "children is omitted (a switch at the end of a settings row whose text is already next to it).",
+      "intent": "Name without visible text. Must name the setting; 'Toggle' or 'On/off' says nothing."
+    },
+    "isSelected": {
+      "type": "boolean",
+      "intent": "Controlled on/off. Pair with onChange."
+    },
+    "defaultSelected": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Uncontrolled initial state."
+    },
+    "onChange": {
+      "type": "(isSelected: boolean) => void",
+      "intent": "Fires with the new boolean (same shape as Checkbox). This is where the setting is applied — immediately, no Save button."
+    },
+    "description": {
+      "type": "string",
+      "intent": "Help text under the label, linked by aria-describedby — what the setting does, not what the switch is."
+    },
+    "labelPlacement": {
+      "type": "'end' | 'start'",
+      "default": "'end'",
+      "intent": "Where the text sits relative to the track. 'start' is the settings-list layout (text left, switch at the row's end); the DOM order and the name do not change."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Removed from the tab order and from submission. Prefer isReadOnly when the state still matters to the user."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Focusable and announced, not toggleable — a setting locked by a plan or a policy the user must still be able to see."
+    },
+    "value": {
+      "type": "string",
+      "intent": "Native form value, for the rare switch inside a form."
+    },
+    "name": {
+      "type": "string",
+      "intent": "Native form field name."
+    },
+    "size": {
+      "type": "'md' | 'lg'",
+      "default": "'md'",
+      "intent": "Row min-height 24 / 44 px (size.target.min / size.target.touch). The track is sized in em of the label's text so it scales with zoom; md is dense-settings density, lg is the touch default. No sm."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Focus on mount. Rarely right for a setting."
+    }
+  },
+  "states": [
+    "off",
+    "on",
+    "hover",
+    "focus",
+    "disabled",
+    "read-only"
+  ],
+  "keyboard": [
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "Moves focus to / from the switch. Each switch is its own tab stop."
+    },
+    {
+      "key": "Space",
+      "action": "Toggles on ↔ off and applies the setting at once."
+    },
+    {
+      "key": "Enter",
+      "action": "Does nothing on the switch (native input behaviour, same as Checkbox). Inside a <form> it submits; the switch must not intercept it."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.7",
+      "2.5.8",
+      "3.2.2",
+      "4.1.2"
+    ],
+    "name": "From children (a real <label> wrapping the input), or aria-label when children is omitted — the type union requires one of the two.",
+    "announcements": "role=\"switch\" with aria-checked true / false — read as 'on' / 'off' by screen readers, which is why the label must name the setting and not ask a question. description → aria-describedby. isReadOnly → aria-readonly=\"true\"; still focusable and read.",
+    "screenReaderNotes": "",
+    "targetSize": "The whole label row is the target: md ≥ 24 px tall (2.5.8 AA minimum), lg ≥ 44 (touch). A bare switch without a label still gets a 24 px hit area around its track."
+  },
+  "tokens": [
+    "color.surface.raised",
+    "color.text.primary",
+    "color.text.secondary",
+    "color.text.disabled",
+    "color.action.primary.bg",
+    "color.action.primary.bg-hover",
+    "color.action.disabled.bg",
+    "color.border.strong",
+    "color.border.focus",
+    "border.width.sm",
+    "border.width.focus",
+    "radius.full",
+    "size.target.min",
+    "size.target.touch",
+    "space.inline.sm",
+    "space.stack.xs",
+    "font.body.family",
+    "font.body.size",
+    "font.body.line-height",
+    "font.meta.size",
+    "font.meta.line-height",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [],
+  "composedBy": [],
+  "rules": [
+    "A switch applies its setting the moment it changes (3.2.2: the change is the expected result of operating it, so no Save button and no confirmation). If the change needs a Save or a confirmation, it is a Checkbox in a form.",
+    "No validation props — no isInvalid, isRequired or errorMessage. A setting cannot be 'invalid' or 'required'; a required on/off is a Checkbox (consent) and it belongs in a form.",
+    "No indeterminate. A switch has two states; a mixed group of settings is a list of switches, not one mixed switch.",
+    "On is never colour-only: the thumb moves to the other end of the track (geometry) AND aria-checked is set. The track colour is the third cue, not the only one. In forced-colors mode the track keeps a FieldText border and the thumb uses the system colour, so on and off stay distinguishable in Windows High Contrast.",
+    "The label names the setting as a thing that can be on — 'Focus timer', not 'Do you want a timer?' and not 'Enable timer'. Screen readers append 'on' / 'off' to it.",
+    "Space toggles; Enter does not — do not add an Enter handler. Enter belongs to the form.",
+    "The label is a real <label> wrapping the input, so clicking anywhere on the text toggles. Never a <span> with an onClick.",
+    "Focus ring is outline + outline-offset on the track, never box-shadow alone.",
+    "Never for consent, never for a destructive setting without its own confirmation ('Delete account and data' is a Button with a confirm Modal, backlog 0e)."
+  ],
+  "figma": {
+    "componentSet": "Inputs / Switch",
+    "properties": {
+      "Size": "size (md / lg)",
+      "State": "browser states (default/hover/focus) + isSelected + isDisabled + isReadOnly",
+      "Label placement": "labelPlacement (end / start)",
+      "Label": "children",
+      "Description": "description (boolean show + text)"
+    }
+  },
+  "examples": [
+    {
+      "title": "Setting with description",
+      "code": "<Switch isSelected={timer} onChange={setTimer} description=\"25 minutes, then a short break.\">Focus timer</Switch>"
+    },
+    {
+      "title": "Settings-list row (text first, switch at the end)",
+      "code": "<Switch labelPlacement=\"start\" isSelected={followSystem} onChange={setFollowSystem}>Follow system theme</Switch>"
+    },
+    {
+      "title": "Locked by the plan",
+      "code": "<Switch isReadOnly isSelected description=\"Included in the 90-day pass.\">Weekly summary email</Switch>"
+    },
+    {
+      "title": "Bare switch in a row that already shows the text",
+      "code": "<Switch aria-label=\"Reminders for overdue actions\" isSelected={reminders} onChange={setReminders} />"
+    }
+  ],
+  "source": "src/components/Inputs/Switch/Switch.spec.json"
+}

@@ -25,7 +25,7 @@ These are the APG defaults. A component may add keys but never remove one.
 - **TextField**: standard; `aria-describedby` links hint and error; error text is in the DOM before it becomes visible so screen readers announce it on `aria-invalid`.
 - **Checkbox**: `Space` toggles; indeterminate via `aria-checked="mixed"`.
 - **RadioGroup**: `Tab` into the group lands on the checked radio (or the first); `Arrow` keys move *and* select; `Space` selects.
-- **Switch**: `role="switch"`, `Space`/`Enter` toggle, `aria-checked`.
+- **Switch**: `role="switch"`, `Space` toggles (`Enter` belongs to the form, as for Checkbox), `aria-checked`; applies at once — no Save, no validation props.
 - **Select** (APG Select-only combobox): `Enter`/`Space`/`Alt+Down` open; `Up/Down` move; `Home/End`; type-ahead; `Enter` selects; `Escape` closes without change; focus stays on the trigger, `aria-activedescendant` tracks the option.
 - **ComboBox**: as Select plus text filtering; `aria-autocomplete="list"`; `aria-expanded`.
 
