@@ -1,0 +1,115 @@
+/* Chip — every value is a token (docs/TOKENS.md). Interactive chips get React Aria data-* states
+   (data-hovered, data-pressed, data-focus-visible, data-selected, data-disabled); static chips have
+   only their emphasis. Spec: Chip.spec.json · ADR-024 for the 28 px target and the caption role. */
+
+.root {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-chip-bg: transparent;
+  --iz-chip-fg: var(--iz-color-text-secondary);
+  --iz-chip-border: var(--iz-color-border-default);
+  --iz-chip-weight: var(--iz-font-caption-weight);
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--iz-space-inline-xs);
+  min-block-size: var(--iz-size-target-sm);
+  padding-block: 0;
+  padding-inline: var(--iz-space-200);
+  border: var(--iz-border-width-sm) solid var(--iz-chip-border);
+  border-radius: var(--iz-radius-full);
+  background: var(--iz-chip-bg);
+  color: var(--iz-chip-fg);
+  font-family: var(--iz-font-caption-family);
+  font-size: var(--iz-font-caption-size);
+  font-weight: var(--iz-chip-weight);
+  line-height: var(--iz-font-caption-line-height);
+  white-space: nowrap;
+  transition:
+    background-color var(--iz-duration-fast) var(--iz-easing-standard),
+    border-color var(--iz-duration-fast) var(--iz-easing-standard),
+    color var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+/* ---- emphasis: quiet (default) / tint / strong ---- */
+.tint {
+  --iz-chip-bg: var(--iz-color-action-primary-bg-subtle);
+  --iz-chip-fg: var(--iz-color-action-primary-fg);
+  --iz-chip-border: var(--iz-color-action-primary-bg-subtle);
+}
+
+.strong {
+  --iz-chip-bg: var(--iz-color-action-primary-bg);
+  --iz-chip-fg: var(--iz-color-text-on-action);
+  --iz-chip-border: var(--iz-color-action-primary-bg);
+}
+
+/* ---- interactive chips (filter, or stage with onPress): a real <button> ---- */
+.interactive {
+  /* a control's boundary must clear 3:1 (1.4.11); static chips keep the decorative border */
+  --iz-chip-border: var(--iz-color-border-strong);
+
+  appearance: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.interactive[data-hovered] {
+  --iz-chip-bg: var(--iz-color-action-secondary-bg-hover);
+  --iz-chip-fg: var(--iz-color-text-primary);
+}
+
+/* Selected (filter) is never colour-only: inverse colours AND a heavier weight AND aria-pressed. */
+.interactive[data-selected] {
+  --iz-chip-bg: var(--iz-color-surface-inverse);
+  --iz-chip-fg: var(--iz-color-text-inverse);
+  --iz-chip-border: var(--iz-color-surface-inverse);
+  --iz-chip-weight: var(--iz-font-caption-weight-strong);
+}
+
+.interactive[data-selected][data-hovered] {
+  --iz-chip-fg: var(--iz-color-text-inverse);
+}
+
+/* outline (not box-shadow): survives overflow clipping and forced-colors mode. px is allowed here on purpose. */
+.interactive[data-focus-visible] {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: 2px;
+}
+
+.interactive[data-disabled] {
+  --iz-chip-bg: var(--iz-color-action-disabled-bg);
+  --iz-chip-fg: var(--iz-color-action-disabled-fg);
+  --iz-chip-border: var(--iz-color-action-disabled-bg);
+
+  cursor: not-allowed;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.icon > * {
+  inline-size: 1em; /* em: the icon scales with the chip's text */
+  block-size: 1em;
+}
+
+.label {
+  display: inline-block;
+}
+
+/* Windows High Contrast / forced-colors: keep a visible pill, a visible ring, and a visible selected state. */
+@media (forced-colors: active) {
+  .root {
+    border-color: ButtonText;
+  }
+
+  .interactive[data-selected] {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .interactive[data-focus-visible] {
+    outline-color: Highlight;
+  }
+}

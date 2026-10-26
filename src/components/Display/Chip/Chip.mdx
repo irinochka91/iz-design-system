@@ -1,0 +1,52 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ChipStories from './Chip.stories';
+
+<Meta of={ChipStories} />
+
+# Chip
+
+A 28 px pill with a short label. **The variant decides the element**: `property` and `stage` are static `<span>`s with no role; `filter` is a `<button aria-pressed>`; a `stage` with `onPress` is a `<button>` that advances the stage. No removable chips (there are none in the product), no `tone` (one accent per screen).
+
+Pattern: [WAI-ARIA APG — Button](https://www.w3.org/WAI/ARIA/apg/patterns/button/) with `aria-pressed` for filters · Behaviour: React Aria `ToggleButton` / `Button` · Spec: `Chip.spec.json`
+
+<Canvas of={ChipStories.Property} />
+<Controls of={ChipStories.Property} />
+
+## Emphasis
+
+`quiet` (border + subtle text — every stage by default) · `tint` (accent-subtle, the handoff's *Interview*) · `strong` (accent, *Offer* — the single accent on a screen). The stage → emphasis mapping lives in the StageChip pattern, not here.
+
+<Canvas of={ChipStories.Emphasis} />
+
+## Filter
+
+Selected is never colour-only: inverse colours **and** a heavier weight **and** `aria-pressed`. Remove any one and a group of users loses the state.
+
+<Canvas of={ChipStories.FilterSelected} />
+
+## Keyboard
+
+| Key | Action |
+|---|---|
+| `Tab` / `Shift+Tab` | Reaches interactive chips only; static chips are never tab stops |
+| `Space` / `Enter` | filter: toggles `aria-pressed` · stage with `onPress`: presses |
+| `Shift+→` / `Shift+←` | **Not the chip's** — the StageChip pattern binds them on the row |
+
+## Target size
+
+28 × 28 px (`size.target.sm`): above the 24 px AA floor, below the 44 px touch guidance. It relies on the 2.5.8 spacing exception — patterns keep ≥ 8 px between chips and wrap rather than shrink the gap.
+
+## Do / Don't
+
+- Do put the state in text when a glyph carries meaning: `Hybrid<span class="iz-visually-hidden">, met</span>`.
+- Do give a cycling stage an `aria-label` that says what pressing does.
+- Don't add `aria-live` to a cycling chip — the pattern's Undo toast already announces the change.
+- Don't reach for a chip to show status colour; emphasis is the only colour axis.
+
+<Canvas of={ChipStories.Priorities} />
+
+## Tokens consumed
+
+See `tokens` in `Chip.spec.json`; `check:specs` verifies the list against the CSS.
+
+<Stories />

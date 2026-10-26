@@ -107,6 +107,31 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "Chip",
+      "category": "Display",
+      "code": {
+        "path": "src/components/Display/Chip/Chip.tsx",
+        "import": "import { Chip } from '@iz/design-system'"
+      },
+      "spec": "src/components/Display/Chip/Chip.spec.json",
+      "stories": "src/components/Display/Chip/Chip.stories.tsx",
+      "figma": {
+        "componentSet": "Display / Chip",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Variant": "variant",
+        "Emphasis": "emphasis",
+        "State": "browser states (default/hover/focus/active) + isSelected + isDisabled (interactive only)",
+        "Label": "children",
+        "Icon start": "iconStart"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

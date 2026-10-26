@@ -14,3 +14,7 @@ export { TextField } from './components/Inputs/TextField';
 export type { TextFieldProps, TextFieldSize, TextFieldType } from './components/Inputs/TextField';
 export { Checkbox } from './components/Inputs/Checkbox';
 export type { CheckboxProps, CheckboxSize } from './components/Inputs/Checkbox';
+
+// Display
+export { Chip } from './components/Display/Chip';
+export type { ChipProps, ChipVariant, ChipEmphasis, ChipPropertyProps, ChipStageProps, ChipFilterProps } from './components/Display/Chip';
