@@ -17,6 +17,8 @@ export { TextField } from './components/Inputs/TextField';
 export type { TextFieldProps, TextFieldSize, TextFieldType } from './components/Inputs/TextField';
 export { Checkbox } from './components/Inputs/Checkbox';
 export type { CheckboxProps, CheckboxSize } from './components/Inputs/Checkbox';
+export { Switch } from './components/Inputs/Switch';
+export type { SwitchProps, SwitchSize, SwitchLabelPlacement } from './components/Inputs/Switch';
 
 // Display
 export { Chip } from './components/Display/Chip';

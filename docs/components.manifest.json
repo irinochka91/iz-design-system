@@ -274,6 +274,31 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "Switch",
+      "category": "Inputs",
+      "code": {
+        "path": "src/components/Inputs/Switch/Switch.tsx",
+        "import": "import { Switch } from '@iz/design-system'"
+      },
+      "spec": "src/components/Inputs/Switch/Switch.spec.json",
+      "stories": "src/components/Inputs/Switch/Switch.stories.tsx",
+      "figma": {
+        "componentSet": "Inputs / Switch",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Size": "size",
+        "State": "isSelected / isDisabled / isReadOnly",
+        "Label placement": "labelPlacement",
+        "Label": "children",
+        "Description": "description"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

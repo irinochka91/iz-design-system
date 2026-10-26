@@ -1,0 +1,147 @@
+/* Switch — every value is a token (docs/TOKENS.md). States come from React Aria data-* attributes:
+   on the root (data-selected, data-disabled, data-readonly) and on the button (data-hovered,
+   data-pressed, data-focus-visible). On is never colour-only: the thumb moves. Spec: Switch.spec.json */
+
+.root {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-switch-track: var(--iz-color-border-strong);
+  --iz-switch-thumb: var(--iz-color-surface-raised);
+  --iz-switch-fg: var(--iz-color-text-primary);
+  --iz-switch-min-height: var(--iz-size-target-min);
+  --iz-switch-inset: var(--iz-border-width-sm); /* thumb inset = the visible rim of the track */
+
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--iz-space-stack-xs) var(--iz-space-inline-sm);
+  align-items: start;
+  min-block-size: var(--iz-switch-min-height);
+  font-family: var(--iz-font-body-family);
+  font-size: var(--iz-font-body-size);
+  line-height: var(--iz-font-body-line-height);
+  color: var(--iz-switch-fg);
+}
+
+/* ---- sizes: row min-heights 24 / 44 px ---- */
+.lg {
+  --iz-switch-min-height: var(--iz-size-target-touch);
+}
+
+/* .button is the <label> around the hidden input: a cell one text line tall, so the track centres on the
+   first line of the label with no magic offsets. em is allowed on min-block-size. */
+.button {
+  grid-column: 1;
+  grid-row: 1;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: calc(var(--iz-font-body-line-height) * 1em);
+  cursor: pointer;
+}
+
+/* The track is sized in em of the label's text — 1.25 tall, twice as wide — so it scales with zoom. */
+.track {
+  position: relative;
+  display: inline-block;
+  inline-size: 2.5em;
+  block-size: 1.25em;
+  border-radius: var(--iz-radius-full);
+  background: var(--iz-switch-track);
+  transition: background-color var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+/* The thumb: a circle inset by the rim; on, it travels to the far end. Geometry is the first cue. */
+.thumb {
+  position: absolute;
+  inset-block-start: var(--iz-switch-inset);
+  inset-inline-start: var(--iz-switch-inset);
+  inline-size: calc(1.25em - 2 * var(--iz-switch-inset));
+  block-size: calc(1.25em - 2 * var(--iz-switch-inset));
+  border-radius: var(--iz-radius-full);
+  background: var(--iz-switch-thumb);
+  transition: translate var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.root[data-selected] {
+  --iz-switch-track: var(--iz-color-action-primary-bg);
+}
+
+.root[data-selected] .thumb {
+  translate: calc(100% + 2 * var(--iz-switch-inset)) 0; /* its own width plus both rims = the far end */
+}
+
+.label {
+  grid-column: 2;
+  grid-row: 1;
+  cursor: pointer;
+}
+
+.description {
+  grid-column: 2;
+  font-size: var(--iz-font-meta-size);
+  line-height: var(--iz-font-meta-line-height);
+  color: var(--iz-color-text-secondary);
+}
+
+/* ---- label placement: 'start' puts the text in column 1 and the track at the row's end ---- */
+.labelStart {
+  grid-template-columns: 1fr auto;
+}
+
+.labelStart .button {
+  grid-column: 2;
+}
+
+.labelStart .label,
+.labelStart .description {
+  grid-column: 1;
+}
+
+/* ---- universal states ---- */
+
+.button[data-hovered] {
+  --iz-switch-track: var(--iz-color-action-primary-bg-hover);
+}
+
+/* outline (not box-shadow): survives overflow clipping and forced-colors mode. px is allowed here on purpose. */
+.button[data-focus-visible] .track {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: 2px;
+}
+
+.root[data-readonly] .button,
+.root[data-readonly] .label {
+  cursor: default;
+}
+
+.root[data-disabled] {
+  --iz-switch-track: var(--iz-color-action-disabled-bg);
+  --iz-switch-fg: var(--iz-color-text-disabled);
+}
+
+.root[data-disabled] .button,
+.root[data-disabled] .label {
+  cursor: not-allowed;
+}
+
+/* Windows High Contrast / forced-colors: a bordered track, a system-colour thumb, a visible ring. */
+@media (forced-colors: active) {
+  .track {
+    border: var(--iz-border-width-sm) solid FieldText;
+    background: Field;
+  }
+
+  .thumb {
+    background: FieldText;
+  }
+
+  .root[data-selected] .track {
+    background: Highlight;
+  }
+
+  .root[data-selected] .thumb {
+    background: HighlightText;
+  }
+
+  .button[data-focus-visible] .track {
+    outline-color: Highlight;
+  }
+}

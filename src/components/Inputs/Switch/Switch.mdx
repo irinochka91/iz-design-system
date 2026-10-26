@@ -1,0 +1,46 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as SwitchStories from './Switch.stories';
+
+<Meta of={SwitchStories} />
+
+# Switch
+
+An **on/off setting that applies the moment it changes** — focus-mode timer, follow system theme, reminders. Not a choice a form collects (`Checkbox`), not an action (`Button`), never consent.
+
+Pattern: [WAI-ARIA APG — Switch](https://www.w3.org/WAI/ARIA/apg/patterns/switch/) · Behaviour: React Aria `SwitchField` + `SwitchButton` · Spec: `Switch.spec.json` · Decision: ADR-031
+
+<Canvas of={SwitchStories.Default} />
+<Controls of={SwitchStories.Default} />
+
+## Switch or Checkbox?
+
+| | Switch | Checkbox |
+| --- | --- | --- |
+| When it takes effect | immediately | on Save / submit |
+| Can be required or invalid | never | yes (consent) |
+| Mixed state | no | yes (select all) |
+| Screen reader says | "Focus timer, switch, on" | "I agree, checkbox, checked" |
+
+So there are no `isRequired`, `isInvalid` or `errorMessage` props here. If you reach for one, the control is a Checkbox in a form.
+
+## Name the setting, not the question
+
+Screen readers append *on* / *off* to the label. "Focus timer — on" reads well; "Enable timer? — on" does not. A bare switch in a row that already shows the text takes `aria-label` with the same name.
+
+<Canvas of={SwitchStories.LabelStart} />
+
+## On is never colour-only
+
+The thumb moves to the other end of the track and `aria-checked` flips; the track colour is the third cue. In Windows High Contrast the track keeps a border and the thumb uses the system colour.
+
+## Keyboard
+
+`Tab` focuses · `Space` toggles and applies · `Enter` is left to the surrounding form, as for Checkbox.
+
+<Canvas of={SwitchStories.Keyboard} />
+
+## Tokens consumed
+
+See `tokens` in `Switch.spec.json`; `check:specs` verifies the list against the CSS. The track is sized in `em` of the label's text so it scales with zoom; the rows meet 24 / 44 px (`size.target.min` / `size.target.touch`).
+
+<Stories />
