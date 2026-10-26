@@ -1658,6 +1658,16 @@
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
       },
+      "radius.xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        },
+        "alias": "{radius-scale.3-5}",
+        "css": "--iz-radius-xl",
+        "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
+      },
       "size.target.lg": {
         "$type": "dimension",
         "$value": {
@@ -3588,6 +3598,16 @@
         },
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
+      },
+      "radius.xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        },
+        "alias": "{radius-scale.3-5}",
+        "css": "--iz-radius-xl",
+        "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
       },
       "size.target.lg": {
         "$type": "dimension",
@@ -5520,6 +5540,16 @@
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
       },
+      "radius.xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        },
+        "alias": "{radius-scale.3-5}",
+        "css": "--iz-radius-xl",
+        "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
+      },
       "size.target.lg": {
         "$type": "dimension",
         "$value": {
@@ -7451,6 +7481,16 @@
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
       },
+      "radius.xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        },
+        "alias": "{radius-scale.3-5}",
+        "css": "--iz-radius-xl",
+        "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
+      },
       "size.target.lg": {
         "$type": "dimension",
         "$value": {
@@ -9374,6 +9414,16 @@
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
       },
+      "radius.xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        },
+        "alias": "{radius-scale.3-5}",
+        "css": "--iz-radius-xl",
+        "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
+      },
       "size.target.lg": {
         "$type": "dimension",
         "$value": {
@@ -11296,6 +11346,16 @@
         },
         "alias": "{radius-scale.1}",
         "css": "--iz-radius-sm"
+      },
+      "radius.xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 14,
+          "unit": "px"
+        },
+        "alias": "{radius-scale.3-5}",
+        "css": "--iz-radius-xl",
+        "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
       },
       "size.target.lg": {
         "$type": "dimension",

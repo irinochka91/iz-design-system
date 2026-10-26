@@ -140,6 +140,7 @@ export type TokenName =
   | 'radius.lg'
   | 'radius.md'
   | 'radius.sm'
+  | 'radius.xl'
   | 'size.target.lg'
   | 'size.target.md'
   | 'size.target.min'

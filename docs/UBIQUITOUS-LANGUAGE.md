@@ -6,7 +6,7 @@ One vocabulary across React props, CSS tokens, Figma properties, specs and docs.
 
 | Concept | React prop | Figma property | Values |
 |---|---|---|---|
-| Visual importance | `variant` | `Variant` | `primary \| secondary \| tertiary \| ghost \| danger` (Actions); `outlined \| filled` (Inputs) |
+| Visual importance | `variant` | `Variant` | `primary \| secondary \| tertiary \| ghost \| danger` (Actions); `outlined \| filled` (Inputs); `surface \| raised` (Display containers — which surface token the box sits on) |
 | Size | `size` | `Size` | `sm \| md \| lg` — never `small/medium/large`, never `xs` unless added here |
 | Semantic colour | `tone` | `Tone` | `neutral \| info \| success \| warning \| danger` (Display, Feedback) |
 | Visual emphasis (no semantic meaning) | `emphasis` | `Emphasis` | `quiet \| tint \| strong` (Chip; one accent per screen — `strong` is the single highlight) |

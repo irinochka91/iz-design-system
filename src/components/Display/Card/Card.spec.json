@@ -1,0 +1,104 @@
+{
+  "name": "Card",
+  "category": "Display",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "A bordered box that groups related content on a surface. Never interactive as a whole — buttons and links live inside it. No shadow: the 1 px border does the work on every theme; elevation belongs to overlays (Popover, Toast), which use the raised variant for their body.",
+  "pattern": {
+    "name": "No ARIA pattern — a generic container. Becomes a region only when rendered as a section with aria-labelledby.",
+    "url": "https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/"
+  },
+  "role": "none",
+  "props": {
+    "children": {
+      "type": "ReactNode",
+      "intent": "The grouped content. Headings, text, chips, buttons — the card imposes no structure on them."
+    },
+    "variant": {
+      "type": "'surface' | 'raised'",
+      "default": "'surface'",
+      "intent": "Which surface token the box sits on. surface = cards and panels on the page (color.surface.raised — white on linen's warm page). raised = the body of a popover, palette or toast (color.surface.overlay). The overlay component adds the shadow; the card never does."
+    },
+    "padding": {
+      "type": "'md' | 'lg'",
+      "default": "'lg'",
+      "intent": "Inset 16 / 24 px (space.inset.md / lg). The handoff's 'padding 600 desktop / 400 phone': the pattern chooses md on phone. Card never reads the viewport — components do not own responsive behaviour (CONTRIBUTING)."
+    },
+    "radius": {
+      "type": "'lg' | 'xl'",
+      "default": "'lg'",
+      "intent": "12 / 14 px (radius.lg / radius.xl). xl is the triage card's radius 500; everything else is lg."
+    },
+    "as": {
+      "type": "'div' | 'section' | 'article' | 'li'",
+      "default": "'div'",
+      "intent": "The element. section + aria-labelledby makes the card a named region (one per screen at most); article for a self-contained item (an application, an experiment); li inside a list of cards. div has no semantics."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "requiredWhen": "as is 'section' — a section without a name is not a landmark and only adds noise.",
+      "intent": "The id of the heading inside the card that names the region."
+    }
+  },
+  "states": [
+    "default"
+  ],
+  "keyboard": [],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "2.4.6",
+      "2.4.1"
+    ],
+    "name": "None by default (a div). With as='section' + aria-labelledby, the heading's text names the region.",
+    "announcements": "None. Everything a screen reader hears comes from the content; the card itself is silent.",
+    "screenReaderNotes": "",
+    "targetSize": "Not a target. A card is never a button or a link; the targets inside it (Button, Chip filter, done ring) meet their own sizes."
+  },
+  "tokens": [
+    "color.surface.raised",
+    "color.surface.overlay",
+    "color.border.default",
+    "border.width.sm",
+    "radius.lg",
+    "radius.xl",
+    "space.inset.md",
+    "space.inset.lg"
+  ],
+  "compose": [],
+  "composedBy": [],
+  "rules": [
+    "Never make the whole card clickable. A card-as-link hides where the target is, breaks 2.5.8 (one huge target with the real controls inside it) and makes nested buttons invalid HTML. Put a Button or Link inside and let the heading be the link text.",
+    "No shadow, on any theme. The 1 px color.border.default edge separates a card from the page; elevation (shadow.overlay) belongs to Popover and Toast, which use variant='raised' for their body and add the shadow themselves.",
+    "No outer margin. Layout — gaps between cards, columns, gutters — is the parent's job (Stack, Grid). A card with margin breaks every container it is placed in.",
+    "padding='md' is the phone value, chosen by the pattern that knows its viewport. Card contains no media query (CONTRIBUTING: components never read window size).",
+    "as='section' requires aria-labelledby pointing at the heading inside; otherwise render a div. One named region per screen is plenty — ten regions are worse than none.",
+    "Linen check (docs/decisions.md, recommendation 5): on linen the card is white on a warm page and the edge is 1.21:1 — separation comes from the surface contrast, not the border. Verify on the Today screen with 6–8 cards before trusting it; if it does not read, the fix is the page surface (surface.sunken), not a shadow."
+  ],
+  "figma": {
+    "componentSet": "Display / Card",
+    "properties": {
+      "Variant": "variant (surface / raised)",
+      "Padding": "padding (md / lg)",
+      "Radius": "radius (lg / xl)"
+    }
+  },
+  "examples": [
+    {
+      "title": "A card on the page",
+      "code": "<Card><h3 id=\"orbit\">Orbit — Senior Product Designer</h3><Chip variant=\"stage\" emphasis=\"tint\">Interview</Chip></Card>"
+    },
+    {
+      "title": "Named region",
+      "code": "<Card as=\"section\" aria-labelledby=\"goal-h\"><h2 id=\"goal-h\">This week</h2>…</Card>"
+    },
+    {
+      "title": "Triage card (xl radius, phone padding)",
+      "code": "<Card radius=\"xl\" padding=\"md\" as=\"article\">…</Card>"
+    },
+    {
+      "title": "Body of a popover (the overlay adds the shadow)",
+      "code": "<Popover><Card variant=\"raised\">…</Card></Popover>"
+    }
+  ]
+}

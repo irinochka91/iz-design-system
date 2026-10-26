@@ -113,6 +113,11 @@
       "$type": "dimension",
       "$value": "{radius-scale.3}"
     },
+    "xl": {
+      "$type": "dimension",
+      "$value": "{radius-scale.3-5}",
+      "$description": "14 px — the triage card (specs/HANDOFF.md radius 500). Canonical name for what the alias layer exposes as radius.500. ADR-026."
+    },
     "full": {
       "$type": "dimension",
       "$value": "{radius-scale.full}"
