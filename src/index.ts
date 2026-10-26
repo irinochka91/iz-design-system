@@ -12,3 +12,5 @@ export type { ButtonProps, ButtonVariant, ButtonSize } from './components/Action
 // Inputs
 export { TextField } from './components/Inputs/TextField';
 export type { TextFieldProps, TextFieldSize, TextFieldType } from './components/Inputs/TextField';
+export { Checkbox } from './components/Inputs/Checkbox';
+export type { CheckboxProps, CheckboxSize } from './components/Inputs/Checkbox';

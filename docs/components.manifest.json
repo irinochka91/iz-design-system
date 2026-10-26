@@ -81,6 +81,32 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "Checkbox",
+      "category": "Inputs",
+      "code": {
+        "path": "src/components/Inputs/Checkbox/Checkbox.tsx",
+        "import": "import { Checkbox } from '@iz/design-system'"
+      },
+      "spec": "src/components/Inputs/Checkbox/Checkbox.spec.json",
+      "stories": "src/components/Inputs/Checkbox/Checkbox.stories.tsx",
+      "figma": {
+        "componentSet": "Inputs / Checkbox",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Size": "size",
+        "State": "browser states (default/hover/focus) + isSelected + isIndeterminate + isInvalid + isDisabled + isReadOnly",
+        "Required": "isRequired",
+        "Label": "children",
+        "Description": "description",
+        "Error": "errorMessage"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

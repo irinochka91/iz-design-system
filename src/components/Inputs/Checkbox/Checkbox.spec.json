@@ -36,7 +36,7 @@
     "isIndeterminate": {
       "type": "boolean",
       "default": "false",
-      "intent": "Presentational 'mixed' state for a select-all box whose children disagree. Exposed as aria-checked=\"mixed\". The parent sets it from the children's state; the box never computes it. Clicking a mixed box selects (not clears), per APG."
+      "intent": "Presentational 'mixed' state for a select-all box whose children disagree. Exposed through the native indeterminate property, which browsers report as aria-checked=\"mixed\" (React Aria sets the property, not the attribute). The parent sets it from the children's state; the box never computes it. Clicking a mixed box selects (not clears), per APG."
     },
     "description": {
       "type": "string",
@@ -124,7 +124,7 @@
       "4.1.2"
     ],
     "name": "From children (a real <label> wrapping the input), or aria-label when children is omitted — the type union requires one of the two.",
-    "announcements": "aria-checked true / false / mixed from the native input + React Aria. isInvalid → aria-invalid=\"true\" and aria-describedby lists description then error. isRequired → aria-required=\"true\". isReadOnly → aria-readonly=\"true\"; still focusable and read.",
+    "announcements": "aria-checked true / false from the native input; \"mixed\" comes from the native indeterminate property that React Aria sets (no attribute in the DOM). isInvalid → aria-invalid=\"true\" and aria-describedby lists description then error. isRequired → aria-required=\"true\". isReadOnly → aria-readonly=\"true\"; still focusable and read.",
     "screenReaderNotes": "",
     "targetSize": "The whole label row is the target: md ≥ 24 px tall (2.5.8 AA minimum), lg ≥ 44 (touch). A bare box without a label still gets a 24 px hit area around its 16 px glyph."
   },
@@ -151,6 +151,7 @@
     "space.stack.xs",
     "font.body.family",
     "font.body.size",
+    "font.body.line-height",
     "font.meta.size",
     "font.meta.line-height",
     "duration.fast",

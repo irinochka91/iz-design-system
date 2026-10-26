@@ -1,0 +1,56 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as CheckboxStories from './Checkbox.stories';
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+A binary — or indeterminate — choice with a **visible label**, for forms and filters. **Not** for one-way actions with Undo (the ActionRow "done" ring is a `Button`), not for settings that apply the moment they change (`Switch`), not for mutually exclusive options (`RadioGroup`).
+
+Pattern: [WAI-ARIA APG — Checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/) · Behaviour: React Aria `CheckboxField` + `CheckboxButton` · Spec: `Checkbox.spec.json`
+
+<Canvas of={CheckboxStories.Default} />
+<Controls of={CheckboxStories.Default} />
+
+## Anatomy
+
+box (`<label>` around the hidden native input — focus ring lives here) · `children` label · `description` · `errorMessage`. The whole row is the target; clicking the label text toggles the box because it is a real label, not a span with a handler.
+
+## Selected, indeterminate
+
+Selected is never colour-only: the check glyph is drawn **and** `aria-checked` is set. `isIndeterminate` is presentational — the parent computes it from the children and passes it in; the box never flips itself to mixed. Clicking a mixed box selects, never clears.
+
+<Canvas of={CheckboxStories.Indeterminate} />
+
+## Sizes
+
+`md` row ≥ 24 px (dense forms, the WCAG 2.5.8 minimum) · `lg` row ≥ 44 px (touch). The box itself is 1em of the label's text so it scales with zoom.
+
+<Canvas of={CheckboxStories.Sizes} />
+
+## Keyboard
+
+| Key | Action |
+|---|---|
+| `Tab` / `Shift+Tab` | Moves focus to / from the box; each checkbox is its own tab stop |
+| `Space` | Toggles (mixed → selected) |
+| `Enter` | **Nothing** on the box; inside a `<form>` it submits — the checkbox never intercepts it |
+
+## States
+
+Hover, focus and pressed are browser states via React Aria `data-*`. Semantic states are props: `isSelected`, `isIndeterminate`, `isInvalid` (+ `errorMessage`), `isRequired`, `isReadOnly`, `isDisabled`. The error element is always in the DOM (empty while valid), so the announcement is immediate (ADR-022).
+
+<Canvas of={CheckboxStories.Invalid} />
+
+## Do / Don't
+
+- Do name a bare box after the thing it selects: `aria-label="Select Orbit — Senior Product Designer"`, never just "Select".
+- Do group related checkboxes in a `CheckboxGroup` (`fieldset` + `legend`) when it exists — not under a heading.
+- Don't build the "done" ring with this: a done action undoes, it does not toggle back.
+- Don't add an Enter handler "for convenience" — Enter belongs to the form.
+
+## Tokens consumed
+
+See `tokens` in `Checkbox.spec.json`; `check:specs` verifies the list against the CSS.
+
+<Stories />

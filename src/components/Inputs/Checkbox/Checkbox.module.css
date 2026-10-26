@@ -1,0 +1,163 @@
+/* Checkbox — every value is a token (docs/TOKENS.md). States come from React Aria data-* attributes:
+   on the root (data-selected, data-indeterminate, data-invalid, data-disabled, data-readonly, data-required)
+   and on the box (data-hovered, data-pressed, data-focus-visible). Spec: Checkbox.spec.json */
+
+.root {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-checkbox-bg: var(--iz-color-surface-raised);
+  --iz-checkbox-border: var(--iz-color-border-strong);
+  --iz-checkbox-border-width: var(--iz-border-width-sm);
+  --iz-checkbox-glyph: var(--iz-color-text-on-action);
+  --iz-checkbox-fg: var(--iz-color-text-primary);
+  --iz-checkbox-min-height: var(--iz-size-target-min);
+
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--iz-space-stack-xs) var(--iz-space-inline-sm);
+  align-items: start;
+  min-block-size: var(--iz-checkbox-min-height);
+  font-family: var(--iz-font-body-family);
+  font-size: var(--iz-font-body-size);
+  line-height: var(--iz-font-body-line-height);
+  color: var(--iz-checkbox-fg);
+}
+
+/* ---- sizes: row min-heights 24 / 44 px ---- */
+.lg {
+  --iz-checkbox-min-height: var(--iz-size-target-touch);
+}
+
+/* .box is the <label> around the hidden input: a cell exactly one text line tall, so the square inside
+   it centres on the first line of the label with no magic offsets. em is allowed on min-block-size. */
+.box {
+  grid-column: 1;
+  grid-row: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: calc(var(--iz-font-body-line-height) * 1em);
+  cursor: pointer;
+}
+
+/* The square is the SVG itself: 1em of the label's text, so it scales with zoom and text size. */
+.glyph {
+  inline-size: 1em;
+  block-size: 1em;
+  border: var(--iz-checkbox-border-width) solid var(--iz-checkbox-border);
+  border-radius: var(--iz-radius-sm);
+  background: var(--iz-checkbox-bg);
+  color: var(--iz-checkbox-glyph);
+  transition:
+    background-color var(--iz-duration-fast) var(--iz-easing-standard),
+    border-color var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+/* Selected is never colour-only: the glyph is drawn AND aria-checked is set. */
+.check,
+.dash {
+  opacity: 0;
+  transition: opacity var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.root[data-selected],
+.root[data-indeterminate] {
+  --iz-checkbox-bg: var(--iz-color-action-primary-bg);
+  --iz-checkbox-border: var(--iz-color-action-primary-bg);
+}
+
+.root[data-selected]:not([data-indeterminate]) .check {
+  opacity: 1;
+}
+
+.root[data-indeterminate] .dash {
+  opacity: 1;
+}
+
+.label {
+  grid-column: 2;
+  grid-row: 1;
+  cursor: pointer;
+}
+
+.required {
+  margin-inline-start: var(--iz-space-inline-sm);
+  color: var(--iz-color-text-danger);
+}
+
+.description,
+.error {
+  grid-column: 2;
+  font-size: var(--iz-font-meta-size);
+  line-height: var(--iz-font-meta-line-height);
+}
+
+.description {
+  color: var(--iz-color-text-secondary);
+}
+
+.error {
+  color: var(--iz-color-text-danger);
+}
+
+.error:empty {
+  display: none; /* stays in the DOM for aria-describedby; takes no space while valid */
+}
+
+/* ---- universal states ---- */
+
+.box[data-hovered] {
+  --iz-checkbox-border: var(--iz-color-action-primary-bg);
+}
+
+.root[data-selected] .box[data-hovered],
+.root[data-indeterminate] .box[data-hovered] {
+  --iz-checkbox-bg: var(--iz-color-action-primary-bg-hover);
+  --iz-checkbox-border: var(--iz-color-action-primary-bg-hover);
+}
+
+/* outline (not box-shadow): survives overflow clipping and forced-colors mode. px is allowed here on purpose. */
+.box[data-focus-visible] .glyph {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Invalid is never colour-only: thicker danger border + error text + aria-invalid. */
+.root[data-invalid] {
+  --iz-checkbox-border: var(--iz-color-border-danger);
+  --iz-checkbox-border-width: var(--iz-border-width-md);
+}
+
+.root[data-readonly] .box,
+.root[data-readonly] .label {
+  cursor: default;
+}
+
+.root[data-disabled] {
+  --iz-checkbox-bg: var(--iz-color-action-disabled-bg);
+  --iz-checkbox-border: var(--iz-color-action-disabled-bg);
+  --iz-checkbox-fg: var(--iz-color-text-disabled);
+  --iz-checkbox-glyph: var(--iz-color-text-disabled);
+}
+
+.root[data-disabled] .box,
+.root[data-disabled] .label {
+  cursor: not-allowed;
+}
+
+/* Windows High Contrast / forced-colors: keep a visible box, a system-colour glyph and a visible ring. */
+@media (forced-colors: active) {
+  .glyph {
+    border-color: FieldText;
+    color: CanvasText;
+  }
+
+  .root[data-selected] .glyph,
+  .root[data-indeterminate] .glyph {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  .box[data-focus-visible] .glyph {
+    outline-color: Highlight;
+  }
+}
