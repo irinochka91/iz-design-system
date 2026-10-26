@@ -20,7 +20,7 @@
     },
     "onAction": {
       "type": "(key: Key) => void",
-      "intent": "Fires with the chosen item's id. One handler for the whole menu — the pattern switches on the key ('tomorrow' | '+3d' | 'mon' | 'pick')."
+      "intent": "Fires with the chosen item's id. One handler for the whole menu — the pattern switches on the key ('tomorrow' | '+3d' | 'mon' | 'pick'). React Aria passes the key as the first argument (a second argument may follow); handlers should read only the key."
     },
     "isOpen": {
       "type": "boolean",
@@ -106,7 +106,7 @@
     },
     {
       "key": "Tab / Shift+Tab",
-      "action": "Closes the menu (no focus trap — it is a non-modal popover) and moves focus on in the page order."
+      "action": "No effect while the menu is open: the popover is modal for assistive technology (React Aria), focus stays on the current item and the menu stays open. Exits are Escape, a choice, or a click outside — all return focus to the trigger."
     }
   ],
   "a11y": {
@@ -123,7 +123,7 @@
       "4.1.2"
     ],
     "name": "The menu is labelled by its trigger (aria-labelledby) — 'Snooze' — or by aria-label when the trigger is an icon. Each item's name is its label text; description and keyboard hint are read after it.",
-    "announcements": "Trigger: aria-haspopup=\"menu\", aria-expanded true/false. Items: role=\"menuitem\" (menuitemradio + aria-checked in single mode); aria-disabled for disabledKeys. Opening announces the menu's name and the focused item; choosing or Escape returns focus to the trigger, which is announced again.",
+    "announcements": "Trigger: aria-haspopup=\"true\" (the boolean form React Aria emits — per ARIA it means a menu), aria-expanded true/false. Items: role=\"menuitem\" (menuitemradio + aria-checked in single mode); aria-disabled for disabledKeys. Opening announces the menu's name and the focused item; choosing or Escape returns focus to the trigger, which is announced again. While open, the rest of the page is aria-hidden for assistive technology (modal popover); closing restores it.",
     "screenReaderNotes": "",
     "targetSize": "Items are 40 px tall (size.target.lg) and span the popover's full width; the trigger is a Button and meets its own size. The popover is at least 160 px wide so short labels are not tiny targets."
   },
@@ -158,20 +158,19 @@
     "easing.standard"
   ],
   "compose": [
-    "Button",
-    "Card"
+    "Button"
   ],
   "composedBy": [],
   "rules": [
     "Menu is for actions, not values. 'Snooze until…' is a menu; 'Stage: Interview' as a form field is a Select. The role tells a screen-reader user what Enter will do.",
     "The split button (ActionRow's Snooze) is a composition, not a component: a Button that applies the default (+3d) next to a MenuTrigger whose Button is icon-only with aria-label='More snooze options'. Two buttons, two names, one visual group. The pattern owns it.",
     "Focus always returns to the trigger on close — choice, Escape, Tab or click outside (2.4.3). Never leave focus on body.",
-    "No focus trap (2.1.2): Tab closes and moves on. A menu that traps is a dialog.",
+    "The menu popover is modal: while open, content outside is hidden from assistive technology and Tab is contained (ADR-029). This is allowed under 2.1.2 because Escape always exits and the exit is in the keyboard map. isNonModal is not used — React Aria warns it degrades the screen-reader experience outside combobox-style components.",
     "The focused item is marked two ways: a background change AND an inset outline ring. The hover background alone is ~1.1:1 against the surface and is not a focus indicator (2.4.7, 1.4.11).",
     "Items hold text, an optional description and an optional keyboard hint — never a nested button, link-button or input. An item that needs a form is a Dialog.",
     "Seven items or fewer in one list; more than that gets sections with headers, or is not a menu.",
     "Destructive actions ('Withdraw application') are plain items that open a confirmation Dialog; no red text in menus — status colours belong to text and rings in the patterns, and one accent per screen.",
-    "The popover body is Card variant='raised' with shadow.overlay (dark themes drop it through the token). It renders in a portal at the end of body; no z-index token exists yet — see PARKING.md.",
+    "The popover body uses the same tokens as Card variant='raised' — surface.overlay, border.default, radius.lg — plus shadow.overlay (dark themes drop it through the token); it is not a Card, because a menu's inset is 8 px and Card offers 16 / 24. It renders in a portal at the end of body; no z-index token exists yet — see PARKING.md.",
     "Keyboard hints (Keyboard slot) show the shortcut that triggers the same action outside the menu ('S' for the default snooze). They are informative text, read after the label; they never duplicate the item's name."
   ],
   "figma": {

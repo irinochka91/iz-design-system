@@ -9,6 +9,9 @@ export const VERSION = '0.0.1';
 export { Button } from './components/Actions/Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './components/Actions/Button';
 
+export { Menu, MenuItem, MenuSection, MenuHeader, MenuSeparator, MenuDescription, MenuKeyboard } from './components/Actions/Menu';
+export type { MenuProps, MenuItemProps, MenuSectionProps, MenuPlacement, MenuSelectionMode } from './components/Actions/Menu';
+
 // Inputs
 export { TextField } from './components/Inputs/TextField';
 export type { TextFieldProps, TextFieldSize, TextFieldType } from './components/Inputs/TextField';

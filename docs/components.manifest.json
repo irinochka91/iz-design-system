@@ -178,6 +178,30 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "Menu",
+      "category": "Actions",
+      "code": {
+        "path": "src/components/Actions/Menu/Menu.tsx",
+        "import": "import { Menu, MenuItem, MenuSection, MenuHeader, MenuSeparator, MenuDescription, MenuKeyboard } from '@iz/design-system'"
+      },
+      "spec": "src/components/Actions/Menu/Menu.spec.json",
+      "stories": "src/components/Actions/Menu/Menu.stories.tsx",
+      "figma": {
+        "componentSet": "Actions / Menu",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Placement": "placement",
+        "Item state": "MenuItem data-* (hover/focus/active/selected/disabled)",
+        "Sections": "MenuSection + MenuHeader",
+        "Hint": "MenuKeyboard"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

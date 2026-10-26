@@ -1,0 +1,59 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as MenuStories from './Menu.stories';
+
+<Meta of={MenuStories} />
+
+# Menu
+
+A list of **actions** behind a trigger Button, in a non-modal popover. Keyboard-complete, closes on choice or Escape, and **always returns focus to the trigger**. Not for choosing a value (`Select`, `ComboBox`), never for navigation (`Link`).
+
+Pattern: [WAI-ARIA APG — Menu Button](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/) · Behaviour: React Aria `MenuTrigger` + `Popover` + `Menu` · Spec: `Menu.spec.json`
+
+<Canvas of={MenuStories.Snooze} />
+<Controls of={MenuStories.Snooze} />
+
+## Anatomy
+
+`trigger` (a Button with `aria-haspopup="menu"` / `aria-expanded`) → popover (surface.overlay, border, `shadow.overlay`) → `Menu` (`role="menu"`, named by the trigger) → `MenuItem`s, optionally in `MenuSection`s with a `MenuHeader`, separated by `MenuSeparator`. An item holds its label, an optional `MenuDescription` and an optional `MenuKeyboard` hint — never a nested control.
+
+## The split button
+
+ActionRow's Snooze is **two buttons**: one applies the default (+3 days), an icon-only trigger opens the presets. Two names, one visual group — composed by the pattern, not a component.
+
+<Canvas of={MenuStories.SplitButton} />
+
+## Single selection
+
+`selectionMode="single"` turns items into `menuitemradio` with `aria-checked`; the checked item shows a tick **and** the tint. Sections with headers group the pipeline stages from the terminal ones.
+
+<Canvas of={MenuStories.SetStage} />
+
+## Keyboard
+
+| Key | Action |
+|---|---|
+| `Enter` / `Space` / `↓` on the trigger | Opens, focus on the first item |
+| `↑` on the trigger | Opens, focus on the last item |
+| `↓` / `↑` | Move, wrapping at the ends |
+| `Home` / `End` | First / last |
+| typing | Type-ahead by label |
+| `Enter` / `Space` | Chooses, closes, focus returns to the trigger |
+| `Escape` | Closes without a choice, focus returns |
+| `Tab` / `Shift+Tab` | **No effect** while open — the popover is modal for assistive tech; exit with `Escape`, a choice, or a click outside |
+
+The focused item is marked two ways: background **and** an inset ring. The hover background alone is ~1.1:1 and is not a focus indicator.
+
+While the menu is open, the rest of the page is hidden from assistive technology and Tab is contained — React Aria's modal popover. `isNonModal` is deliberately not used: the library warns it degrades the screen-reader experience outside combobox-style components (ADR-029).
+
+## Do / Don't
+
+- Do keep it to seven items; more gets sections, or is not a menu.
+- Do give an icon-only trigger an `aria-label` and the menu an `aria-label` that names what it does.
+- Don't put a destructive action in red; it opens a confirmation Dialog instead.
+- Don't nest buttons, links-as-buttons or inputs in items.
+
+## Tokens consumed
+
+See `tokens` in `Menu.spec.json`; `check:specs` verifies the list against the CSS.
+
+<Stories />

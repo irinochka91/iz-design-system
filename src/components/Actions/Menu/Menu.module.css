@@ -1,0 +1,145 @@
+/* Menu — every value is a token (docs/TOKENS.md). The popover body uses Card-raised tokens plus
+   shadow.overlay; items are 40 px rows with React Aria data-* states. Spec: Menu.spec.json */
+
+.popover {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-menu-bg: var(--iz-color-surface-overlay);
+  --iz-menu-border: var(--iz-color-border-default);
+
+  min-inline-size: calc(4 * var(--iz-size-target-lg)); /* 160 px: short labels are not tiny targets */
+  padding: var(--iz-space-inset-sm);
+  border: var(--iz-border-width-sm) solid var(--iz-menu-border);
+  border-radius: var(--iz-radius-lg);
+  background: var(--iz-menu-bg);
+  box-shadow: var(--iz-shadow-overlay);
+  font-family: var(--iz-font-body-family);
+  font-size: var(--iz-font-body-size);
+  line-height: var(--iz-font-body-line-height);
+  color: var(--iz-color-text-primary);
+}
+
+/* Enter / leave: a fade. Under prefers-reduced-motion the duration token is 0, so it is instant. */
+.popover[data-entering] {
+  animation: iz-menu-in var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.popover[data-exiting] {
+  animation: iz-menu-in var(--iz-duration-fast) var(--iz-easing-standard) reverse;
+}
+
+@keyframes iz-menu-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  max-block-size: inherit;
+  overflow: auto;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--iz-space-inline-sm);
+  min-block-size: var(--iz-size-target-lg);
+  padding-inline: var(--iz-space-inset-md);
+  color: var(--iz-color-text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hover and roving focus share a background; focus-visible adds the inset ring (the background alone is
+   ~1.1:1 against the surface and is not a focus indicator). px on outline-offset is allowed on purpose. */
+.item[data-hovered],
+.item[data-focused] {
+  background: var(--iz-color-action-secondary-bg-hover);
+}
+
+.item[data-pressed] {
+  background: var(--iz-color-action-secondary-bg-active);
+}
+
+.item[data-focus-visible] {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: -2px;
+}
+
+/* single selection: reserve the tick column so labels stay aligned; show the tick when checked */
+.item[data-selection-mode="single"]::before {
+  content: "";
+  inline-size: 1em;
+  flex-shrink: 0;
+}
+
+.item[data-selected] {
+  background: var(--iz-color-action-primary-bg-subtle);
+  color: var(--iz-color-action-primary-fg);
+}
+
+.item[data-selected]::before {
+  content: "✓";
+}
+
+.item[data-disabled] {
+  color: var(--iz-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.description {
+  flex-basis: 100%;
+  color: var(--iz-color-text-secondary);
+}
+
+.item[data-disabled] .description {
+  color: var(--iz-color-text-disabled);
+}
+
+.kbd {
+  margin-inline-start: auto;
+  font-family: var(--iz-font-code-family);
+  font-size: var(--iz-font-code-size);
+  color: var(--iz-color-text-secondary);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: var(--iz-space-inset-sm) var(--iz-space-inset-md);
+  font-family: var(--iz-font-label-family);
+  font-size: var(--iz-font-label-size);
+  font-weight: var(--iz-font-label-weight);
+  color: var(--iz-color-text-secondary);
+}
+
+.separator {
+  margin-block: var(--iz-space-inset-sm);
+  border: 0;
+  border-block-start: var(--iz-border-width-sm) solid var(--iz-color-border-default);
+}
+
+/* Windows High Contrast / forced-colors: visible box, visible ring, visible selection. */
+@media (forced-colors: active) {
+  .popover {
+    border-color: CanvasText;
+  }
+
+  .item[data-focus-visible] {
+    outline-color: Highlight;
+  }
+
+  .item[data-selected] {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
