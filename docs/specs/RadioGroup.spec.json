@@ -1,0 +1,218 @@
+{
+  "name": "RadioGroup",
+  "category": "Inputs",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "One choice from a short, fully visible list of mutually exclusive options — role type, window length, a lead's source. Two to about six options; more is a Select. Not for on/off (Switch), not for several picks (Checkbox), not for navigation between views (Tabs). Ships two parts: RadioGroup (the fieldset: name, description, error, orientation) and Radio (one option).",
+  "pattern": {
+    "name": "Radio Group",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/radio/"
+  },
+  "role": "radiogroup",
+  "props": {
+    "label": {
+      "type": "ReactNode",
+      "requiredWhen": "aria-label is not given. The type union refuses a group with neither.",
+      "intent": "The group's visible name — the question the options answer ('Role type', 'Window'). Announced once when focus enters the group, then each radio's own label; never repeated per option."
+    },
+    "aria-label": {
+      "type": "string",
+      "requiredWhen": "label is omitted (a group whose question is already a heading beside it).",
+      "intent": "Name without visible text."
+    },
+    "children": {
+      "type": "ReactElement<RadioProps>[]",
+      "intent": "The options, as <Radio> elements, in the order they are read. Two to ~six."
+    },
+    "value": {
+      "type": "string",
+      "intent": "Controlled selected value. Pair with onChange."
+    },
+    "defaultValue": {
+      "type": "string",
+      "intent": "Uncontrolled initial value. Omit it for a genuine question the user must answer; preselect only a safe default."
+    },
+    "onChange": {
+      "type": "(value: string) => void",
+      "intent": "Fires with the selected Radio's value, not the event."
+    },
+    "description": {
+      "type": "string",
+      "intent": "Help text under the group name, linked to the group by aria-describedby."
+    },
+    "errorMessage": {
+      "type": "string",
+      "intent": "Shown when isInvalid. Present in the DOM before it becomes visible, so the announcement is immediate (same contract as TextField and Checkbox)."
+    },
+    "isInvalid": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Sets aria-invalid on the group and the invalid style on every radio; the form decides validity (e.g. no option chosen on submit)."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Sets aria-required on the group plus the visible marker on the group name. Native required is not used (ADR-022)."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Disables every radio; the group leaves the tab order. A single option is disabled with Radio's own isDisabled."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Focusable and announced, not changeable, still submitted."
+    },
+    "orientation": {
+      "type": "'vertical' | 'horizontal'",
+      "default": "'vertical'",
+      "intent": "Layout only; Up/Down and Left/Right both work in either. Horizontal is for 2–3 short labels (e.g. '14 days / 30 days'); it wraps rather than overflows."
+    },
+    "name": {
+      "type": "string",
+      "intent": "Native form field name shared by all radios."
+    },
+    "size": {
+      "type": "'md' | 'lg'",
+      "default": "'md'",
+      "intent": "Row min-height 24 / 44 px per radio (size.target.min / size.target.touch). The circle is 1em of the label's text. No sm."
+    },
+    "Radio.value": {
+      "type": "string",
+      "intent": "Required. The value reported by onChange and submitted."
+    },
+    "Radio.children": {
+      "type": "ReactNode",
+      "intent": "Required. The option's visible label AND accessible name, in a real <label> wrapping the input. A radio has no bare form: an unlabeled option cannot be chosen knowingly."
+    },
+    "Radio.isDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Disables this option only; arrow navigation skips it."
+    }
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "selected",
+    "invalid",
+    "disabled",
+    "read-only"
+  ],
+  "keyboard": [
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "The whole group is one tab stop. Tab lands on the selected radio, or the first enabled one when nothing is selected; Tab again leaves the group."
+    },
+    {
+      "key": "Arrow Down / Arrow Right",
+      "action": "Moves focus to the next enabled radio AND selects it; wraps from the last to the first."
+    },
+    {
+      "key": "Arrow Up / Arrow Left",
+      "action": "Moves focus to the previous enabled radio AND selects it; wraps from the first to the last."
+    },
+    {
+      "key": "Space",
+      "action": "Selects the focused radio if it is not yet selected. Nothing deselects — a group with a selection always has one."
+    },
+    {
+      "key": "Enter",
+      "action": "Does nothing on a radio (native). Inside a <form> it submits; the group must not intercept it."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.4.3",
+      "2.4.7",
+      "2.5.8",
+      "3.3.1",
+      "3.3.2",
+      "4.1.2"
+    ],
+    "name": "Group: from label (aria-labelledby) or aria-label — the type union requires one. Each Radio: from its children, a real <label> wrapping the native input.",
+    "announcements": "Entering the group: group name, then 'radio group', then the focused radio's label and 'selected, n of m'. Arrows re-announce each radio as it is selected. isInvalid → aria-invalid=\"true\" on the group and aria-describedby lists description then error. isRequired → aria-required=\"true\" on the group. isReadOnly → aria-readonly=\"true\".",
+    "screenReaderNotes": "",
+    "targetSize": "Each radio's label row is the target: md ≥ 24 px tall (2.5.8 AA minimum), lg ≥ 44 (touch). Horizontal groups keep at least space.inline.md between rows so adjacent targets do not touch."
+  },
+  "tokens": [
+    "color.surface.raised",
+    "color.text.primary",
+    "color.text.secondary",
+    "color.text.danger",
+    "color.text.disabled",
+    "color.action.primary.bg",
+    "color.action.primary.bg-hover",
+    "color.action.disabled.bg",
+    "color.border.strong",
+    "color.border.focus",
+    "color.border.danger",
+    "border.width.sm",
+    "border.width.md",
+    "border.width.focus",
+    "radius.full",
+    "size.target.min",
+    "size.target.touch",
+    "space.inline.sm",
+    "space.inline.md",
+    "space.stack.xs",
+    "space.stack.sm",
+    "font.body.family",
+    "font.body.size",
+    "font.body.line-height",
+    "font.body.weight",
+    "font.meta.size",
+    "font.meta.line-height",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [],
+  "composedBy": [],
+  "rules": [
+    "The group is role=\"radiogroup\" named by its label — the ARIA equivalent of fieldset + legend, which is what the Checkbox spec promised for grouped choices. The question is announced once, on entry; never put it in every option.",
+    "One tab stop per group (APG roving tabindex): Tab lands on the selected radio or the first enabled one. Arrow keys move focus AND select — there is no 'move without choosing' in a radio group, by design; if choosing must be deliberate, the options are a listbox or buttons.",
+    "Nothing deselects. Omit defaultValue for a question the user must answer, and let the form mark the group invalid on submit; never preselect a consequential default to dodge the empty state.",
+    "Selected is never colour-only: the inner dot is drawn AND aria-checked is set. In forced-colors mode the circle keeps a FieldText border and the dot uses the system colour.",
+    "Invalid is group-level: aria-invalid and the error live on the group, the danger border shows on every radio, and the error text appears once under the group. Never an error per option.",
+    "Every Radio has a visible label in a real <label>; there is no aria-label-only radio. Two to about six options — beyond that, a Select; a single option is a Checkbox or a Switch.",
+    "Horizontal is layout, not semantics: both arrow axes work in both orientations, and the row wraps on narrow viewports rather than overflowing.",
+    "The error element is in the DOM before it is visible (ADR-022: validationBehavior=\"aria\"); Enter is left to the form.",
+    "Focus ring is outline + outline-offset on the circle of the focused radio, never box-shadow alone."
+  ],
+  "figma": {
+    "componentSet": "Inputs / RadioGroup",
+    "properties": {
+      "Orientation": "orientation (vertical / horizontal)",
+      "Size": "size (md / lg)",
+      "State": "browser states (default/hover/focus) + isInvalid + isDisabled + isReadOnly",
+      "Required": "isRequired",
+      "Label": "label",
+      "Description": "description (boolean show + text)",
+      "Error": "errorMessage (boolean show + text; visible only when State = invalid)",
+      "Radio / Selected": "the selected option",
+      "Radio / Label": "Radio children"
+    }
+  },
+  "examples": [
+    {
+      "title": "A question with no default",
+      "code": "<RadioGroup label=\"Role type\" value={roleType} onChange={setRoleType} isRequired isInvalid={submitted && !roleType} errorMessage=\"Choose a role type\">\n  <Radio value=\"ic\">Individual contributor</Radio>\n  <Radio value=\"lead\">Lead</Radio>\n  <Radio value=\"manager\">Manager</Radio>\n</RadioGroup>"
+    },
+    {
+      "title": "Short horizontal choice with a safe default",
+      "code": "<RadioGroup label=\"Window\" orientation=\"horizontal\" defaultValue=\"14\" description=\"How long the experiment runs.\">\n  <Radio value=\"14\">14 days</Radio>\n  <Radio value=\"30\">30 days</Radio>\n</RadioGroup>"
+    },
+    {
+      "title": "One option unavailable",
+      "code": "<RadioGroup label=\"Lead source\" defaultValue=\"board\">\n  <Radio value=\"board\">Job board</Radio>\n  <Radio value=\"referral\">Referral</Radio>\n  <Radio value=\"import\" isDisabled>Import (coming)</Radio>\n</RadioGroup>"
+    }
+  ],
+  "source": "src/components/Inputs/RadioGroup/RadioGroup.spec.json"
+}
