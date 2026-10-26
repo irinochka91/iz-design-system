@@ -251,6 +251,29 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "Tooltip",
+      "category": "Overlay",
+      "code": {
+        "path": "src/components/Overlay/Tooltip/Tooltip.tsx",
+        "import": "import { Tooltip } from '@iz/design-system'"
+      },
+      "spec": "src/components/Overlay/Tooltip/Tooltip.spec.json",
+      "stories": "src/components/Overlay/Tooltip/Tooltip.stories.tsx",
+      "figma": {
+        "componentSet": "Overlay / Tooltip",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Placement": "placement",
+        "Arrow": "showArrow",
+        "Text": "children"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

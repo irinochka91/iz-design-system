@@ -1,4 +1,4 @@
-import { forwardRef, useState, type ReactElement, type ReactNode } from 'react';
+import { forwardRef, type ReactElement, type ReactNode } from 'react';
 import {
   DialogTrigger as AriaDialogTrigger,
   Popover as AriaPopover,
@@ -8,6 +8,7 @@ import {
 } from 'react-aria-components';
 import type { ButtonProps } from '../../Actions/Button';
 import { FocusFirstControl } from '../focusFirstControl';
+import { useTokenPx } from '../useTokenPx';
 import styles from './Popover.module.css';
 
 export type PopoverPlacement = 'bottom start' | 'bottom' | 'bottom end' | 'top start' | 'top' | 'top end' | 'start' | 'end';
@@ -39,20 +40,6 @@ type BaseProps = {
 export type PopoverProps =
   | (BaseProps & { title: string; 'aria-label'?: string })
   | (BaseProps & { title?: undefined; 'aria-label': string });
-
-/**
- * React Aria positions with a number. The gap to the trigger is space.200: read from the token at
- * runtime so the token stays the source of truth — the one place a value crosses into JavaScript.
- */
-const useTokenPx = (name: string, fallback: number) => {
-  // Read once, lazily, on first render — no effect, no setState-in-effect (React Compiler rule).
-  const [px] = useState(() => {
-    if (typeof document === 'undefined') return fallback;
-    const parsed = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
-    return Number.isFinite(parsed) ? parsed : fallback;
-  });
-  return px;
-};
 
 /**
  * Popover — a small surface anchored to its trigger: one or two controls or a sentence. Modal for

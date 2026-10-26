@@ -1,0 +1,64 @@
+/* Tooltip — every value is a token (docs/TOKENS.md). The inverse surface pair is the one the token layer
+   defines for tooltips; the contrast with the page is the separation — no border, no shadow.
+   Spec: Tooltip.spec.json */
+
+.tooltip {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-tooltip-bg: var(--iz-color-surface-inverse);
+  --iz-tooltip-fg: var(--iz-color-text-inverse);
+  --iz-tooltip-gap: var(--iz-space-200); /* the gap to the trigger; Tooltip.tsx reads the same token for React Aria's offset */
+
+  max-inline-size: calc(8 * var(--iz-size-target-lg)); /* 320 px */
+  padding: var(--iz-space-inset-sm);
+  border-radius: var(--iz-radius-sm);
+  background: var(--iz-tooltip-bg);
+  color: var(--iz-tooltip-fg);
+  font-family: var(--iz-font-caption-family);
+  font-size: var(--iz-font-caption-size);
+  font-weight: var(--iz-font-caption-weight);
+  line-height: var(--iz-font-caption-line-height);
+}
+
+/* Enter / leave: a fade. Under prefers-reduced-motion the duration token is 0, so it is instant. */
+.tooltip[data-entering] {
+  animation: iz-tooltip-in var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.tooltip[data-exiting] {
+  animation: iz-tooltip-in var(--iz-duration-fast) var(--iz-easing-standard) reverse;
+}
+
+@keyframes iz-tooltip-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* The arrow is the surface itself, rotated per placement by React Aria's data-placement. */
+.arrow svg {
+  display: block;
+  fill: var(--iz-tooltip-bg);
+}
+
+.tooltip[data-placement="bottom"] .arrow svg {
+  transform: rotate(180deg);
+}
+
+.tooltip[data-placement="left"] .arrow svg {
+  transform: rotate(-90deg);
+}
+
+.tooltip[data-placement="right"] .arrow svg {
+  transform: rotate(90deg);
+}
+
+/* Windows High Contrast / forced-colors: the inverse pair collapses, so keep an edge. */
+@media (forced-colors: active) {
+  .tooltip {
+    border: var(--iz-border-width-sm) solid CanvasText;
+  }
+}

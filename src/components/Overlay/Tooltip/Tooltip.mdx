@@ -1,0 +1,44 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as TooltipStories from './Tooltip.stories';
+
+<Meta of={TooltipStories} />
+
+# Tooltip
+
+A short **plain-text hint** that describes a focusable control — shown on keyboard focus and after a hover delay, dismissed with `Escape`. **Supplementary**: the control makes sense without it, and an icon-only button keeps its `aria-label`. A hint that needs a link or a button is a `Popover`.
+
+Pattern: [WAI-ARIA APG — Tooltip](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/) · WCAG 1.4.13 · Behaviour: React Aria `TooltipTrigger` + `Tooltip` · Spec: `Tooltip.spec.json`
+
+<Canvas of={TooltipStories.Open} />
+<Controls of={TooltipStories.Default} />
+
+## How it is read
+
+`role="tooltip"`; while shown, the trigger gets `aria-describedby` — a screen reader reads the trigger's **name**, then the hint. The tooltip never names the trigger.
+
+## Never hover-only
+
+`showOn="hover"` also shows on **keyboard-visible** focus (a mouse click does not flash it); `showOn="focus"` shows on keyboard focus only, for text buttons where hover would be noise. A tooltip on a static element is unreachable from the keyboard and therefore forbidden — the trigger must be focusable.
+
+<Canvas of={TooltipStories.FocusOnly} />
+
+## WCAG 1.4.13, all three
+
+- **Dismissable** — `Escape` hides it; focus stays on the trigger.
+- **Hoverable** — `closeDelay` lets the pointer reach the tooltip, and hovering it keeps it open.
+- **Persistent** — it stays until hover or focus leaves.
+
+<Canvas of={TooltipStories.Placements} />
+
+## Do / Don't
+
+- Do keep it to one or two lines of plain text.
+- Don't put the only explanation of a control in a tooltip — the control must stand on its own.
+- Don't attach a tooltip to a disabled control; it receives neither focus nor hover.
+- Don't put links, buttons or headings inside; use a Popover.
+
+## Tokens consumed
+
+See `tokens` in `Tooltip.spec.json`; `check:specs` verifies the list against the CSS. The inverse surface pair is the one the token layer defines for tooltips (`surface.inverse` / `text.inverse`), contrast-checked in every theme.
+
+<Stories />

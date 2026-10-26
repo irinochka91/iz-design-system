@@ -33,3 +33,5 @@ export { Modal, ModalBody, ModalFooter } from './components/Overlay/Modal';
 export type { ModalProps, ModalSize, ModalPadding, ModalRole } from './components/Overlay/Modal';
 export { Popover } from './components/Overlay/Popover';
 export type { PopoverProps, PopoverPlacement, PopoverSize, PopoverPadding } from './components/Overlay/Popover';
+export { Tooltip } from './components/Overlay/Tooltip';
+export type { TooltipProps, TooltipPlacement, TooltipShowOn } from './components/Overlay/Tooltip';

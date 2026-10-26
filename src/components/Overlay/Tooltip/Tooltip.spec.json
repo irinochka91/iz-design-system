@@ -103,7 +103,8 @@
     "font.caption.line-height",
     "font.caption.weight",
     "duration.fast",
-    "easing.standard"
+    "easing.standard",
+    "border.width.sm"
   ],
   "compose": [
     "Button"
