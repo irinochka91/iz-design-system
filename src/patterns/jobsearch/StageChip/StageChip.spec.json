@@ -1,0 +1,114 @@
+{
+  "name": "StageChip",
+  "category": "Pattern",
+  "status": "draft",
+  "since": "0.3.0",
+  "summary": "The one chip for a pipeline stage — Lead · Applied · Screen · Interview · Offer — used identically in the Today row, the application card, the Leads filter and the pipeline. Static by default; with onChange it becomes a cycling button (press or Shift+→ advances, Shift+← reverts) that confirms nothing and relies on the list's Undo toast. Rejected and Withdrawn are terminal: shown, never cycled, never red.",
+  "pattern": {
+    "name": "Button (cycling) over Chip",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/button/"
+  },
+  "role": "button",
+  "props": {
+    "stage": {
+      "type": "'Lead' | 'Applied' | 'Screen' | 'Interview' | 'Offer' | 'Rejected' | 'Withdrawn'",
+      "intent": "Controlled. The five pipeline stages cycle in that order; Rejected and Withdrawn are terminal states set from a menu elsewhere and render static whatever else is passed."
+    },
+    "onChange": {
+      "type": "(next: Stage, prev: Stage) => void",
+      "intent": "Makes the chip a cycling <button>. Fires with the new and the previous stage; the app applies it at once, updates the pipeline count and shows the one Undo toast (backlog #10). Undo is the app passing the previous stage back."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Cycling only: a stage the user may not change right now (e.g. while the agent is re-scoring). Stays visible and announced."
+    },
+    "className": {
+      "type": "string"
+    }
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "flipping",
+    "final",
+    "terminal",
+    "disabled"
+  ],
+  "keyboard": [
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "Moves focus to / from a cycling chip. Static and terminal chips are never tab stops."
+    },
+    {
+      "key": "Space / Enter",
+      "action": "Advances to the next stage (onChange). At Offer it does nothing — the label says 'Final stage'; Offer never advances by accident."
+    },
+    {
+      "key": "Shift + Arrow Right",
+      "action": "Advances to the next stage, same as a press. Bound on the chip button itself — never on the row or the document, so it cannot fire inside an input."
+    },
+    {
+      "key": "Shift + Arrow Left",
+      "action": "Reverts to the previous stage. At Lead it does nothing. Plain arrows are left alone: they belong to the list (J/K) and to text fields."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.1.1",
+      "2.3.3",
+      "2.4.7",
+      "2.5.8",
+      "4.1.2"
+    ],
+    "name": "Static: the stage text is the name ('Interview'). Cycling: aria-label 'Stage: Screen. Press to advance' — what it is and what pressing does; at Offer 'Stage: Offer. Final stage'.",
+    "announcements": "A cycling chip announces a change by its own label changing (focus stays on it); the stage change itself is confirmed by the list's toast (role=status). No aria-live on the chip — two announcements for one change (Chip spec, rule 4). Emphasis (tint for Interview, strong for Offer) is decoration: the stage is always in the text.",
+    "screenReaderNotes": "",
+    "targetSize": "The pill is 28 px tall (size.target.sm, ADR-024) — above the 24 px AA minimum, inline in text rows; the row around it provides the 44 px touch context."
+  },
+  "tokens": [
+    "size.target.touch",
+    "duration.normal",
+    "easing.standard"
+  ],
+  "compose": [
+    "Chip"
+  ],
+  "composedBy": [],
+  "rules": [
+    "One mapping everywhere (handoff): every stage quiet (border + secondary text), Interview tint, Offer strong — the single accent on the screen. The map is exported (stageEmphasis) and is the only place it lives; ActionRow, the card and the pipeline read it from here.",
+    "Terminal states are neutral: Rejected and Withdrawn render as quiet static chips, never danger colour (backlog 0c — rejection is a stage, not a failure) and never in the cycle. They are set from a menu, not by pressing the chip.",
+    "Cycling confirms nothing. onChange fires at once; the list shows the Undo toast and ticks the pipeline count. The chip never opens a dialog and never asks 'are you sure'.",
+    "Offer is final: pressing or Shift+→ at Offer does nothing and the label says so. Nothing wraps — a loop from Offer back to Lead would be the one stage change a user could make by accident.",
+    "Keys live on the button. Shift+→/← are handled by the chip's own keydown (Chip's onKeyDown passthrough for a cycling stage), so they work wherever the chip is rendered and never fire inside an input. Plain arrows are untouched.",
+    "The flip (motion spec 3): on a stage change the new label turns in on the Y axis from 90° to 0° over duration.normal — the half of the 240 ms flip that a remount can honour; the outgoing half is dropped rather than delaying onChange until an animation ends (ADR-034). Interruptible: a second change restarts it. Reduced motion: the token is 0, so the label simply swaps.",
+    "The chip never shows status colour (Chip spec, rule 3) and never carries the count — the pipeline count is the list's figure, updated after the change."
+  ],
+  "figma": {
+    "componentSet": "Patterns / StageChip",
+    "properties": {
+      "Stage": "stage (Lead / Applied / Screen / Interview / Offer / Rejected / Withdrawn)",
+      "Cycling": "onChange given (button) vs static (span)",
+      "State": "browser states (default/hover/focus) + isDisabled"
+    }
+  },
+  "examples": [
+    {
+      "title": "Static, in a row or a card",
+      "code": "<StageChip stage={application.stage} />"
+    },
+    {
+      "title": "Cycling, on the application card",
+      "code": "<StageChip stage={stage} onChange={(next, prev) => { setStage(next); showToast(`Stage: ${next}`, () => setStage(prev)); }} />"
+    },
+    {
+      "title": "The shared mapping, for anything else that colours by stage",
+      "code": "import { stageEmphasis } from '@iz/design-system'; // { Lead: 'quiet', …, Interview: 'tint', Offer: 'strong' }"
+    }
+  ]
+}
