@@ -21,7 +21,8 @@ for (const rel of specs) {
   for (const k of REQUIRED) if (!(k in spec)) errors.push(`${where} missing "${k}"`);
   if (!CATEGORIES.includes(spec.category)) errors.push(`${where} category "${spec.category}" is not one of ${CATEGORIES.join('/')}`);
   if (spec.name !== rel.split('/').at(-1).replace('.spec.json', '')) errors.push(`${where} name "${spec.name}" ≠ file name`);
-  const interactive = !['presentation', 'none', undefined].includes(spec.role);
+  // Roles that are read, not operated: no keyboard map or focus state required.
+  const interactive = !['presentation', 'none', 'img', 'meter', 'progressbar', 'status', undefined].includes(spec.role);
   if (interactive && !(spec.keyboard?.length)) errors.push(`${where} interactive component without a keyboard map`);
   if (interactive && !spec.states?.includes('focus')) errors.push(`${where} interactive component without a "focus" state`);
   if (spec.status === 'stable' && !spec.a11y?.screenReaderNotes) errors.push(`${where} status "stable" requires a11y.screenReaderNotes`);

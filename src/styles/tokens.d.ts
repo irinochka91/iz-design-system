@@ -77,6 +77,7 @@ export type TokenName =
   | 'color.text.success'
   | 'color.text.warning'
   | 'duration.fast'
+  | 'duration.moment'
   | 'duration.normal'
   | 'duration.slow'
   | 'easing.emphasized'

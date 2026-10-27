@@ -11,6 +11,11 @@
     "slow": {
       "$type": "duration",
       "$value": "{duration.300}"
+    },
+    "moment": {
+      "$type": "duration",
+      "$value": "{duration.700}",
+      "$description": "A signature moment (HANDOFF § Motion spec): goal met, stage up. Five events earn it; everything else uses fast/normal/slow."
     }
   },
   "easing": {

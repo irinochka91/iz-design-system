@@ -1110,6 +1110,16 @@
         "alias": "{duration.100}",
         "css": "--iz-duration-fast"
       },
+      "duration.moment": {
+        "$type": "duration",
+        "$value": {
+          "value": 700,
+          "unit": "ms"
+        },
+        "alias": "{duration.700}",
+        "css": "--iz-duration-moment",
+        "$description": "A signature moment (HANDOFF § Motion spec): goal met, stage up. Five events earn it; everything else uses fast/normal/slow."
+      },
       "duration.normal": {
         "$type": "duration",
         "$value": {
@@ -3085,6 +3095,16 @@
         },
         "alias": "{duration.100}",
         "css": "--iz-duration-fast"
+      },
+      "duration.moment": {
+        "$type": "duration",
+        "$value": {
+          "value": 700,
+          "unit": "ms"
+        },
+        "alias": "{duration.700}",
+        "css": "--iz-duration-moment",
+        "$description": "A signature moment (HANDOFF § Motion spec): goal met, stage up. Five events earn it; everything else uses fast/normal/slow."
       },
       "duration.normal": {
         "$type": "duration",
@@ -5062,6 +5082,16 @@
         "alias": "{duration.100}",
         "css": "--iz-duration-fast"
       },
+      "duration.moment": {
+        "$type": "duration",
+        "$value": {
+          "value": 700,
+          "unit": "ms"
+        },
+        "alias": "{duration.700}",
+        "css": "--iz-duration-moment",
+        "$description": "A signature moment (HANDOFF § Motion spec): goal met, stage up. Five events earn it; everything else uses fast/normal/slow."
+      },
       "duration.normal": {
         "$type": "duration",
         "$value": {
@@ -7037,6 +7067,16 @@
         },
         "alias": "{duration.100}",
         "css": "--iz-duration-fast"
+      },
+      "duration.moment": {
+        "$type": "duration",
+        "$value": {
+          "value": 700,
+          "unit": "ms"
+        },
+        "alias": "{duration.700}",
+        "css": "--iz-duration-moment",
+        "$description": "A signature moment (HANDOFF § Motion spec): goal met, stage up. Five events earn it; everything else uses fast/normal/slow."
       },
       "duration.normal": {
         "$type": "duration",
@@ -9014,6 +9054,16 @@
         "alias": "{duration.100}",
         "css": "--iz-duration-fast"
       },
+      "duration.moment": {
+        "$type": "duration",
+        "$value": {
+          "value": 700,
+          "unit": "ms"
+        },
+        "alias": "{duration.700}",
+        "css": "--iz-duration-moment",
+        "$description": "A signature moment (HANDOFF § Motion spec): goal met, stage up. Five events earn it; everything else uses fast/normal/slow."
+      },
       "duration.normal": {
         "$type": "duration",
         "$value": {
@@ -10981,6 +11031,16 @@
         },
         "alias": "{duration.100}",
         "css": "--iz-duration-fast"
+      },
+      "duration.moment": {
+        "$type": "duration",
+        "$value": {
+          "value": 700,
+          "unit": "ms"
+        },
+        "alias": "{duration.700}",
+        "css": "--iz-duration-moment",
+        "$description": "A signature moment (HANDOFF § Motion spec): goal met, stage up. Five events earn it; everything else uses fast/normal/slow."
       },
       "duration.normal": {
         "$type": "duration",

@@ -79,6 +79,7 @@
   --iz-color-text-success: #166534;
   --iz-color-text-warning: #92400E;
   --iz-duration-fast: 100ms;
+  --iz-duration-moment: 700ms;
   --iz-duration-normal: 200ms;
   --iz-duration-slow: 300ms;
   --iz-easing-emphasized: cubic-bezier(0.3, 0, 0.8, 0.15);
@@ -632,6 +633,7 @@
 @media (prefers-reduced-motion: reduce) {
   :root {
     --iz-duration-fast: 0ms;
+    --iz-duration-moment: 0ms;
     --iz-duration-normal: 0ms;
     --iz-duration-slow: 0ms;
     --iz-motion-duration-100: 0ms;

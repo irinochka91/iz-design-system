@@ -1,0 +1,144 @@
+{
+  "name": "WeeklyGoal",
+  "category": "Pattern",
+  "status": "draft",
+  "since": "0.3.0",
+  "summary": "The weekly gauge on Today: a label, the figure '4 / 5', five bars and a footer line. Counts quality applications only (fit ≥ 70 or marked Stretch) and shows the stretch quota used. The goal-met moment — fifth bar springs up, figure rolls, footer crossfades to 'Goal met · 7-week streak' — plays once, on the fifth qualifying Done. Under target it says what to do next, never that a streak was lost. StreakBar and the adjust prompt are a later pattern (backlog #12).",
+  "pattern": {
+    "name": "Meter",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/meter/"
+  },
+  "role": "meter",
+  "props": {
+    "done": {
+      "type": "number",
+      "intent": "Quality applications done this week (the app counts: fit ≥ 70 or marked Stretch). May exceed target; the gauge clamps, the figure does not."
+    },
+    "target": {
+      "type": "number",
+      "default": "5",
+      "intent": "The weekly target. Also the number of bars."
+    },
+    "stretch": {
+      "type": "{ used: number; quota: number }",
+      "intent": "Shows 'Stretch 1 of 1 used' under the figure (one per five target). Omit to hide the line."
+    },
+    "streakWeeks": {
+      "type": "number",
+      "intent": "Consecutive weeks met, counting this one once met. Appears only in the met footer: 'Goal met · 7-week streak'."
+    },
+    "isAtRisk": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "The app's call (Saturday with ≥ 2 to go). Colours the footer with text.warning and, with nextAction, names the next useful step — never a loss (backlog 0c)."
+    },
+    "nextAction": {
+      "type": "string",
+      "intent": "The next useful step for the at-risk footer: '2 to go · next: Email Priya'."
+    },
+    "lastWeek": {
+      "type": "number",
+      "intent": "Last week's done count for the in-progress footer: '1 to go · last week 5/5'."
+    },
+    "footer": {
+      "type": "string",
+      "intent": "Overrides the derived footer for a one-off line such as 'Logged, not counted — fit 58' or a localised sentence. The default footers are English; the app localises by passing its own."
+    },
+    "label": {
+      "type": "string",
+      "default": "'Weekly goal'",
+      "intent": "The visible label and the meter's name."
+    },
+    "className": {
+      "type": "string"
+    }
+  },
+  "states": [
+    "in-progress",
+    "at-risk",
+    "met",
+    "moment"
+  ],
+  "keyboard": [],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "2.3.3",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "name": "role=\"meter\" named by the visible label (aria-labelledby). aria-valuemin 0, aria-valuemax target, aria-valuenow done (clamped), aria-valuetext '4 of 5 quality applications'.",
+    "announcements": "The footer is a polite, atomic live region: when the goal is met it announces 'Goal met · 7-week streak' once; at risk it announces the next step. Nothing else in the widget is live — the bars are aria-hidden decoration and the figure is read through the meter's value text.",
+    "screenReaderNotes": "",
+    "targetSize": "Not interactive. The adjust prompt (two real buttons) belongs to the later StreakBar pattern."
+  },
+  "tokens": [
+    "color.text.primary",
+    "color.text.secondary",
+    "color.text.warning",
+    "color.action.primary.bg",
+    "color.border.default",
+    "border.width.sm",
+    "radius.100",
+    "space.100",
+    "space.stack.xs",
+    "size.target.min",
+    "size.target.sm",
+    "font.label.family",
+    "font.label.size",
+    "font.label.weight",
+    "font.figure-lg.family",
+    "font.figure-lg.size",
+    "font.figure-lg.weight",
+    "font.figure-lg.line-height",
+    "font.meta.family",
+    "font.meta.size",
+    "font.meta.line-height",
+    "duration.fast",
+    "duration.normal",
+    "duration.moment",
+    "easing.standard"
+  ],
+  "compose": [],
+  "composedBy": [],
+  "rules": [
+    "It is a meter, not a picture (ADR-035): a quantity in a range, announced as a value with the full sentence as aria-valuetext. The bars are decoration (aria-hidden); nothing in the widget is read twice.",
+    "Counts quality applications only (backlog #8). The pattern never decides what counts — done arrives counted. 'Logged, not counted — fit 58' is the app's footer override, shown once.",
+    "The moment plays once, on the Done that reaches the target (motion spec 2, 700 ms = duration.moment): the last bar fills from the bottom and overshoots to 1.12 before settling (a keyframe, not a physics spring — ADR-035), the figure's digit rolls up, the footer crossfades. Every other increment fills its bar over duration.fast. Under reduced motion the tokens are 0: bar, figure and footer simply change. Never confetti, never sound.",
+    "Under target the footer says what to do next ('2 to go · next: Email Priya'), never that a streak ended; copy never judges (backlog 0c). At risk is the app's call (isAtRisk), shown with text.warning — colour plus words, never colour alone.",
+    "Figure face: font.figure.lg with font-variation-settings 'wdth' 112 and tabular numerals, set in this pattern's CSS as the documented rule for the figure role (ADR-035). Digits must not shift width as they roll.",
+    "Bars: target × (14 × 36 px, radius.100, gap space.100) — 14 = size.target.sm / 2, 36 = 1.5 × size.target.min. Lit = action.primary.bg, unlit = border.default. The single accent on the Today header is these bars.",
+    "StreakBar and the soft goal adjustment (history, onAdjustTarget) are backlog #12, P1 — a later pattern that sits beside this figure, never inside it."
+  ],
+  "figma": {
+    "componentSet": "Patterns / WeeklyGoal",
+    "properties": {
+      "Done": "done (0–5)",
+      "State": "in progress / at risk / met",
+      "Stretch": "stretch (boolean show + used/quota)",
+      "Footer": "footer text",
+      "Label": "label"
+    }
+  },
+  "examples": [
+    {
+      "title": "In progress with last week",
+      "code": "<WeeklyGoal done={3} target={5} stretch={{ used: 0, quota: 1 }} lastWeek={5} />"
+    },
+    {
+      "title": "At risk on Saturday",
+      "code": "<WeeklyGoal done={3} isAtRisk nextAction=\"Email Priya\" />"
+    },
+    {
+      "title": "Met, with the streak",
+      "code": "<WeeklyGoal done={5} streakWeeks={7} />"
+    },
+    {
+      "title": "A logged, not counted application",
+      "code": "<WeeklyGoal done={3} footer=\"Logged, not counted — fit 58\" />"
+    }
+  ]
+}

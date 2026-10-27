@@ -6,7 +6,7 @@
 
 - Import from the package root: `import { Button, TextField } from '@iz/design-system'`; styles: `@iz/design-system/styles.css`; tokens: `@iz/design-system/tokens.css`.
 - Themes: set `data-iz-theme` on `<html>` to one of `dark`, `hc-light`, `hc-dark`, `linen`, `linen-dark` (the base theme `light` needs no attribute). Themes override semantic tokens only; no component code changes between themes.
-- Tokens: 172 semantic tokens, CSS prefix `--iz-`, path `category.concept.property.variant.state` → `--iz-category-concept-property-variant-state`. In app and pattern code use `var(--iz-*)` only — a raw hex or px literal fails lint (`iz/no-raw-colors`, `iz/no-raw-spacing`, stylelint).
+- Tokens: 173 semantic tokens, CSS prefix `--iz-`, path `category.concept.property.variant.state` → `--iz-category-concept-property-variant-state`. In app and pattern code use `var(--iz-*)` only — a raw hex or px literal fails lint (`iz/no-raw-colors`, `iz/no-raw-spacing`, stylelint).
 - Hover, focus-visible and pressed are browser states, never props. Public props are semantic: `isDisabled`, `isInvalid`, `isSelected`, `isExpanded`, `isPending`.
 - Validation is controlled by the form, not the field: `isInvalid` + `errorMessage`; native `required` is not used (ADR-022). Overlays are modal for assistive technology except the ComboBox list (ADR-029).
 - Do not add a component or token without a spec and an ADR (`docs/CONTRIBUTING.md`, `docs/decisions.md`). Out-of-scope ideas go to `PARKING.md`, one line each.
@@ -43,6 +43,7 @@
 
 - [ActionRow](docs/specs/ActionRow.spec.json): One next action in the Today list: a done ring, the title, a meta row (company, stage, time), the due label, a Snooze split button and an Open button. role=`listitem`, status draft. `import { ActionRow } from '@iz/design-system'`
 - [StageChip](docs/specs/StageChip.spec.json): The one chip for a pipeline stage — Lead · Applied · Screen · Interview · Offer — used identically in the Today row, the application card, the Leads filter and the pipeline. role=`button`, status draft. `import { StageChip, stageEmphasis } from '@iz/design-system'`
+- [WeeklyGoal](docs/specs/WeeklyGoal.spec.json): The weekly gauge on Today: a label, the figure '4 / 5', five bars and a footer line. role=`meter`, status draft. `import { WeeklyGoal } from '@iz/design-system'`
 
 ## Tokens
 
