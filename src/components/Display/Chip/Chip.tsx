@@ -1,4 +1,4 @@
-import { forwardRef, type ReactNode } from 'react';
+import { forwardRef, type KeyboardEvent, type ReactNode } from 'react';
 import {
   Button as AriaButton,
   ToggleButton as AriaToggleButton,
@@ -28,6 +28,8 @@ export type ChipStageProps = CommonProps & {
   onPress?: (e: PressEvent) => void;
   /** Only with onPress: what pressing does — 'Stage: Screen. Press to advance'. */
   'aria-label'?: string;
+  /** Only with onPress: the StageChip pattern binds Shift+→ / Shift+← on the button itself here. */
+  onKeyDown?: (e: KeyboardEvent<HTMLButtonElement>) => void;
   isDisabled?: boolean;
 };
 
@@ -83,12 +85,13 @@ export const Chip = forwardRef<HTMLElement, ChipProps>(function Chip(props, ref)
   }
 
   if (props.variant === 'stage' && props.onPress) {
-    const { onPress, isDisabled } = props;
+    const { onPress, onKeyDown, isDisabled } = props;
     return (
       <AriaButton
         ref={ref as React.Ref<HTMLButtonElement>}
         className={classes(styles.interactive)}
         onPress={onPress}
+        {...(onKeyDown !== undefined ? { onKeyDown } : {})}
         {...(props['aria-label'] !== undefined ? { 'aria-label': props['aria-label'] } : {})}
         {...(isDisabled !== undefined ? { isDisabled } : {})}
       >

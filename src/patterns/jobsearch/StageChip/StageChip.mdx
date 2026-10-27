@@ -1,0 +1,37 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as StageChipStories from './StageChip.stories';
+
+<Meta of={StageChipStories} />
+
+# StageChip
+
+**The one chip for a pipeline stage**, used identically in the Today row, the application card, the Leads filter and the pipeline. Static by default; with `onChange` it becomes a cycling button that confirms nothing and relies on the list's Undo toast.
+
+Spec: `StageChip.spec.json` · Decision: ADR-034 · Brief: `specs/HANDOFF.md` § StageChip, motion spec 3, backlog #10
+
+<Canvas of={StageChipStories.Default} />
+<Controls of={StageChipStories.Default} />
+
+## One mapping, everywhere
+
+<Canvas of={StageChipStories.AllStages} />
+
+Every stage is quiet; **Interview** is tint; **Offer** is the single strong — the one accent on the screen. The map is exported as `stageEmphasis` and lives only here; ActionRow reads it from this file.
+
+## Terminal is neutral
+
+<Canvas of={StageChipStories.Terminal} />
+
+Rejected and Withdrawn are stages, not failures (backlog 0c): quiet, static, never red, never in the cycle. They are set from a menu, not by pressing the chip.
+
+## Cycling
+
+<Canvas of={StageChipStories.WithUndo} />
+
+`Space`/`Enter` or `Shift+→` advance; `Shift+←` reverts. The keys are bound on the chip's own button — never on the row or the document — so they cannot fire inside an input, and plain arrows are left to the list. **Offer is final**: nothing wraps, because a loop from Offer back to Lead would be the one stage change a user could make by accident. The chip announces the change through its own label; the toast confirms it.
+
+## The flip
+
+On a change the new label turns in on the Y axis over `duration.normal`. Under reduced motion the token is 0 and the label simply swaps.
+
+<Stories />

@@ -1,10 +1,11 @@
 import { forwardRef } from 'react';
 import { Button } from '../../../components/Actions/Button';
-import { Chip, type ChipEmphasis } from '../../../components/Display/Chip';
+import { Chip } from '../../../components/Display/Chip';
+import { StageChip, type Stage } from '../StageChip';
 import { Menu, MenuItem } from '../../../components/Actions/Menu';
 import styles from './ActionRow.module.css';
 
-export type ActionStage = 'Lead' | 'Applied' | 'Screen' | 'Interview' | 'Offer';
+export type ActionStage = Stage;
 export type ActionGroup = 'overdue' | 'today' | 'week';
 export type SnoozePreset = 'tomorrow' | '+3d' | 'monday' | 'pick';
 
@@ -29,15 +30,6 @@ export type ActionRowProps = {
   onSnooze: (preset: SnoozePreset, action: Action) => void;
   onOpen: (action: Action) => void;
   className?: string;
-};
-
-/** The handoff's stage colours (Chip spec): every stage quiet, Interview tint, Offer the one strong. StageChip will own this map. */
-const STAGE_EMPHASIS: Record<ActionStage, ChipEmphasis> = {
-  Lead: 'quiet',
-  Applied: 'quiet',
-  Screen: 'quiet',
-  Interview: 'tint',
-  Offer: 'strong',
 };
 
 const Ring = () => (
@@ -107,11 +99,7 @@ export const ActionRow = forwardRef<HTMLLIElement, ActionRowProps>(function Acti
             <span className={styles.title}>{title}</span>
             <span className={styles.meta}>
               {action.company && <Chip>{action.company}</Chip>}
-              {action.stage && (
-                <Chip variant="stage" emphasis={STAGE_EMPHASIS[action.stage]}>
-                  {action.stage}
-                </Chip>
-              )}
+              {action.stage && <StageChip stage={action.stage} />}
               {action.time && <span className={styles.time}>{action.time}</span>}
             </span>
           </div>

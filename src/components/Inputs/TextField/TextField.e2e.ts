@@ -28,8 +28,9 @@ test.describe('TextField keyboard', () => {
   });
 
   test('Enter and Escape do not clear the value — the field does not own them', async ({ page }) => {
-    await page.goto(story('inputs-textfield--keyboard'));
-    const input = page.getByRole('textbox', { name: 'Type here' });
+    // Default, not Keyboard: that story's play() types 'Orbit' itself on load, and racing it made this flaky.
+    await page.goto(story('inputs-textfield--default'));
+    const input = page.getByRole('textbox', { name: 'Company' });
     await input.fill('Orbit');
     await page.keyboard.press('Enter');
     await page.keyboard.press('Escape');

@@ -45,6 +45,10 @@
       "type": "string",
       "intent": "Only for a cycling stage, to say what pressing does: 'Stage: Screen. Press to advance'. Never on a static chip — the label is the name."
     },
+    "onKeyDown": {
+      "type": "(e: KeyboardEvent<HTMLButtonElement>) => void",
+      "intent": "stage with onPress only. Lets the StageChip pattern bind Shift+→ / Shift+← on the button itself, where they cannot fire inside an input. The chip adds no key behaviour of its own."
+    },
     "isDisabled": {
       "type": "boolean",
       "default": "false",
@@ -74,7 +78,7 @@
     },
     {
       "key": "Shift+→ / Shift+←",
-      "action": "Not the chip's. The StageChip pattern binds them on the row to advance / revert."
+      "action": "Not the chip's. The StageChip pattern binds them on the cycling chip's own button through onKeyDown to advance / revert."
     }
   ],
   "a11y": {

@@ -1,0 +1,23 @@
+/* StageChip — the colours are the Chip's (emphasis); this file owns only the flip on a stage change
+   (motion spec 3). Only the label remounts with the stage (the button keeps focus), so the new one turns in from 90° to 0°.
+   Under prefers-reduced-motion the duration token is 0 and the label simply swaps. Spec: StageChip.spec.json */
+
+.root {
+  display: inline-flex;
+}
+
+.flip {
+  display: inline-block; /* a transform needs a box */
+  animation: iz-stagechip-in var(--iz-duration-normal) var(--iz-easing-standard);
+  backface-visibility: hidden;
+}
+
+@keyframes iz-stagechip-in {
+  from {
+    transform: perspective(calc(16 * var(--iz-size-target-touch))) rotateY(90deg);
+  }
+
+  to {
+    transform: perspective(calc(16 * var(--iz-size-target-touch))) rotateY(0deg);
+  }
+}

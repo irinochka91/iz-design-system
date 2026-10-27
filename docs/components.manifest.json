@@ -383,6 +383,29 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "StageChip",
+      "category": "Pattern",
+      "code": {
+        "path": "src/patterns/jobsearch/StageChip/StageChip.tsx",
+        "import": "import { StageChip, stageEmphasis } from '@iz/design-system'"
+      },
+      "spec": "src/patterns/jobsearch/StageChip/StageChip.spec.json",
+      "stories": "src/patterns/jobsearch/StageChip/StageChip.stories.tsx",
+      "figma": {
+        "componentSet": "Patterns / StageChip",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Stage": "stage",
+        "Cycling": "onChange given",
+        "State": "isDisabled / hover / focus"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

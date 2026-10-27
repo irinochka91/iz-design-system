@@ -42,7 +42,7 @@
 ## Patterns (Job Search HQ) — composed from the components above
 
 - [ActionRow](docs/specs/ActionRow.spec.json): One next action in the Today list: a done ring, the title, a meta row (company, stage, time), the due label, a Snooze split button and an Open button. role=`listitem`, status draft. `import { ActionRow } from '@iz/design-system'`
-- [StageChip](docs/specs/StageChip.spec.json): The one chip for a pipeline stage — Lead · Applied · Screen · Interview · Offer — used identically in the Today row, the application card, the Leads filter and the pipeline. role=`button`, status draft. `import { StageChip } from '@iz/design-system'`
+- [StageChip](docs/specs/StageChip.spec.json): The one chip for a pipeline stage — Lead · Applied · Screen · Interview · Offer — used identically in the Today row, the application card, the Leads filter and the pipeline. role=`button`, status draft. `import { StageChip, stageEmphasis } from '@iz/design-system'`
 
 ## Tokens
 

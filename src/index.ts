@@ -45,3 +45,5 @@ export type { TooltipProps, TooltipPlacement, TooltipShowOn } from './components
 // Patterns — Job Search HQ (ADR-033)
 export { ActionRow } from './patterns/jobsearch/ActionRow';
 export type { ActionRowProps, Action, ActionStage, ActionGroup, SnoozePreset } from './patterns/jobsearch/ActionRow';
+export { StageChip, STAGES, stageEmphasis } from './patterns/jobsearch/StageChip';
+export type { StageChipProps, Stage, TerminalStage } from './patterns/jobsearch/StageChip';
