@@ -1,0 +1,294 @@
+{
+  "name": "ComboBox",
+  "category": "Inputs",
+  "status": "draft",
+  "since": "0.2.0",
+  "summary": "A text field with filtered suggestions — pick one of many (a company from the tracker, a stage, a contact) or, with allowsCustomValue, type something new. For more options than a RadioGroup can show; when the user must not type, it is a Select (later). Ships four parts: ComboBox (the field), ComboBoxItem (one option), ComboBoxSection + ComboBoxHeader (a named group).",
+  "pattern": {
+    "name": "Combobox (editable, list autocomplete)",
+    "url": "https://www.w3.org/WAI/ARIA/apg/patterns/combobox/"
+  },
+  "role": "combobox",
+  "props": {
+    "label": {
+      "type": "string",
+      "requiredWhen": "aria-label is not given. The type union refuses a field with neither.",
+      "intent": "The visible label AND the accessible name of the input. Also names the listbox and the toggle button ('Show suggestions for Company')."
+    },
+    "aria-label": {
+      "type": "string",
+      "requiredWhen": "label is omitted (the quick-add row, the palette input).",
+      "intent": "Name without visible text."
+    },
+    "children": {
+      "type": "ReactNode | (item: T) => ReactNode",
+      "intent": "Static ComboBoxItem / ComboBoxSection elements, or a render function used with items for dynamic lists. Option text is plain; never a control inside an option."
+    },
+    "items": {
+      "type": "Iterable<T>",
+      "intent": "Controlled dynamic collection (the consumer filters, e.g. against the tracker). Omit for static children, which React Aria filters by text with a contains-match."
+    },
+    "defaultItems": {
+      "type": "Iterable<T>",
+      "intent": "Uncontrolled dynamic collection; React Aria filters it by text."
+    },
+    "selectedKey": {
+      "type": "Key | null",
+      "intent": "Controlled selection. null is 'nothing chosen'. Pair with onSelectionChange."
+    },
+    "defaultSelectedKey": {
+      "type": "Key",
+      "intent": "Uncontrolled initial selection."
+    },
+    "onSelectionChange": {
+      "type": "(key: Key | null) => void",
+      "intent": "Fires with the chosen option's id, or null when the text no longer matches any option. The value a form submits (formValue='key' by default; 'text' with allowsCustomValue)."
+    },
+    "inputValue": {
+      "type": "string",
+      "intent": "Controlled text. Pair with onInputChange. Needed by quick-add (the text is parsed) and the palette (the query is echoed)."
+    },
+    "defaultInputValue": {
+      "type": "string",
+      "intent": "Uncontrolled initial text."
+    },
+    "onInputChange": {
+      "type": "(value: string) => void",
+      "intent": "Fires on every keystroke with the text."
+    },
+    "allowsCustomValue": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Text that matches no option is kept as the value (quick-add: a new company). Off by default: on blur the text reverts to the selected option, so a form never receives a half-typed value."
+    },
+    "menuTrigger": {
+      "type": "'input' | 'focus' | 'manual'",
+      "default": "'input'",
+      "intent": "When the list opens: on typing (default), on focus (short known lists, Select-like), or only via the button / Arrow Down (manual — the quick-add row, where suggestions are optional)."
+    },
+    "emptyMessage": {
+      "type": "string",
+      "default": "'No matches'",
+      "intent": "Shown in the list when the filter leaves nothing, so the list never silently vanishes. Not shown when allowsCustomValue and the text is new — the text is the result."
+    },
+    "description": {
+      "type": "string",
+      "intent": "Help text under the field, linked by aria-describedby."
+    },
+    "errorMessage": {
+      "type": "string",
+      "intent": "Shown when isInvalid. Present in the DOM before it becomes visible (same contract as TextField)."
+    },
+    "isInvalid": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "aria-invalid + the invalid style; the form decides validity."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "aria-required + the visible marker. Native required is not used (ADR-022)."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "default": "false",
+      "intent": "Focusable and announced; neither typing nor the list."
+    },
+    "disabledKeys": {
+      "type": "Iterable<Key>",
+      "intent": "Options shown but not selectable, skipped by the arrows (e.g. a stage the role cannot move to yet)."
+    },
+    "placeholder": {
+      "type": "string",
+      "intent": "Example value only, muted. Never the label."
+    },
+    "size": {
+      "type": "'md' | 'lg'",
+      "default": "'md'",
+      "intent": "Field heights 40 / 44 px (size.target.lg / size.target.touch), same as TextField."
+    },
+    "isFullWidth": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "name": {
+      "type": "string",
+      "intent": "Native form field name."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "ComboBoxItem.id": {
+      "type": "Key",
+      "intent": "The option's id, reported by onSelectionChange. For static children it is required; for items it comes from the object."
+    },
+    "ComboBoxItem.textValue": {
+      "type": "string",
+      "requiredWhen": "children is not a plain string.",
+      "intent": "The text the filter and type-ahead match on, and what the input shows when chosen."
+    },
+    "ComboBoxItem.children": {
+      "type": "ReactNode",
+      "intent": "The option's label; optionally a ComboBoxDescription after it."
+    },
+    "ComboBoxSection / ComboBoxHeader": {
+      "type": "ReactNode",
+      "intent": "A named group of options (palette: Actions · Companies · Contacts · Commands). The header is announced as the group name; it is not an option."
+    }
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "open",
+    "filtering",
+    "empty",
+    "selected",
+    "invalid",
+    "disabled",
+    "read-only"
+  ],
+  "keyboard": [
+    {
+      "key": "Typing",
+      "action": "Filters the options (contains-match on textValue) and opens the list (menuTrigger 'input')."
+    },
+    {
+      "key": "Arrow Down / Arrow Up",
+      "action": "Opens the list if closed; moves the highlighted option (aria-activedescendant). Focus never leaves the input."
+    },
+    {
+      "key": "Alt + Arrow Down",
+      "action": "Opens the list without highlighting an option."
+    },
+    {
+      "key": "Home / End",
+      "action": "Move the caret in the text, as in any input (the list uses the arrows)."
+    },
+    {
+      "key": "Enter",
+      "action": "Selects the highlighted option (text becomes its label, list closes). With allowsCustomValue and no highlight, commits the typed text. Inside a <form> with nothing highlighted and the list closed, submits — the field must not swallow it."
+    },
+    {
+      "key": "Escape",
+      "action": "Closes the list; the text stays. Does not propagate to a Modal while the list was open — the first Escape belongs to the list."
+    },
+    {
+      "key": "Tab / Shift+Tab",
+      "action": "Leaves the field and closes the list. Without allowsCustomValue, text that matches no option reverts to the selected option's label (or empties) on blur."
+    }
+  ],
+  "a11y": {
+    "wcag": [
+      "1.3.1",
+      "1.4.1",
+      "1.4.3",
+      "1.4.11",
+      "1.4.13",
+      "2.1.1",
+      "2.4.3",
+      "2.4.7",
+      "2.5.8",
+      "3.3.1",
+      "3.3.2",
+      "4.1.2",
+      "4.1.3"
+    ],
+    "name": "The input is named by label (aria-labelledby) or aria-label; the listbox and the toggle button take the same name from React Aria.",
+    "announcements": "role=\"combobox\" with aria-autocomplete=\"list\", aria-expanded, aria-controls → the listbox, aria-activedescendant → the highlighted option (focus stays in the input). Options are role=\"option\" with aria-selected; a section header is announced as the group name. React Aria announces the result count on filter ('3 options available') and the empty state is a visible, readable element. isInvalid → aria-invalid=\"true\"; description then error in aria-describedby.",
+    "screenReaderNotes": "",
+    "targetSize": "The field is ≥ 40 px tall (44 lg); every option row ≥ 40 px (size.target.lg); the toggle button is a full-height target at the field's end."
+  },
+  "tokens": [
+    "color.surface.raised",
+    "color.surface.sunken",
+    "color.surface.overlay",
+    "color.text.primary",
+    "color.text.secondary",
+    "color.text.muted",
+    "color.text.danger",
+    "color.text.disabled",
+    "color.border.strong",
+    "color.border.default",
+    "color.border.focus",
+    "color.border.danger",
+    "color.action.disabled.bg",
+    "color.action.secondary.bg-hover",
+    "color.action.secondary.bg-active",
+    "color.action.primary.bg-subtle",
+    "color.action.primary.fg",
+    "shadow.overlay",
+    "border.width.sm",
+    "border.width.md",
+    "border.width.focus",
+    "radius.md",
+    "radius.lg",
+    "space.200",
+    "space.inset.sm",
+    "space.inset.md",
+    "space.inline.sm",
+    "space.stack.xs",
+    "size.target.lg",
+    "size.target.touch",
+    "font.body.family",
+    "font.body.size",
+    "font.body.line-height",
+    "font.label.family",
+    "font.label.size",
+    "font.label.weight",
+    "font.meta.size",
+    "font.meta.line-height",
+    "duration.fast",
+    "easing.standard"
+  ],
+  "compose": [],
+  "composedBy": [],
+  "rules": [
+    "The list is NON-modal for assistive technology — the one exception to ADR-029. Focus stays in the input, the highlighted option is conveyed by aria-activedescendant, and the page is not aria-hidden: a combobox is a field the user is typing into, not a surface they moved to.",
+    "A ComboBox always lets the user type. If typing makes no sense (3–6 fixed stages), the control is a Select (APG select-only combobox, later) — not a ComboBox with isReadOnly.",
+    "No silent empty state: when the filter leaves nothing, the list stays open with emptyMessage, visible and readable. The only exception is allowsCustomValue with new text, where the text itself is the result.",
+    "allowsCustomValue is for free text with suggestions (quick-add company, a tag). Off, a half-typed value never reaches the form: on blur the text reverts to the selected option.",
+    "Options are plain text (label, optional description). Never a button, link or checkbox inside an option — aria-activedescendant cannot reach it.",
+    "The list shows at most 8 rows (calc(8 × size.target.lg) = 320 px), then scrolls; the highlighted option scrolls into view. More than a screen of options is a search, not a list.",
+    "Invalid is never colour-only: thicker danger border + error text + aria-invalid (TextField contract, ADR-022). Enter and Escape are never swallowed when the list is closed.",
+    "Focus ring is outline + outline-offset on the field box (shared with the toggle button), never box-shadow alone; forced-colors keeps a FieldText border on the box and a CanvasText border on the list.",
+    "The popover is positioned by React Aria with the space.200 gap read from the token (useTokenPx, shared Overlay module); it is as wide as the field, never narrower."
+  ],
+  "figma": {
+    "componentSet": "Inputs / ComboBox",
+    "properties": {
+      "Size": "size (md / lg)",
+      "State": "browser states (default/hover/focus) + open + isInvalid + isDisabled + isReadOnly",
+      "Required": "isRequired",
+      "Label": "label",
+      "Description": "description (boolean show + text)",
+      "Error": "errorMessage (boolean show + text; visible only when State = invalid)",
+      "List / Empty": "emptyMessage shown",
+      "Option / Highlighted": "the aria-activedescendant option",
+      "Option / Selected": "aria-selected option"
+    }
+  },
+  "examples": [
+    {
+      "title": "Pick a company from the tracker",
+      "code": "<ComboBox label=\"Company\" defaultItems={companies} selectedKey={companyId} onSelectionChange={setCompanyId}>\n  {(c) => <ComboBoxItem id={c.id} textValue={c.name}>{c.name}</ComboBoxItem>}\n</ComboBox>"
+    },
+    {
+      "title": "Quick-add company: suggestions, but new text is fine",
+      "code": "<ComboBox aria-label=\"Company\" allowsCustomValue menuTrigger=\"manual\" inputValue={text} onInputChange={setText} defaultItems={companies}>\n  {(c) => <ComboBoxItem id={c.id}>{c.name}</ComboBoxItem>}\n</ComboBox>"
+    },
+    {
+      "title": "Grouped results",
+      "code": "<ComboBox aria-label=\"Search and commands\" items={results}>\n  {(group) => (\n    <ComboBoxSection id={group.id}>\n      <ComboBoxHeader>{group.name}</ComboBoxHeader>\n      <Collection items={group.items}>{(r) => <ComboBoxItem id={r.id}>{r.label}</ComboBoxItem>}</Collection>\n    </ComboBoxSection>\n  )}\n</ComboBox>"
+    },
+    {
+      "title": "Required on submit",
+      "code": "<ComboBox label=\"Stage\" isRequired isInvalid={submitted && !stage} errorMessage=\"Choose a stage\" selectedKey={stage} onSelectionChange={setStage}>\n  <ComboBoxItem id=\"applied\">Applied</ComboBoxItem>\n  <ComboBoxItem id=\"screen\">Screen</ComboBoxItem>\n  <ComboBoxItem id=\"interview\">Interview</ComboBoxItem>\n</ComboBox>"
+    }
+  ]
+}
