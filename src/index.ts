@@ -47,3 +47,5 @@ export { ActionRow } from './patterns/jobsearch/ActionRow';
 export type { ActionRowProps, Action, ActionStage, ActionGroup, SnoozePreset } from './patterns/jobsearch/ActionRow';
 export { StageChip, STAGES, stageEmphasis } from './patterns/jobsearch/StageChip';
 export type { StageChipProps, Stage, TerminalStage } from './patterns/jobsearch/StageChip';
+export { WeeklyGoal, weeklyGoalFooter } from './patterns/jobsearch/WeeklyGoal';
+export type { WeeklyGoalProps } from './patterns/jobsearch/WeeklyGoal';

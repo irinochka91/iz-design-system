@@ -1,0 +1,39 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as WeeklyGoalStories from './WeeklyGoal.stories';
+
+<Meta of={WeeklyGoalStories} />
+
+# WeeklyGoal
+
+**The gauge on Today.** A label, the figure `4 / 5`, five bars and one footer line. It counts quality applications only — the app decides what counts (fit ≥ 70 or marked Stretch) and the gauge shows it.
+
+Spec: `WeeklyGoal.spec.json` · Decision: ADR-035 · Brief: `specs/HANDOFF.md` § WeeklyGoal, motion spec 2, backlog #8, 0c
+
+<Canvas of={WeeklyGoalStories.Default} />
+<Controls of={WeeklyGoalStories.Default} />
+
+## It is a meter
+
+`role="meter"` with `aria-valuenow / min / max` and the sentence as `aria-valuetext` ("3 of 5 quality applications"). A screen reader hears a value in a range, not a picture re-read on every change. The bars are decoration; the footer is the one live region.
+
+## The moment
+
+<Canvas of={WeeklyGoalStories.Moment} />
+
+On the Done that reaches the target: the fifth bar fills from the bottom and overshoots to 1.12 before settling (`duration.moment`, 700 ms — the handoff's spring as a keyframe), the digit rolls up, the footer crossfades to "Goal met · 7-week streak". Every other increment just fills its bar. Under `prefers-reduced-motion` every duration token is 0 and it all lands at once. Never confetti, never sound.
+
+## Under target, say what's next
+
+<Canvas of={WeeklyGoalStories.AtRisk} />
+
+At risk is the app's call (Saturday with two or more to go). The footer turns warning **and** names the next useful step; it never says a streak was lost, and the copy never judges (backlog 0c).
+
+## The figure face
+
+`font.figure.lg` at width 112 with tabular numerals, set in this pattern's CSS — the documented rule for the figure role, since DTCG has no axis type (ADR-035). Digits never shift the slash as they roll.
+
+## Not here
+
+StreakBar and the soft goal adjustment (`history`, `onAdjustTarget`) are backlog #12 — a later pattern that sits beside this figure, never inside it.
+
+<Stories />

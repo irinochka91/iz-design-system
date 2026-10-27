@@ -1,0 +1,193 @@
+/* WeeklyGoal — every value is a token (docs/TOKENS.md). States: data-met (the moment: the latest bar
+   springs, the digit rolls, the footer crossfades — motion spec 2) and data-at-risk (footer in warning).
+   Under prefers-reduced-motion the duration tokens are 0, so everything simply changes. Spec: WeeklyGoal.spec.json */
+
+.root {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-weeklygoal-lit: var(--iz-color-action-primary-bg);
+  --iz-weeklygoal-unlit: var(--iz-color-border-default);
+  --iz-weeklygoal-footer: var(--iz-color-text-secondary);
+  --iz-weeklygoal-bar-width: calc(var(--iz-size-target-sm) / 2); /* 14 px */
+  --iz-weeklygoal-bar-height: calc(1.5 * var(--iz-size-target-min)); /* 36 px */
+
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--iz-space-stack-xs);
+  color: var(--iz-color-text-primary);
+}
+
+.label {
+  font-family: var(--iz-font-label-family);
+  font-size: var(--iz-font-label-size);
+  font-weight: var(--iz-font-label-weight);
+  color: var(--iz-color-text-secondary);
+}
+
+/* The figure role's rule (ADR-035): the display face at width 112, tabular numerals so a rolling digit
+   never shifts the slash. DTCG has no axis type, so this is where the rule lives. */
+.figure {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--iz-font-figure-lg-family);
+  font-size: var(--iz-font-figure-lg-size);
+  font-weight: var(--iz-font-figure-lg-weight);
+  line-height: var(--iz-font-figure-lg-line-height);
+  font-variation-settings: "wdth" 112;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The odometer: the done digit rolls up into a clipped box; only the keyed span remounts. */
+.rollBox {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.roll {
+  display: inline-block;
+  animation: iz-weeklygoal-roll var(--iz-duration-normal) var(--iz-easing-standard);
+}
+
+@keyframes iz-weeklygoal-roll {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.target {
+  color: var(--iz-color-text-secondary);
+}
+
+.stretch,
+.footer {
+  margin: 0;
+  font-family: var(--iz-font-meta-family);
+  font-size: var(--iz-font-meta-size);
+  line-height: var(--iz-font-meta-line-height);
+}
+
+.stretch {
+  color: var(--iz-color-text-secondary);
+}
+
+/* ---- the bars: target × 14 × 36, lit from the bottom ---- */
+.bars {
+  display: inline-flex;
+  gap: var(--iz-space-100);
+  align-items: end;
+}
+
+.bar {
+  position: relative;
+  inline-size: var(--iz-weeklygoal-bar-width);
+  block-size: var(--iz-weeklygoal-bar-height);
+  border-radius: var(--iz-radius-100);
+  background: var(--iz-weeklygoal-unlit);
+  overflow: hidden;
+}
+
+.bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--iz-weeklygoal-lit);
+  transform: scaleY(0);
+  transform-origin: bottom;
+}
+
+.bar[data-lit]::after {
+  transform: scaleY(1);
+}
+
+/* An ordinary increment: the newest bar fills over duration.fast. */
+.bar[data-latest]::after {
+  animation: iz-weeklygoal-fill var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+@keyframes iz-weeklygoal-fill {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* The moment (700 ms = duration.moment): fill by 120, overshoot to 1.12 and settle — the handoff's spring
+   260/18 as a keyframe (ADR-035). Percentages are of duration.moment. */
+.root[data-met] .bar[data-latest]::after {
+  animation: iz-weeklygoal-spring var(--iz-duration-moment) var(--iz-easing-standard);
+}
+
+@keyframes iz-weeklygoal-spring {
+  0% {
+    transform: scaleY(0);
+  }
+
+  17% {
+    transform: scaleY(1);
+  }
+
+  45% {
+    transform: scaleY(1.12);
+  }
+
+  74% {
+    transform: scaleY(0.97);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+/* ---- footer: the live line; keyed text crossfades ---- */
+.footer {
+  color: var(--iz-weeklygoal-footer);
+}
+
+.footerText {
+  display: inline-block;
+  animation: iz-weeklygoal-fade var(--iz-duration-normal) var(--iz-easing-standard);
+}
+
+/* In the moment the footer waits for the bar: fade in over the last stretch of duration.moment. */
+.root[data-met] .footerText {
+  animation-duration: var(--iz-duration-normal);
+  animation-delay: calc(var(--iz-duration-moment) - var(--iz-duration-normal));
+  animation-fill-mode: backwards;
+}
+
+@keyframes iz-weeklygoal-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* At risk: the footer in warning — colour plus the words it already says. */
+.root[data-at-risk] {
+  --iz-weeklygoal-footer: var(--iz-color-text-warning);
+}
+
+/* Windows High Contrast / forced-colors: lit bars in the system highlight, unlit keep an edge. */
+@media (forced-colors: active) {
+  .bar {
+    border: var(--iz-border-width-sm) solid CanvasText;
+    background: Canvas;
+  }
+
+  .bar::after {
+    background: Highlight;
+  }
+}

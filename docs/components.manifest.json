@@ -406,6 +406,31 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "WeeklyGoal",
+      "category": "Pattern",
+      "code": {
+        "path": "src/patterns/jobsearch/WeeklyGoal/WeeklyGoal.tsx",
+        "import": "import { WeeklyGoal } from '@iz/design-system'"
+      },
+      "spec": "src/patterns/jobsearch/WeeklyGoal/WeeklyGoal.spec.json",
+      "stories": "src/patterns/jobsearch/WeeklyGoal/WeeklyGoal.stories.tsx",
+      "figma": {
+        "componentSet": "Patterns / WeeklyGoal",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist (duration/moment added 2026-10-27, re-run the plugin); component set not built"
+      },
+      "propMap": {
+        "Done": "done",
+        "State": "in progress / at risk / met",
+        "Stretch": "stretch",
+        "Footer": "footer",
+        "Label": "label"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }
