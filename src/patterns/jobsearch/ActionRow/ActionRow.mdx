@@ -1,0 +1,54 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ActionRowStories from './ActionRow.stories';
+
+<Meta of={ActionRowStories} />
+
+# ActionRow
+
+**One next action in the Today list.** A done ring, the title, company and stage chips, the time, the due label, a Snooze split button and an Open button. The first of the Job Search HQ patterns: it composes `Button`, `Chip` and `Menu`, and nothing in it is a new primitive.
+
+Spec: `ActionRow.spec.json` · Decision: ADR-033 · Brief: `specs/HANDOFF.md` § ActionRow, motion spec 1, backlog #2–5
+
+<Canvas of={ActionRowStories.Default} />
+<Controls of={ActionRowStories.Default} />
+
+## The ring is a Button, not a Checkbox
+
+Done is a **one-way action with an Undo**. A checkbox promises a toggle; this ring does not toggle back — Undo lives in the list's toast (and in the list). So it is `<button aria-label="Mark done: Email Priya" aria-pressed>`: the state is exposed, the action is one-way.
+
+## Who owns what
+
+| The row | The list (Today, Phase 4) |
+| --- | --- |
+| its four controls, named for the action | J/K between rows, D/S/O for the current row |
+| the done moment (ring, tick, strike, collapse) | flipping `isDone` at once, and back on Undo |
+| `:focus-within` outline | the one Undo toast, the live region "Done. 3 due today." |
+| nothing formatted — `dueLabel` and `time` are strings | relative dates, locale, groups and counts |
+
+Letter shortcuts are deliberately **not** on the row: a key listener on a row fires inside quick-add's input when focus is within it, and the list already knows which row is current.
+
+<Canvas of={ActionRowStories.WithUndo} />
+
+## The done moment
+
+Press → ring scales to 0.9 → ring fills and the tick draws → the title turns subtle and a strike grows left to right → the row collapses (`grid-template-rows: 1fr → 0fr`, the only layout animation allowed) → the list shows the toast. Every duration is a token, so under `prefers-reduced-motion` it all lands at once. Undo mid-animation reverses from wherever it is.
+
+<Canvas of={ActionRowStories.Done} />
+
+## Overdue is two things, not the whole row
+
+<Canvas of={ActionRowStories.Overdue} />
+
+The due label says it in words ("2 days ago") and only the label and the ring take the danger colour. Chips never carry status colour (Chip spec).
+
+## Phone
+
+<Canvas of={ActionRowStories.Phone} />
+
+The actions wrap under the title; every target stays 44 px. There is no breakpoint — the row wraps when the title column would drop below six touch targets wide.
+
+## Tokens consumed
+
+See `tokens` in `ActionRow.spec.json`; `check:specs` verifies the list against the CSS.
+
+<Stories />

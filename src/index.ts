@@ -41,3 +41,7 @@ export { Popover } from './components/Overlay/Popover';
 export type { PopoverProps, PopoverPlacement, PopoverSize, PopoverPadding } from './components/Overlay/Popover';
 export { Tooltip } from './components/Overlay/Tooltip';
 export type { TooltipProps, TooltipPlacement, TooltipShowOn } from './components/Overlay/Tooltip';
+
+// Patterns — Job Search HQ (ADR-033)
+export { ActionRow } from './patterns/jobsearch/ActionRow';
+export type { ActionRowProps, Action, ActionStage, ActionGroup, SnoozePreset } from './patterns/jobsearch/ActionRow';

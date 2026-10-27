@@ -99,9 +99,9 @@
     "color.border.strong",
     "color.border.danger",
     "color.border.focus",
+    "border.width.sm",
     "border.width.md",
     "border.width.focus",
-    "radius.full",
     "size.target.min",
     "size.target.touch",
     "space.inline.sm",
@@ -121,7 +121,6 @@
     "font.label.weight",
     "duration.fast",
     "duration.normal",
-    "duration.slow",
     "easing.standard",
     "easing.emphasized"
   ],

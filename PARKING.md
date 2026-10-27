@@ -12,3 +12,5 @@ Ideas noticed during a phase that belong to a later one. One line each; nothing 
 - Phase 2: the Figma plugin was verified with a throwaway mock-API dry run (155 + 116 variables, 696 aliases, 0 raw, 0 unset). Make it a permanent test so a token-type change cannot silently break the import.
 - Housekeeping: `docs/components.manifest.json` declares `"$schema": "./manifest.schema.json"`, which does not exist — the same class of dangling reference as `specs/ARCHITECTURE.md` was. Write the schema (and let `check:specs` validate the manifest against it) or drop the line.
 - Phase 2: no `z.*` tokens exist (docs/TOKENS.md names `z.overlay | z.toast`). Menu and Toast position without z-index for now; add the scale when a second stacking context appears (Dialog over Toast).
+- Phase 3: the handoff's ActionRow hover is `bg-sunken at 40%`; stylelint forbids `color-mix` by design (colours are tokens, ADR-027). The row uses opaque `color.surface.sunken`. If it reads too heavy on linen, add a `color.surface.hover` alpha token rather than a mix in CSS.
+

@@ -5,3 +5,10 @@
   gap: var(--iz-space-inline-lg);
   align-items: center;
 }
+
+/* A bare list for row patterns: no bullets, no indent; rows draw their own separation. */
+.sb-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

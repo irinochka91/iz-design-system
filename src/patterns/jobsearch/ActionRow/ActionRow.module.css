@@ -1,0 +1,194 @@
+/* ActionRow — every value is a token (docs/TOKENS.md). States: data-group (overdue colours only the due
+   label and the ring), data-done (the done moment, motion spec 1), :focus-within (row outline) and the
+   buttons' own React Aria data-* states. Spec: ActionRow.spec.json */
+
+.row {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-actionrow-ring: var(--iz-color-border-strong);
+  --iz-actionrow-ring-fill: var(--iz-color-action-primary-bg);
+  --iz-actionrow-tick: var(--iz-color-text-on-action);
+  --iz-actionrow-due: var(--iz-color-text-subtle);
+  --iz-actionrow-title: var(--iz-color-text-primary);
+  --iz-actionrow-hover: var(--iz-color-surface-sunken); /* the handoff's 40% wash would need an alpha token (ADR-027); opaque sunken until one is justified — PARKING */
+
+  /* The collapse: the only layout animation allowed (motion spec, shared rules). 1fr → 0fr, delayed until
+     the ring and the title have finished; under reduced motion every duration token is 0. */
+  display: grid;
+  grid-template-rows: 1fr;
+  list-style: none;
+  font-family: var(--iz-font-title-family);
+  transition: grid-template-rows var(--iz-duration-fast) var(--iz-easing-standard) calc(var(--iz-duration-normal) + var(--iz-duration-fast));
+}
+
+/* .inner only clips: with 0fr the track is 0, but padding on the clipped element would still paint —
+   so the padding lives one level down, on .content. */
+.inner {
+  min-block-size: 0;
+  overflow: hidden;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap; /* phone: the actions wrap under the title; no breakpoint token exists, and none is needed */
+  align-items: center;
+  gap: var(--iz-space-inline-sm) var(--iz-space-inline-md);
+  padding: var(--iz-space-inset-sm) var(--iz-space-inset-md);
+  transition: background-color var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.content:hover {
+  background: var(--iz-actionrow-hover);
+}
+
+/* focus is a browser state: the outline follows focus within the row. px on outline-offset is allowed on purpose. */
+.row:focus-within .content {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: -2px;
+}
+
+/* ---- the done target: 44 px Button around a 24 px ring ---- */
+.done {
+  flex-shrink: 0;
+}
+
+.ring {
+  inline-size: var(--iz-size-target-min);
+  block-size: var(--iz-size-target-min);
+  overflow: visible;
+  transition: scale var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.done[data-pressed] .ring {
+  scale: 0.9; /* t=0: the press */
+}
+
+.ringCircle {
+  fill: transparent;
+  stroke: var(--iz-actionrow-ring);
+  stroke-width: var(--iz-border-width-md);
+  transition:
+    fill var(--iz-duration-normal) var(--iz-easing-standard) var(--iz-duration-fast),
+    stroke var(--iz-duration-normal) var(--iz-easing-standard) var(--iz-duration-fast);
+}
+
+/* The tick draws itself: dash length = path length, offset animates to 0. */
+.tick {
+  stroke: var(--iz-actionrow-tick);
+  stroke-width: var(--iz-border-width-md);
+  stroke-dasharray: 16;
+  stroke-dashoffset: 16;
+  transition: stroke-dashoffset var(--iz-duration-normal) var(--iz-easing-standard) var(--iz-duration-fast);
+}
+
+/* ---- text ---- */
+.main {
+  display: flex;
+  flex: 1 1 calc(6 * var(--iz-size-target-touch)); /* 264 px: below this the actions wrap to their own line */
+  flex-direction: column;
+  gap: var(--iz-space-stack-xs);
+  min-inline-size: 0;
+}
+
+.title {
+  position: relative;
+  align-self: start;
+  font-size: var(--iz-font-title-size);
+  font-weight: var(--iz-font-title-weight);
+  line-height: var(--iz-font-title-line-height);
+  color: var(--iz-actionrow-title);
+  transition: color var(--iz-duration-normal) var(--iz-easing-standard) var(--iz-duration-fast);
+}
+
+/* The strike grows left → right; line-through itself cannot animate. */
+.title::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 50%;
+  inline-size: 0;
+  block-size: var(--iz-border-width-sm);
+  background: currentcolor;
+  transition: inline-size var(--iz-duration-normal) var(--iz-easing-emphasized) var(--iz-duration-fast);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--iz-space-inline-sm);
+}
+
+.time,
+.due {
+  font-family: var(--iz-font-meta-family);
+  font-size: var(--iz-font-meta-size);
+  line-height: var(--iz-font-meta-line-height);
+  color: var(--iz-color-text-subtle);
+}
+
+.due {
+  flex-shrink: 0;
+  font-family: var(--iz-font-label-family);
+  font-size: var(--iz-font-label-size);
+  font-weight: var(--iz-font-label-weight);
+  color: var(--iz-actionrow-due);
+}
+
+/* ---- actions ---- */
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--iz-space-inline-sm);
+  margin-inline-start: auto;
+}
+
+.snooze {
+  display: inline-flex;
+}
+
+/* ---- overdue: the label and the ring, nothing else (backlog #2) ---- */
+.row[data-group="overdue"] {
+  --iz-actionrow-due: var(--iz-color-text-danger);
+  --iz-actionrow-ring: var(--iz-color-border-danger);
+}
+
+/* ---- done: the moment, then the collapse ---- */
+.row[data-done] {
+  --iz-actionrow-title: var(--iz-color-text-subtle);
+
+  grid-template-rows: 0fr;
+}
+
+.row[data-done] .ringCircle {
+  fill: var(--iz-actionrow-ring-fill);
+  stroke: var(--iz-actionrow-ring-fill);
+}
+
+.row[data-done] .tick {
+  stroke-dashoffset: 0;
+}
+
+.row[data-done] .title::after {
+  inline-size: 100%;
+}
+
+/* Windows High Contrast / forced-colors: ring, tick and strike in system colours; the outline stays. */
+@media (forced-colors: active) {
+  .ringCircle {
+    stroke: CanvasText;
+  }
+
+  .row[data-done] .ringCircle {
+    fill: Highlight;
+    stroke: Highlight;
+  }
+
+  .row[data-done] .tick {
+    stroke: HighlightText;
+  }
+
+  .row:focus-within .content {
+    outline-color: Highlight;
+  }
+}

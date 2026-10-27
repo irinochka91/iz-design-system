@@ -356,6 +356,33 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "ActionRow",
+      "category": "Pattern",
+      "code": {
+        "path": "src/patterns/jobsearch/ActionRow/ActionRow.tsx",
+        "import": "import { ActionRow } from '@iz/design-system'"
+      },
+      "spec": "src/patterns/jobsearch/ActionRow/ActionRow.spec.json",
+      "stories": "src/patterns/jobsearch/ActionRow/ActionRow.stories.tsx",
+      "figma": {
+        "componentSet": "Patterns / ActionRow",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Group": "group",
+        "State": "isDone / hover / focus-within / menu open",
+        "Company": "action.company",
+        "Stage": "action.stage",
+        "Time": "action.time",
+        "Due": "action.dueLabel",
+        "Title": "action.title"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }
