@@ -327,6 +327,35 @@
       },
       "status": "beta (code, stories, unit + e2e done; Figma pending)",
       "reviewedVersion": "0.0.1"
+    },
+    {
+      "name": "ComboBox",
+      "category": "Inputs",
+      "code": {
+        "path": "src/components/Inputs/ComboBox/ComboBox.tsx",
+        "import": "import { ComboBox, ComboBoxItem, ComboBoxSection, ComboBoxHeader } from '@iz/design-system'"
+      },
+      "spec": "src/components/Inputs/ComboBox/ComboBox.spec.json",
+      "stories": "src/components/Inputs/ComboBox/ComboBox.stories.tsx",
+      "figma": {
+        "componentSet": "Inputs / ComboBox",
+        "nodeId": null,
+        "url": null,
+        "status": "pending — variables exist; component set not built"
+      },
+      "propMap": {
+        "Size": "size",
+        "State": "isInvalid / isDisabled / isReadOnly / open",
+        "Required": "isRequired",
+        "Label": "label",
+        "Description": "description",
+        "Error": "errorMessage",
+        "List / Empty": "emptyMessage",
+        "Option / Highlighted": "aria-activedescendant",
+        "Option / Selected": "aria-selected"
+      },
+      "status": "beta (code, stories, unit + e2e done; Figma pending)",
+      "reviewedVersion": "0.0.1"
     }
   ]
 }

@@ -176,7 +176,7 @@
     },
     {
       "key": "Escape",
-      "action": "Closes the list; the text stays. Does not propagate to a Modal while the list was open — the first Escape belongs to the list."
+      "action": "Cancels: closes the list and reverts the text to the selected option's label (or empties it when nothing is selected). With allowsCustomValue the typed text is committed instead. Does not propagate to a Modal while the list was open — the first Escape belongs to the list."
     },
     {
       "key": "Tab / Shift+Tab",

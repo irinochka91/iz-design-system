@@ -1,0 +1,303 @@
+/* ComboBox — every value is a token (docs/TOKENS.md). The field is TextField's box; the list is Menu's
+   surface. States come from React Aria data-* attributes: on the root (data-invalid, data-disabled,
+   data-readonly, data-required, data-open), on the input (data-hovered, data-focus-visible), on the toggle
+   (data-pressed, data-focus-visible) and on each option (data-focused = aria-activedescendant,
+   data-selected, data-disabled, data-hovered). Spec: ComboBox.spec.json */
+
+.root {
+  /* component tokens: scoped aliases of semantic tokens */
+  --iz-combobox-bg: var(--iz-color-surface-raised);
+  --iz-combobox-fg: var(--iz-color-text-primary);
+  --iz-combobox-border: var(--iz-color-border-strong);
+  --iz-combobox-border-width: var(--iz-border-width-sm);
+  --iz-combobox-height: var(--iz-size-target-lg);
+  --iz-combobox-gap: var(--iz-space-200); /* the gap to the list; ComboBox.tsx reads the same token for React Aria's offset */
+
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--iz-space-stack-xs);
+  font-family: var(--iz-font-body-family);
+}
+
+.fullWidth {
+  display: flex;
+  inline-size: 100%;
+}
+
+/* ---- sizes: 40 / 44 px (md → target.lg, lg → target.touch) ---- */
+.lg {
+  --iz-combobox-height: var(--iz-size-target-touch);
+}
+
+.label {
+  font-family: var(--iz-font-label-family);
+  font-size: var(--iz-font-label-size);
+  font-weight: var(--iz-font-label-weight);
+  color: var(--iz-combobox-fg);
+}
+
+.required {
+  margin-inline-start: var(--iz-space-inline-sm);
+  color: var(--iz-color-text-danger);
+}
+
+/* The box is the target: border, background and focus ring live here, not on the bare <input>. */
+.field {
+  display: flex;
+  align-items: stretch;
+  min-block-size: var(--iz-combobox-height);
+  border: var(--iz-combobox-border-width) solid var(--iz-combobox-border);
+  border-radius: var(--iz-radius-md);
+  background: var(--iz-combobox-bg);
+  color: var(--iz-combobox-fg);
+  cursor: text;
+  transition:
+    border-color var(--iz-duration-fast) var(--iz-easing-standard),
+    background-color var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.input {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  padding-block: 0;
+  padding-inline: var(--iz-space-inset-md) 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--iz-font-body-size);
+  outline-color: transparent; /* the ring is drawn on .field via :has() below — moved, never removed */
+}
+
+.input::placeholder {
+  color: var(--iz-color-text-muted);
+  opacity: 1;
+}
+
+/* The toggle is a full-height target at the field's end; it shares the box's ring. */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--iz-combobox-height);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--iz-color-text-secondary);
+  cursor: pointer;
+  outline-color: transparent;
+}
+
+.toggle > svg {
+  inline-size: 1em;
+  block-size: 1em;
+  transition: rotate var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.root[data-open] .toggle > svg {
+  rotate: 180deg;
+}
+
+/* ---- universal states ---- */
+
+/* outline (not box-shadow): survives overflow clipping and forced-colors mode. px is allowed here on purpose. */
+.field:has(.input[data-focus-visible]),
+.field:has(.toggle[data-focus-visible]) {
+  outline: var(--iz-border-width-focus) solid var(--iz-color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Invalid is never colour-only: thicker border + error text + aria-invalid. */
+.root[data-invalid] {
+  --iz-combobox-border: var(--iz-color-border-danger);
+  --iz-combobox-border-width: var(--iz-border-width-md);
+}
+
+.root[data-readonly] {
+  --iz-combobox-bg: var(--iz-color-surface-sunken);
+}
+
+.root[data-readonly] .field,
+.root[data-readonly] .toggle {
+  cursor: default;
+}
+
+.root[data-disabled] {
+  --iz-combobox-bg: var(--iz-color-action-disabled-bg);
+  --iz-combobox-fg: var(--iz-color-text-disabled);
+  --iz-combobox-border: var(--iz-color-action-disabled-bg);
+}
+
+.root[data-disabled] .field,
+.root[data-disabled] .toggle {
+  cursor: not-allowed;
+}
+
+.description,
+.error {
+  font-size: var(--iz-font-meta-size);
+  line-height: var(--iz-font-meta-line-height);
+}
+
+.description {
+  color: var(--iz-color-text-secondary);
+}
+
+.error {
+  color: var(--iz-color-text-danger);
+}
+
+.error:empty {
+  display: none; /* stays in the DOM for aria-describedby; takes no space while valid */
+}
+
+/* ---- the list: Menu's surface, as wide as the field (React Aria exposes the trigger width) ---- */
+.popover {
+  --iz-combobox-list-bg: var(--iz-color-surface-overlay);
+  --iz-combobox-list-border: var(--iz-color-border-default);
+  --iz-combobox-border-width: var(--iz-border-width-sm); /* re-declared: the list is portalled outside .root */
+
+  /* React Aria's ComboBox sets --trigger-width to the span from the input's left edge to the toggle's
+     right edge — the field's content box. Add the box's border on both sides so the list is exactly as
+     wide as the field, in the invalid (thicker-border) state too. */
+  /* stylelint-disable-next-line custom-property-pattern -- --trigger-width is React Aria's name; not ours to rename */
+  inline-size: calc(var(--trigger-width) + 2 * var(--iz-combobox-border-width));
+  padding: var(--iz-space-inset-sm);
+  border: var(--iz-border-width-sm) solid var(--iz-combobox-list-border);
+  border-radius: var(--iz-radius-lg);
+  background: var(--iz-combobox-list-bg);
+  box-shadow: var(--iz-shadow-overlay);
+  font-family: var(--iz-font-body-family);
+  font-size: var(--iz-font-body-size);
+  line-height: var(--iz-font-body-line-height);
+  color: var(--iz-color-text-primary);
+}
+
+/* Mirrors .root[data-invalid]: the field's border is thicker, so the list grows by the same amount. */
+.popover[data-invalid] {
+  --iz-combobox-border-width: var(--iz-border-width-md);
+}
+
+.popover[data-entering] {
+  animation: iz-combobox-in var(--iz-duration-fast) var(--iz-easing-standard);
+}
+
+.popover[data-exiting] {
+  animation: iz-combobox-in var(--iz-duration-fast) var(--iz-easing-standard) reverse;
+}
+
+@keyframes iz-combobox-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* At most 8 rows, then it scrolls; the highlighted option scrolls into view (React Aria). */
+.listbox {
+  display: flex;
+  flex-direction: column;
+  max-block-size: calc(8 * var(--iz-size-target-lg));
+  overflow: auto;
+  outline-color: transparent; /* focus never lands here — aria-activedescendant conveys it */
+}
+
+.option {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--iz-space-inline-sm);
+  min-block-size: var(--iz-size-target-lg);
+  padding-inline: var(--iz-space-inset-md);
+  color: var(--iz-color-text-primary);
+  cursor: pointer;
+  user-select: none;
+  outline-color: transparent; /* the highlight below is the indicator; DOM focus stays in the input */
+}
+
+/* The highlighted (aria-activedescendant) option and hover share a background. */
+.option[data-hovered],
+.option[data-focused] {
+  background: var(--iz-color-action-secondary-bg-hover);
+}
+
+.option[data-pressed] {
+  background: var(--iz-color-action-secondary-bg-active);
+}
+
+/* Selected is never colour-only: the tick is drawn AND aria-selected is set. */
+.option::before {
+  content: "";
+  inline-size: 1em;
+  flex-shrink: 0;
+}
+
+.option[data-selected] {
+  background: var(--iz-color-action-primary-bg-subtle);
+  color: var(--iz-color-action-primary-fg);
+}
+
+.option[data-selected]::before {
+  content: "✓";
+}
+
+.option[data-disabled] {
+  color: var(--iz-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.optionDescription {
+  flex-basis: 100%;
+  color: var(--iz-color-text-secondary);
+}
+
+.option[data-disabled] .optionDescription {
+  color: var(--iz-color-text-disabled);
+}
+
+/* No silent empty state: a visible, readable row. */
+.empty {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--iz-size-target-lg);
+  padding-inline: var(--iz-space-inset-md);
+  color: var(--iz-color-text-secondary);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: var(--iz-space-inset-sm) var(--iz-space-inset-md);
+  font-family: var(--iz-font-label-family);
+  font-size: var(--iz-font-label-size);
+  font-weight: var(--iz-font-label-weight);
+  color: var(--iz-color-text-secondary);
+}
+
+/* Windows High Contrast / forced-colors: visible box, visible ring, visible list and selection. */
+@media (forced-colors: active) {
+  .field {
+    border-color: FieldText;
+  }
+
+  .field:has(.input[data-focus-visible]),
+  .field:has(.toggle[data-focus-visible]) {
+    outline-color: Highlight;
+  }
+
+  .popover {
+    border-color: CanvasText;
+  }
+
+  .option[data-focused],
+  .option[data-selected] {
+    background: Highlight;
+    color: HighlightText;
+  }
+}

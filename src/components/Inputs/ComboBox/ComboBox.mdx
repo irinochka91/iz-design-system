@@ -1,0 +1,47 @@
+import { Meta, Canvas, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ComboBoxStories from './ComboBox.stories';
+
+<Meta of={ComboBoxStories} />
+
+# ComboBox
+
+A **text field with filtered suggestions** — pick one of many (a company from the tracker, a stage, a contact) or, with `allowsCustomValue`, type something new. For more options than a `RadioGroup` can show. When the user must not type, it is a `Select` (later), never a read-only ComboBox.
+
+Pattern: [WAI-ARIA APG — Combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) (editable, list autocomplete) · Behaviour: React Aria `ComboBox` + `ListBox` · Spec: `ComboBox.spec.json`
+
+<Canvas of={ComboBoxStories.Default} />
+<Controls of={ComboBoxStories.Default} />
+
+## The list is non-modal
+
+Focus **never leaves the input**: the highlighted option is conveyed by `aria-activedescendant`, and the page is not hidden from assistive technology. This is the one exception to the modal rule for Menu and Popover (ADR-029) — a combobox is a field the user is typing into, not a surface they moved to.
+
+## Keyboard
+
+Type to filter · `↓` / `↑` open and highlight · `Alt+↓` opens without highlighting · `Enter` picks (or commits new text with `allowsCustomValue`) · `Escape` cancels — closes and reverts the text to the selected option (or empties it) · `Tab` leaves; without `allowsCustomValue`, text that matches nothing **reverts** on blur, so a form never receives a half-typed value.
+
+<Canvas of={ComboBoxStories.Keyboard} />
+
+## No silent empty state
+
+When the filter leaves nothing, the list stays open with `emptyMessage` — visible and readable. The only exception is `allowsCustomValue` with new text, where the text itself is the result.
+
+<Canvas of={ComboBoxStories.CustomValue} />
+
+## Groups
+
+<Canvas of={ComboBoxStories.Grouped} />
+
+A `ComboBoxSection` with a `ComboBoxHeader` is announced as the group name; the header is not an option. This is the shape the command palette will use (Actions · Companies · Contacts · Commands).
+
+## Do / Don't
+
+- Do keep options plain text (label, optional description) — `aria-activedescendant` cannot reach a control inside an option.
+- Don't exceed a screen of options; the list shows 8 rows and scrolls. More is a search.
+- Don't swallow `Enter` or `Escape` when the list is closed — they belong to the form and to the dialog.
+
+## Tokens consumed
+
+See `tokens` in `ComboBox.spec.json`; `check:specs` verifies the list against the CSS. The field is TextField's box; the list is Menu's surface, as wide as the field, with the `space.200` gap read from the token.
+
+<Stories />

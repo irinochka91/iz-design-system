@@ -21,6 +21,8 @@ export { Switch } from './components/Inputs/Switch';
 export type { SwitchProps, SwitchSize, SwitchLabelPlacement } from './components/Inputs/Switch';
 export { RadioGroup, Radio } from './components/Inputs/RadioGroup';
 export type { RadioGroupProps, RadioProps, RadioGroupSize, RadioGroupOrientation } from './components/Inputs/RadioGroup';
+export { ComboBox, ComboBoxItem, ComboBoxSection, ComboBoxHeader, ComboBoxDescription } from './components/Inputs/ComboBox';
+export type { ComboBoxProps, ComboBoxItemProps, ComboBoxSectionProps, ComboBoxSize, ComboBoxMenuTrigger } from './components/Inputs/ComboBox';
 
 // Display
 export { Chip } from './components/Display/Chip';
