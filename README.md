@@ -7,7 +7,7 @@ Goal by 8 Nov: portfolio case on Phase A. Product with testers — after the off
 
 An accessible, token-first, agent-ready design system. Small on purpose: every component is built by hand, end to end, so the system is understood from the inside — and so AI agents (Claude Code, Codex, Claude Design) can consume it without guessing.
 
-**Status:** Phase 1 done (tokens, six themes incl. `linen`, contrast gate, lint rules). Next: Phase 2 primitives — see `docs/ROADMAP.md`.
+**Status:** Phase 1 done (tokens, six themes incl. `linen`, contrast gate, lint rules). Phase 2 primitives done (13 components with specs, keyboard + screen-reader tests, `agent/llms.txt`). Next: the patterns the Today screen needs — see `docs/ROADMAP.md`.
 
 **The brief this is built against:** [`specs/HANDOFF.md`](specs/HANDOFF.md) (Job Search HQ, the second consumer). Where it conflicts with the repo, `docs/decisions.md` is the authority — the conflicts are listed in the handoff itself, above its phase-1 prompt.
 

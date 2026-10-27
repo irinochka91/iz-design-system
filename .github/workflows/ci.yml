@@ -58,6 +58,8 @@ jobs:
         run: npm run check:contrast
       - name: Component specs
         run: npm run check:specs
+      - name: agent/llms.txt is current
+        run: npm run check:llms
 
       - name: Tests (unit + Storybook stories with axe)
         run: npm test

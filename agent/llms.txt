@@ -1,0 +1,59 @@
+# IZ Design System
+
+> A React component library on React Aria Components, driven by DTCG design tokens with six themes. Every component ships a machine-readable spec (`docs/specs/<Name>.spec.json`): role, props with intent, states, keyboard map, WCAG criteria, the tokens it consumes, and the rules a reviewer applies. Read the spec before using or extending a component; CI enforces what the spec says.
+
+## How to use it
+
+- Import from the package root: `import { Button, TextField } from '@iz/design-system'`; styles: `@iz/design-system/styles.css`; tokens: `@iz/design-system/tokens.css`.
+- Themes: set `data-iz-theme` on `<html>` to one of `dark`, `hc-light`, `hc-dark`, `linen`, `linen-dark` (the base theme `light` needs no attribute). Themes override semantic tokens only; no component code changes between themes.
+- Tokens: 172 semantic tokens, CSS prefix `--iz-`, path `category.concept.property.variant.state` → `--iz-category-concept-property-variant-state`. In app and pattern code use `var(--iz-*)` only — a raw hex or px literal fails lint (`iz/no-raw-colors`, `iz/no-raw-spacing`, stylelint).
+- Hover, focus-visible and pressed are browser states, never props. Public props are semantic: `isDisabled`, `isInvalid`, `isSelected`, `isExpanded`, `isPending`.
+- Validation is controlled by the form, not the field: `isInvalid` + `errorMessage`; native `required` is not used (ADR-022). Overlays are modal for assistive technology except the ComboBox list (ADR-029).
+- Do not add a component or token without a spec and an ADR (`docs/CONTRIBUTING.md`, `docs/decisions.md`). Out-of-scope ideas go to `PARKING.md`, one line each.
+
+## Components — Actions
+
+- [Button](docs/specs/Button.spec.json): Triggers an action or submits a form. role=`button`, status beta. `import { Button } from '@iz/design-system'`
+- [Menu](docs/specs/Menu.spec.json): A list of actions behind a trigger button — Snooze presets, 'set stage', row actions. role=`menu`, status draft. `import { Menu, MenuItem, MenuSection, MenuHeader, MenuSeparator, MenuDescription, MenuKeyboard } from '@iz/design-system'`
+
+## Components — Inputs
+
+- [Checkbox](docs/specs/Checkbox.spec.json): A binary (or indeterminate) choice with a visible label, for forms and filters. role=`checkbox`, status draft. `import { Checkbox } from '@iz/design-system'`
+- [ComboBox](docs/specs/ComboBox.spec.json): A text field with filtered suggestions — pick one of many (a company from the tracker, a stage, a contact) or, with allowsCustomValue, type something new. role=`combobox`, status draft. `import { ComboBox, ComboBoxItem, ComboBoxSection, ComboBoxHeader } from '@iz/design-system'`
+- [RadioGroup](docs/specs/RadioGroup.spec.json): One choice from a short, fully visible list of mutually exclusive options — role type, window length, a lead's source. role=`radiogroup`, status draft. `import { RadioGroup, Radio } from '@iz/design-system'`
+- [Switch](docs/specs/Switch.spec.json): An on/off setting that applies the moment it changes — focus-mode timer, theme follows system, reminders. role=`switch`, status draft. `import { Switch } from '@iz/design-system'`
+- [TextField](docs/specs/TextField.spec.json): Single-line text entry with a visible label, optional description and an error message that screen readers announce. role=`textbox`, status draft. `import { TextField } from '@iz/design-system'`
+
+## Components — Display
+
+- [Card](docs/specs/Card.spec.json): A bordered box that groups related content on a surface. role=`none`, status draft. `import { Card } from '@iz/design-system'`
+- [Chip](docs/specs/Chip.spec.json): A 28 px pill with a short text label: a property (static), a stage (static, or pressable to advance), or a filter (toggle with aria-pressed). role=`button`, status draft. `import { Chip } from '@iz/design-system'`
+
+## Components — Feedback
+
+- [Toast](docs/specs/Toast.spec.json): A brief, polite status message at the bottom-centre of the screen — 'Done: Email Priya · Undo' — that never steals focus, dismisses itself after 6 s (paused while hovered or focused) and is replaced, not stacked, when a new one arrives. role=`status`, status draft. `import { Toast } from '@iz/design-system'`
+
+## Components — Overlay
+
+- [Modal](docs/specs/Modal.spec.json): A blocking dialog for a decision that must be made now — confirm an irreversible step, pick a date, the ⌘K palette. role=`dialog`, status draft. `import { Modal, ModalBody, ModalFooter } from '@iz/design-system'`
+- [Popover](docs/specs/Popover.spec.json): A small surface anchored to its trigger for one or two controls or a short explanation — adjust the weekly target, edit a priority, 'what counts as a quality application'. role=`dialog`, status draft. `import { Popover } from '@iz/design-system'`
+- [Tooltip](docs/specs/Tooltip.spec.json): A short plain-text hint that describes a focusable control — 'Open application', 'Mark done (D)' — shown on keyboard focus and after a hover delay, dismissed with Escape. role=`tooltip`, status draft. `import { Tooltip } from '@iz/design-system'`
+
+## Tokens
+
+- [tokens.dtcg.json](docs/specs/tokens.dtcg.json): every semantic token with its resolved value per theme (DTCG 2025.10).
+- [docs/TOKENS.md](docs/TOKENS.md): three tiers (primitive → semantic → component), naming, what a theme may override, the contrast gate.
+- [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md): the keyboard and screen-reader contract per component family; WCAG 2.2 AA is the floor, hc-* themes are AAA.
+
+## Decisions and process
+
+- [docs/decisions.md](docs/decisions.md): ADRs — what was decided, why, and which option was rejected. Check here before proposing a change that "fixes" a deliberate choice.
+- [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md): the component cycle — spec → code → stories → unit tests → Playwright e2e → MDX → manifest → learning log.
+- [docs/SPEC-FORMAT.md](docs/SPEC-FORMAT.md): the spec schema and the MCP tools planned over it.
+- [docs/components.manifest.json](docs/components.manifest.json): code ↔ Figma mapping per component and its review status.
+
+## Optional
+
+- [docs/learning-log.md](docs/learning-log.md): what each component taught, including React Aria facts the tests got wrong before the component did.
+- [PARKING.md](PARKING.md): ideas deferred to a later phase.
+- [specs/HANDOFF.md](specs/HANDOFF.md): the product brief this system is built against (Job Search HQ).
