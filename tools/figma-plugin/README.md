@@ -37,8 +37,8 @@ tools/figma-plugin/
 
 | Collection | Modes | Contents |
 |---|---|---|
-| `Primitives` | one, hidden from publishing | 155 variables — raw values, so designers can only pick Semantic ones |
-| `Semantic` | `light`, `dark`, `hc-light`, `hc-dark`, `linen`, `linen-dark` | 116 variables, **696 alias assignments** (116 × 6) — every value in every mode points at a Primitive |
+| `Primitives` | one, hidden from publishing | 159 variables — raw values, so designers can only pick Semantic ones |
+| `Semantic` | `light`, `dark`, `hc-light`, `hc-dark`, `linen`, `linen-dark` | 125 variables, **750 alias assignments** (125 × 6) — every value in every mode points at a Primitive |
 
 Mode names match `attribute` in `tokens/themes.config.ts`, so a Figma mode maps 1:1 to `data-iz-theme`.
 
@@ -52,16 +52,18 @@ Variable **modes** are a paid feature — Starter has none, Professional allows 
 Organization 20. The six modes here fit Professional.
 
 The plugin degrades rather than failing: it imports every mode the plan allows, names the ones Figma
-refused, and says what to do. On Starter you get all 271 variables with `light` values and one mode.
+refused, and says what to do. On Starter you get all 284 variables with `light` values and one mode.
 Re-running after an upgrade fills the rest in — it updates in place, so nothing is duplicated and
 nothing has to be undone. Verified by running `code.js` against a mock whose `addMode` throws:
-155 + 116 variables, 116 aliases, 0 raw, 0 unset, 5 modes reported as refused.
+155 + 116 variables (the counts at the time), 116 aliases, 0 raw, 0 unset, 5 modes reported as refused.
 
 ## What it cannot do, and why
 
-- **Easing (6 tokens).** `curve/*` and `easing/*` are `cubicBezier`; Figma has no variable type for a
-  curve. Set these by hand on prototype interactions. The plugin lists them as skipped — that list
-  being exactly 6 is the check that nothing else was dropped.
+- **Easing (6 tokens) and the overlay shadow (1).** `curve/*` and `easing/*` are `cubicBezier`; Figma has
+  no variable type for a curve — set these by hand on prototype interactions. `shadow/overlay` is a
+  composite (ADR-027) and lives in Figma as an effect style. The plugin lists all 7 as skipped — that
+  list being exactly 7 is the check that nothing else was dropped (counts as of 2026-10-27; the
+  `[tokens-build]` line in `npm run build` is the source when they move).
 - **Shadows and composite type styles.** Figma holds them as effect and text styles, not variables.
   `docs/figma/PHASE-1-FIGMA.md` has the manual steps.
 - **Components.** It imports variables only. The Button component set is manual — a component is a
@@ -80,4 +82,4 @@ nothing has to be undone. Verified by running `code.js` against a mock whose `ad
 | `fontFamily` | `STRING`, first family in the stack (Figma takes one name) |
 
 Verified before first use by running `code.js` against a mock Plugin API and the real
-`dist/figma/tokens.json`: 155 + 116 variables, 696 aliases, 0 raw values, 0 unset, 6 expected skips.
+`dist/figma/tokens.json`: 159 + 125 variables, 750 aliases, 0 raw values, 0 unset, 7 expected skips (2026-10-27).
