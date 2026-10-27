@@ -8,10 +8,11 @@ import { loadTheme, cssName } from './lib/dtcg.mjs';
 
 const root = new URL('../', import.meta.url).pathname;
 const { semanticNames } = loadTheme('light');
-const CATEGORIES = ['Actions', 'Inputs', 'Display', 'Navigation', 'Overlay', 'Layout', 'Feedback', 'Template'];
+const CATEGORIES = ['Actions', 'Inputs', 'Display', 'Navigation', 'Overlay', 'Layout', 'Feedback', 'Pattern', 'Template'];
 const REQUIRED = ['name', 'category', 'status', 'summary', 'role', 'props', 'states', 'keyboard', 'a11y', 'tokens', 'rules', 'figma'];
 const errors = [];
-const specs = globSync('src/components/**/*.spec.json', { cwd: root });
+// Patterns (src/patterns/<product>/<Name>/) are specified and checked exactly like components (ADR-033).
+const specs = [...globSync('src/components/**/*.spec.json', { cwd: root }), ...globSync('src/patterns/**/*.spec.json', { cwd: root })];
 
 for (const rel of specs) {
   const spec = JSON.parse(readFileSync(root + rel, 'utf8'));

@@ -39,6 +39,10 @@
 - [Popover](docs/specs/Popover.spec.json): A small surface anchored to its trigger for one or two controls or a short explanation — adjust the weekly target, edit a priority, 'what counts as a quality application'. role=`dialog`, status draft. `import { Popover } from '@iz/design-system'`
 - [Tooltip](docs/specs/Tooltip.spec.json): A short plain-text hint that describes a focusable control — 'Open application', 'Mark done (D)' — shown on keyboard focus and after a hover delay, dismissed with Escape. role=`tooltip`, status draft. `import { Tooltip } from '@iz/design-system'`
 
+## Patterns (Job Search HQ) — composed from the components above
+
+- [ActionRow](docs/specs/ActionRow.spec.json): One next action in the Today list: a done ring, the title, a meta row (company, stage, time), the due label, a Snooze split button and an Open button. role=`listitem`, status draft. `import { ActionRow } from '@iz/design-system'`
+
 ## Tokens
 
 - [tokens.dtcg.json](docs/specs/tokens.dtcg.json): every semantic token with its resolved value per theme (DTCG 2025.10).

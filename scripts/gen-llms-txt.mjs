@@ -8,7 +8,7 @@ import { THEME_DEFS, loadTheme } from './lib/dtcg.mjs';
 const root = new URL('../', import.meta.url).pathname;
 const out = root + 'agent/llms.txt';
 const check = process.argv.includes('--check');
-const CATEGORY_ORDER = ['Actions', 'Inputs', 'Display', 'Feedback', 'Overlay', 'Navigation', 'Layout', 'Template'];
+const CATEGORY_ORDER = ['Actions', 'Inputs', 'Display', 'Feedback', 'Overlay', 'Navigation', 'Layout', 'Pattern', 'Template'];
 
 const specs = readdirSync(root + 'docs/specs')
   .filter((f) => f.endsWith('.spec.json'))
@@ -33,7 +33,7 @@ p('- Do not add a component or token without a spec and an ADR (`docs/CONTRIBUTI
 for (const cat of CATEGORY_ORDER) {
   const group = specs.filter((s) => s.category === cat);
   if (!group.length) continue;
-  p(`## Components — ${cat}`, '');
+  p(cat === 'Pattern' ? '## Patterns (Job Search HQ) — composed from the components above' : `## Components — ${cat}`, '');
   for (const s of group) {
     p(`- [${s.name}](docs/specs/${s.name}.spec.json): ${firstSentence(s.summary)} role=\`${s.role}\`, status ${s.status}. \`${importOf(s.name)}\``);
   }
